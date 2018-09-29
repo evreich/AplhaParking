@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "AlphaParking.BLL.Interfaces/1.0.0": {
+        "dependencies": {
+          "AlphaParking.DAL.Interfaces": "1.0.0",
+          "AlphaParking.DB.Models": "1.0.0"
+        },
+        "runtime": {
+          "AlphaParking.BLL.Interfaces.dll": {}
+        }
+      },
+      "AlphaParking.DAL.Interfaces/1.0.0": {
+        "dependencies": {
+          "AlphaParking.DB.Models": "1.0.0"
+        },
+        "runtime": {
+          "AlphaParking.DAL.Interfaces.dll": {}
+        }
+      },
+      "AlphaParking.DB.Models/1.0.0": {
+        "runtime": {
+          "AlphaParking.DB.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AlphaParking.BLL.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AlphaParking.DAL.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AlphaParking.DB.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

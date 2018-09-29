@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlphaParking.BLL.Services\AlphaParking.BLL.Services.csproj" />
+    <ProjectReference Include="..\AlphaParking.DAL.Repositories\AlphaParking.DAL.Repositories.csproj" />
+    <ProjectReference Include="..\AlphaParking.DAL\AlphaParking.DAL.Interfaces.csproj" />
+    <ProjectReference Include="..\AlphaParking.Domain\AlphaParking.BLL.Interfaces.csproj" />
+    <ProjectReference Include="..\AlphaParking.Models\AlphaParking.DB.Models.csproj" />
+  </ItemGroup>
+
+</Project>

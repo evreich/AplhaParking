@@ -1,0 +1,14 @@
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\bin\Debug\netcoreapp2.1\AlphaParking.Web.Managers.deps.json
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\bin\Debug\netcoreapp2.1\AlphaParking.Web.Managers.runtimeconfig.json
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\bin\Debug\netcoreapp2.1\AlphaParking.Web.Managers.runtimeconfig.dev.json
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\bin\Debug\netcoreapp2.1\AlphaParking.Web.Managers.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\bin\Debug\netcoreapp2.1\AlphaParking.Web.Managers.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.csprojAssemblyReference.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.csproj.CoreCompileInputs.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.RazorAssemblyInfo.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.RazorAssemblyInfo.cs
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.AssemblyInfoInputs.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.AssemblyInfo.cs
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.RazorTargetAssemblyInfo.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Managers.pdb

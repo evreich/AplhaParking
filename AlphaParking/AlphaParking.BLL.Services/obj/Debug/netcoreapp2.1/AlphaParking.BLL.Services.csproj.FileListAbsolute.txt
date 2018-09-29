@@ -1,0 +1,16 @@
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.BLL.Services.deps.json
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.BLL.Services.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.BLL.Services.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.BLL.Interfaces.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.DB.Models.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.BLL.Interfaces.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.DB.Models.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.csprojAssemblyReference.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.csproj.CoreCompileInputs.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.AssemblyInfoInputs.cache
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.AssemblyInfo.cs
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.csproj.CopyComplete
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\obj\Debug\netcoreapp2.1\AlphaParking.BLL.Services.pdb
