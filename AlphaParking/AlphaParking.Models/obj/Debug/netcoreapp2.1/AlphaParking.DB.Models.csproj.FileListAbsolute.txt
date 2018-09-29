@@ -6,3 +6,4 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Models
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Models\obj\Debug\netcoreapp2.1\AlphaParking.DB.Models.AssemblyInfo.cs
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Models\obj\Debug\netcoreapp2.1\AlphaParking.DB.Models.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Models\obj\Debug\netcoreapp2.1\AlphaParking.DB.Models.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Models\obj\Debug\netcoreapp2.1\AlphaParking.DB.Models.csprojAssemblyReference.cache
