@@ -16,7 +16,7 @@ namespace AlphaParking.DB.Models
 
         //TODO: Добавить доп. параметры авто
 
-        public List<UserCars> UserCars { get; set; } = new List<UserCars>();
-        public List<ParkingSpaceCars> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCars>();
+        public List<UserCar> UserCars { get; set; } = new List<UserCar>();
+        public List<ParkingSpaceCar> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCar>();
     }
 }

@@ -12,9 +12,10 @@ namespace AlphaParking.DB.Models
         public string Login { get; set; }
         public string Password { get; set; }
         public string FIO { get; set; }
-
+        public string Address { get; set; }
         //TODO: Добавить доп инфо о пользователе приложения
 
-        public List<UserRoles> UserRoles { get; set; } = new List<UserRoles>();
+        public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public List<UserCar> UserCars { get; set; } = new List<UserCar>();
     }
 }

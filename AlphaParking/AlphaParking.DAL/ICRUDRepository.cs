@@ -12,9 +12,10 @@ namespace AlphaParking.DAL.Interfaces
         Task<TEntity> Delete(TEntity elem);
         Task<TEntity> Update(TEntity elem);
         Task<TEntity> GetElem(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> GetElem(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
+
         Task<IEnumerable<TEntity>> GetElems();
         Task<IEnumerable<TEntity>> GetElems(Expression<Func<TEntity, bool>> predicate);
-
         Task<IEnumerable<TEntity>> GetElems(params Expression<Func<TEntity, object>>[] includeProperties);
         Task<IEnumerable<TEntity>> GetElems(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includeProperties);

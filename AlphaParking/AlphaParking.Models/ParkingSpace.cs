@@ -10,9 +10,9 @@ namespace AlphaParking.DB.Models
         [Key]
         public int Number { get; set; }
 
-        public List<ParkingSpaceCars> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCars>();
+        public List<ParkingSpaceCar> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCar>();
 
-        public ParkingSpace(int number, List<ParkingSpaceCars> parkingSpaceCars)
+        public ParkingSpace(int number, List<ParkingSpaceCar> parkingSpaceCars)
         {
             Number = number;
             ParkingSpaceCars = parkingSpaceCars;

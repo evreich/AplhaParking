@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AlphaParking.BLL.Interfaces
 {
-    interface IUserService
+    public interface IUserService: ICRUDService<User>
     {
-        bool IsRegistered(User user);
-        User Registration(User user);
-        void Login(User user);
+        Task<User> Login(string login, string password);
+        Task<User> GetUser(Guid userId);
+        Task<IEnumerable<ParkingSpace>> GetUserParkingPlaces(Guid userId);
     }
 }

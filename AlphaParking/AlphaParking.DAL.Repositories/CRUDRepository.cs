@@ -42,7 +42,12 @@ namespace AlphaParking.DAL.Repositories
 
         public virtual Task<TEntity> GetElem(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.SingleAsync(predicate);
+            return _dbSet.SingleOrDefaultAsync(predicate);
+        }
+
+        public virtual async Task<TEntity> GetElem(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return await Include(includeProperties).SingleOrDefaultAsync(predicate);
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetElems()

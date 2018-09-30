@@ -11,6 +11,6 @@ namespace AlphaParking.DB.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
 
-        public List<UserRoles> UserRoles { get; set; } = new List<UserRoles>();
+        public List<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }

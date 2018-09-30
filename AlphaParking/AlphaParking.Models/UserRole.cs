@@ -5,14 +5,14 @@ using System.Text;
 
 namespace AlphaParking.DB.Models
 {
-    public class UserCars
+    public class UserRole
     {
         [Key]
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         [Key]
-        public string CarNumber { get; set; }
-        public Car Car { get; set; }
+        public Guid RoleId { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

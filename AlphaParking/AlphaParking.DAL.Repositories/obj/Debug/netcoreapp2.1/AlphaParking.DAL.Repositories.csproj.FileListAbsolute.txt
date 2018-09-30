@@ -12,5 +12,3 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Re
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.csproj.CopyComplete
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.pdb
-C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\Microsoft.EntityFrameworkCore.dll
-C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\Microsoft.EntityFrameworkCore.xml

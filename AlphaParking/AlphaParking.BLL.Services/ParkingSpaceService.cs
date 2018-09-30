@@ -10,16 +10,19 @@ namespace AlphaParking.BLL.Services
 {
     public class ParkingSpaceService : IParkingSpaceService
     {
-        private readonly ICRUDRepository<ParkingSpace> _repository;
-
-        public ParkingSpaceService(ICRUDRepository<ParkingSpace> repository)
+        private readonly IUnitOfWork _unitOfWork;
+        public ParkingSpaceService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async void CheckInOnMainParkingSpace(int numParkingSpace, string carNumber)
         {
-            throw new NotImplementedException();
+            var mainParkingSpace = await _unitOfWork.ParkingSpaceCarRepository.GetElem(x => x.IsMainParkingSpace);
+            if (mainParkingSpace.CheckIn)
+                throw new Exception("Основное место уже занято");
+            mainParkingSpace.CheckIn = true;
+            _unitOfWork.Save();
         }
 
         public async void CheckInOnOtherParkingSpace(int numParkingSpace, string carNumber)
@@ -34,27 +37,32 @@ namespace AlphaParking.BLL.Services
 
         public async Task<ParkingSpace> Create(ParkingSpace parkingSpace)
         {
-            return await _repository.Create(parkingSpace);
+            return await _unitOfWork.ParkingSpaceRepository.Create(parkingSpace);
         }
 
         public async Task<ParkingSpace> Delete(ParkingSpace parkingSpace)
         {
-            return await _repository.Delete(parkingSpace);
+            return await _unitOfWork.ParkingSpaceRepository.Delete(parkingSpace);
         }
 
         public async Task<ParkingSpace> Get(int numberId)
         {
-            return await _repository.GetElem(elem => elem.Number == numberId);
+            return await _unitOfWork.ParkingSpaceRepository.GetElem(elem => elem.Number == numberId);
         }
 
         public async Task<ParkingSpace> Update(ParkingSpace parkingSpace)
         {
-            return await _repository.Update(parkingSpace);
+            return await _unitOfWork.ParkingSpaceRepository.Update(parkingSpace);
         }
 
-        public Task<ParkingSpace> GetAll()
+        public Task<IEnumerable<ParkingSpace>> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

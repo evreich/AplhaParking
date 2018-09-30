@@ -8,7 +8,7 @@ namespace AlphaParking.Web.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class UserController : ControllerBase
     {
         // GET api/values
         [HttpGet]
