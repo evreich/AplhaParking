@@ -11,11 +11,5 @@ namespace AlphaParking.DB.Models
         public int Number { get; set; }
 
         public List<ParkingSpaceCar> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCar>();
-
-        public ParkingSpace(int number, List<ParkingSpaceCar> parkingSpaceCars)
-        {
-            Number = number;
-            ParkingSpaceCars = parkingSpaceCars;
-        }
     }
 }

@@ -1116,6 +1116,20 @@
           "bin/placeholder/AlphaParking.DAL.Interfaces.dll": {}
         }
       },
+      "AlphaParking.DAL.Repositories/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "AlphaParking.DAL.Interfaces": "1.0.0",
+          "AlphaParking.DB.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AlphaParking.DAL.Repositories.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AlphaParking.DAL.Repositories.dll": {}
+        }
+      },
       "AlphaParking.DB.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -4215,6 +4229,11 @@
       "path": "../AlphaParking.DAL/AlphaParking.DAL.Interfaces.csproj",
       "msbuildProject": "../AlphaParking.DAL/AlphaParking.DAL.Interfaces.csproj"
     },
+    "AlphaParking.DAL.Repositories/1.0.0": {
+      "type": "project",
+      "path": "../AlphaParking.DAL.Repositories/AlphaParking.DAL.Repositories.csproj",
+      "msbuildProject": "../AlphaParking.DAL.Repositories/AlphaParking.DAL.Repositories.csproj"
+    },
     "AlphaParking.DB.Models/1.0.0": {
       "type": "project",
       "path": "../AlphaParking.Models/AlphaParking.DB.Models.csproj",
@@ -4225,6 +4244,7 @@
     ".NETCoreApp,Version=v2.1": [
       "AlphaParking.BLL.Interfaces >= 1.0.0",
       "AlphaParking.DAL.Interfaces >= 1.0.0",
+      "AlphaParking.DAL.Repositories >= 1.0.0",
       "AlphaParking.DB.Models >= 1.0.0",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
@@ -4259,6 +4279,9 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
+            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL.Repositories\\AlphaParking.DAL.Repositories.csproj": {
+              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL.Repositories\\AlphaParking.DAL.Repositories.csproj"
+            },
             "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.Interfaces.csproj": {
               "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.Interfaces.csproj"
             },

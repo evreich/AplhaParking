@@ -4756,6 +4756,7 @@
         "dependencies": {
           "AlphaParking.BLL.Interfaces": "1.0.0",
           "AlphaParking.DAL.Interfaces": "1.0.0",
+          "AlphaParking.DAL.Repositories": "1.0.0",
           "AlphaParking.DB.Models": "1.0.0"
         },
         "compile": {

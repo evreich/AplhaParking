@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Proxies;
 using AlphaParking.DB.Models;
+using AlphaParking.DB.Models.SeedData;
 
 namespace AlphaParking.DB.DbContext.Models
 {
@@ -11,58 +12,51 @@ namespace AlphaParking.DB.DbContext.Models
     {
         public AlphaParkingDbContext() { }
 
-        DbSet<Car> Cars { get; set; }
-        DbSet<ParkingSpaceCar> ParkingSpaceCars {get; set;}
-        DbSet<ParkingSpace> ParkingSpaces { get; set; }
-        DbSet<TempOwnerParkingSpace> TempOwnerParkingSpaces { get; set; }
-        DbSet<UserCar> UserCars { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<UserRole> UserRoles { get; set; }
-        DbSet<Role> Roles { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<ParkingSpaceCar> ParkingSpaceCars {get; set;}
+        public DbSet<ParkingSpace> ParkingSpaces { get; set; }
+        public DbSet<TempOwnerParkingSpace> TempOwnerParkingSpaces { get; set; }
+        public DbSet<UserCar> UserCars { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //many-to-many для книг и заказов
-            //modelBuilder.Entity<BookOrder>()
-            //    .HasKey(bc => new { bc.BookId, bc.OrderId });
+            //multi keys
+            modelBuilder.Entity<UserRole>()
+                .HasKey(ur => new { ur.RoleId, ur.UserId });
 
-            //modelBuilder.Entity<BookOrder>()
-            //    .HasOne(bc => bc.Book)
-            //    .WithMany(b => b.BookOrders)
-            //    .HasForeignKey(bc => bc.BookId);
+            modelBuilder.Entity<UserCar>()
+                .HasKey(uc => new { uc.UserId, uc.CarNumber });
+            
+            //many-to-many
+            modelBuilder.Entity<UserCar>()
+                .HasOne(elem => elem.Car)
+                .WithMany(car => car.UserCars)
+                .HasForeignKey(elem => elem.CarNumber);
 
-            //modelBuilder.Entity<BookOrder>()
-            //    .HasOne(bc => bc.Order)
-            //    .WithMany(c => c.BookOrders)
-            //    .HasForeignKey(bc => bc.OrderId);
+            modelBuilder.Entity<UserCar>()
+                .HasOne(elem => elem.User)
+                .WithMany(car => car.UserCars)
+                .HasForeignKey(elem => elem.UserId);
 
-            ////many-to-many для ролей и связанных пунктов меню
-            //modelBuilder.Entity<UserRoleMenuElement>()
-            //    .HasKey(user_menu => new { user_menu.UserRoleId, user_menu.MenuElementId });
+            modelBuilder.Entity<UserRole>()
+                .HasOne(elem => elem.Role)
+                .WithMany(elem => elem.UserRoles)
+                .HasForeignKey(elem => elem.RoleId);
 
-            //modelBuilder.Entity<UserRoleMenuElement>()
-            //    .HasOne(user_menu => user_menu.MenuElement)
-            //    .WithMany(b => b.UserRoleMenuElements)
-            //    .HasForeignKey(user_menu => user_menu.MenuElementId);
+            modelBuilder.Entity<UserRole>()
+                .HasOne(elem => elem.User)
+                .WithMany(elem => elem.UserRoles)
+                .HasForeignKey(elem => elem.UserId);
 
-            //modelBuilder.Entity<UserRoleMenuElement>()
-            //    .HasOne(user_menu => user_menu.UserRole)
-            //    .WithMany(c => c.UserRoleMenuElements)
-            //    .HasForeignKey(user_menu => user_menu.UserRoleId);
+            //init start values
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Id = Guid.NewGuid(), Name = RoleConstants.EMPLOYEE },
+                new Role { Id = Guid.NewGuid(), Name = RoleConstants.MANAGER }
+            );
 
-            ////many-to-many для ролей и доступных маршрутов
-            //modelBuilder.Entity<UserRoleRouteElement>()
-            //    .HasKey(user_role => new { user_role.UserRoleId, user_role.RouteElementId });
-
-            //modelBuilder.Entity<UserRoleRouteElement>()
-            //    .HasOne(user_role => user_role.UserRole)
-            //    .WithMany(b => b.UserRoleRouteElements)
-            //    .HasForeignKey(user_role => user_role.UserRoleId);
-
-            //modelBuilder.Entity<UserRoleRouteElement>()
-            //    .HasOne(user_role => user_role.RouteElement)
-            //    .WithMany(c => c.UserRoleRouteElements)
-            //    .HasForeignKey(user_role => user_role.RouteElementId);
             base.OnModelCreating(modelBuilder);
         }
 

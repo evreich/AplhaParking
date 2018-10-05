@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AlphaParking.DAL.Repositories\AlphaParking.DAL.Repositories.csproj" />
     <ProjectReference Include="..\AlphaParking.DAL\AlphaParking.DAL.Interfaces.csproj" />
     <ProjectReference Include="..\AlphaParking.Domain\AlphaParking.BLL.Interfaces.csproj" />
     <ProjectReference Include="..\AlphaParking.Models\AlphaParking.DB.Models.csproj" />
