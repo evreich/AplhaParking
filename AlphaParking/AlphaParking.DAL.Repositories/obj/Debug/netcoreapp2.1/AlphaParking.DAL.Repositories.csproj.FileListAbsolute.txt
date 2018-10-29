@@ -1,9 +1,7 @@
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.deps.json
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.pdb
-C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DB.Models.dll
-C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.pdb
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\AlphaParking.DB.Models.pdb
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.csprojAssemblyReference.cache
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.csproj.CoreCompileInputs.cache
@@ -12,3 +10,5 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Re
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.csproj.CopyComplete
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL.Repositories\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Identity.Core.xml

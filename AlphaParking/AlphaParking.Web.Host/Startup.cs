@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AlphaParking.BLL.Services;
-using AlphaParking.DAL.Interfaces;
+using AlphaParking.DAL.Repositories;
 using AlphaParking.DAL.Repositories.UnitOfWork;
 using AlphaParking.DB.DbContext.Models;
 using AlphaParking.Web.Host.Extensions;
@@ -38,10 +38,9 @@ namespace AlphaParking.Web.Host
 
             services.AddDbContext<AlphaParkingDbContext>(options => options.UseSqlServer(_defaultConnection));
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<SeedDbService>();
+            services.AddSingleton<ISeedDbService, SeedDbService>();
             services.AddDbRepositories();
             services.AddServices();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

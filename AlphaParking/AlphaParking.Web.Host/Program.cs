@@ -7,17 +7,17 @@ using AlphaParking.BLL.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace AlphaParking.Web.Host
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            //TODO:
-            host.Services.GetService(typeof(SeedDbService));
+            await host.Services.GetRequiredService<ISeedDbService>().EnsurePopulated();
             host.Run();
         }
 

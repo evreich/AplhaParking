@@ -1,6 +1,8 @@
-﻿using AlphaParking.BLL.Interfaces;
-using AlphaParking.DAL.Interfaces;
+﻿using AlphaParking.BLL.Services.DTO;
+using AlphaParking.BLL.Services.Utils;
+using AlphaParking.DAL.Repositories;
 using AlphaParking.DB.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,29 +13,32 @@ namespace AlphaParking.BLL.Services
     public class CarService : ICarService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CarService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public CarService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<Car> Create(Car elem)
+        public async Task<CarDTO> Create(CarDTO elem)
         {
-            return await _unitOfWork.CarRepository.Create(elem);
+            return await MappingDataUtils.WrapperMappingDALFunc<CarDTO,Car>(_unitOfWork.CarRepository.Create, elem, _mapper);
         }
 
-        public async Task<Car> Delete(Car elem)
+        public async Task<CarDTO> Delete(CarDTO elem)
         {
-            return await _unitOfWork.CarRepository.Delete(elem);
+            return await MappingDataUtils.WrapperMappingDALFunc<CarDTO, Car>(_unitOfWork.CarRepository.Delete, elem, _mapper);
         }
 
-        public async Task<IEnumerable<Car>> GetAll()
+        public async Task<IEnumerable<CarDTO>> GetAll()
         {
-            return await _unitOfWork.CarRepository.GetElems(elem => elem.UserCars);
+            return _mapper.Map<IEnumerable<Car>, IEnumerable<CarDTO>>(await _unitOfWork.CarRepository.GetElems());
         }
 
-        public async Task<Car> Update(Car elem)
+        public async Task<CarDTO> Update(CarDTO elem)
         {
-            return await _unitOfWork.CarRepository.Update(elem);
+            return await MappingDataUtils.WrapperMappingDALFunc<CarDTO,Car>(_unitOfWork.CarRepository.Update, elem, _mapper);
         }
 
         public void Dispose()

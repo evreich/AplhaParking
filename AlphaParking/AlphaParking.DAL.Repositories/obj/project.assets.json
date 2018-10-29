@@ -1089,19 +1089,6 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "AlphaParking.DAL.Interfaces/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "AlphaParking.DB.Models": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/AlphaParking.DAL.Interfaces.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AlphaParking.DAL.Interfaces.dll": {}
-        }
-      },
       "AlphaParking.DB.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -4191,11 +4178,6 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "AlphaParking.DAL.Interfaces/1.0.0": {
-      "type": "project",
-      "path": "../AlphaParking.DAL/AlphaParking.DAL.Interfaces.csproj",
-      "msbuildProject": "../AlphaParking.DAL/AlphaParking.DAL.Interfaces.csproj"
-    },
     "AlphaParking.DB.Models/1.0.0": {
       "type": "project",
       "path": "../AlphaParking.Models/AlphaParking.DB.Models.csproj",
@@ -4204,7 +4186,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "AlphaParking.DAL.Interfaces >= 1.0.0",
       "AlphaParking.DB.Models >= 1.0.0",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
@@ -4239,9 +4220,6 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.Interfaces.csproj": {
-              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.Interfaces.csproj"
-            },
             "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj": {
               "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj"
             }

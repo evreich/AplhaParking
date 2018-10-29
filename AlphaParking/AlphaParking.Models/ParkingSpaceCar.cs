@@ -16,13 +16,17 @@ namespace AlphaParking.DB.Models
         public string CarNumber { get; set; }
         public Car Car { get; set; }
 
-        public DateTime StartParking { get; set; }
-        public DateTime EndParking { get; set; }
+        public TimeSpan StartParkingTime { get; set; }
+        public TimeSpan EndParkingTime { get; set; }
 
         public bool IsMainParkingSpace { get; set; }
         public bool CheckIn { get; set; }
 
-        public Guid? TempOwnerParkingSpaceId { get; set; }
-        public TempOwnerParkingSpace TempOwnerParkingSpace { get; set; }
+        //для возможности временной делеагции парк. места на другую машину
+        public string DelegatedCarNumber { get; set; }
+        public Car DelegatedCar { get; set; }
+
+        public DateTime? StartDelegatedDate { get; set; }
+        public DateTime? EndDelegatedDate { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using AlphaParking.DAL.Interfaces;
+﻿using AlphaParking.DAL.Repositories;
 using AlphaParking.DAL.Repositories.UnitOfWork;
 using AlphaParking.DB.DbContext.Models;
 using AlphaParking.DB.Models.SeedData;
@@ -6,10 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AlphaParking.BLL.Services
 {
-    public class SeedDbService
+    public class SeedDbService: ISeedDbService
     {
         private readonly IUnitOfWork _uow;
 
@@ -18,7 +19,7 @@ namespace AlphaParking.BLL.Services
             _uow = uow;
         }
 
-        public async void EnsurePopulated()
+        public async Task EnsurePopulated()
         {
             if (!(await _uow.UserRepository.GetElems()).Any())
             {
@@ -55,23 +56,6 @@ namespace AlphaParking.BLL.Services
                 await _uow.CarRepository.Create(CarConstants.Solaris);
             }
 
-            if (!(await _uow.UserCarRepository
-                .GetElems(elem => elem.UserId == UserConstants.Employee.Id ||
-                                  elem.UserId == UserConstants.Manager.Id))
-                .Any())
-            {
-                await _uow.UserCarRepository.Create(new DB.Models.UserCar
-                {
-                    UserId = UserConstants.Manager.Id,
-                    CarNumber = CarConstants.Priora.Number
-                });
-                await _uow.UserCarRepository.Create(new DB.Models.UserCar
-                {
-                    UserId = UserConstants.Employee.Id,
-                    CarNumber = CarConstants.Solaris.Number
-                });
-            }
-
             if (!(await _uow.ParkingSpaceRepository.GetElems()).Any())
             {
                 await _uow.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceOne);
@@ -86,12 +70,16 @@ namespace AlphaParking.BLL.Services
                 await _uow.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
                 {
                     ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceOne.Number,
-                    CarNumber = CarConstants.Priora.Number
+                    CarNumber = CarConstants.Priora.Number,
+                    StartParkingTime = new TimeSpan(8,0,0),
+                    EndParkingTime = new TimeSpan(17, 0, 0)
                 });
                 await _uow.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
                 {
                     ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceTwo.Number,
-                    CarNumber = CarConstants.Solaris.Number
+                    CarNumber = CarConstants.Solaris.Number,
+                    StartParkingTime = new TimeSpan(8, 0, 0),
+                    EndParkingTime = new TimeSpan(17, 0, 0)
                 });
             }
         }

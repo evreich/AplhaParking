@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "AutoMapper/7.0.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.0/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/AutoMapper.dll": {}
+        }
+      },
       "Castle.Core/4.2.1": {
         "type": "package",
         "dependencies": {
@@ -1042,6 +1054,15 @@
           "lib/netstandard1.0/System.Threading.Tasks.Extensions.dll": {}
         }
       },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
       "System.Xml.ReaderWriter/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1089,38 +1110,10 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "AlphaParking.BLL.Interfaces/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "AlphaParking.DAL.Interfaces": "1.0.0",
-          "AlphaParking.DB.Models": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/AlphaParking.BLL.Interfaces.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AlphaParking.BLL.Interfaces.dll": {}
-        }
-      },
-      "AlphaParking.DAL.Interfaces/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "AlphaParking.DB.Models": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/AlphaParking.DAL.Interfaces.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AlphaParking.DAL.Interfaces.dll": {}
-        }
-      },
       "AlphaParking.DAL.Repositories/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "AlphaParking.DAL.Interfaces": "1.0.0",
           "AlphaParking.DB.Models": "1.0.0"
         },
         "compile": {
@@ -1146,6 +1139,27 @@
     }
   },
   "libraries": {
+    "AutoMapper/7.0.1": {
+      "sha512": "6xHbhsW09sWjjYuE1sqhYn25PQzB6UEUVPME5uhlaIz2NR2+L3+FGbVxvknJKug1BLp6VTLxDb5RcGXKMm0ieQ==",
+      "type": "package",
+      "path": "automapper/7.0.1",
+      "files": [
+        "automapper.7.0.1.nupkg.sha512",
+        "automapper.nuspec",
+        "lib/net45/AutoMapper.dll",
+        "lib/net45/AutoMapper.pdb",
+        "lib/net45/AutoMapper.xml",
+        "lib/netcoreapp2.0/AutoMapper.dll",
+        "lib/netcoreapp2.0/AutoMapper.pdb",
+        "lib/netcoreapp2.0/AutoMapper.xml",
+        "lib/netstandard1.3/AutoMapper.dll",
+        "lib/netstandard1.3/AutoMapper.pdb",
+        "lib/netstandard1.3/AutoMapper.xml",
+        "lib/netstandard2.0/AutoMapper.dll",
+        "lib/netstandard2.0/AutoMapper.pdb",
+        "lib/netstandard2.0/AutoMapper.xml"
+      ]
+    },
     "Castle.Core/4.2.1": {
       "sha512": "XSNA0Gc1Zu33L+8+/3Tqt+aFu8QWS8UenVHZ7RenIP5wJfhoLrA4PnNscpxReeo5aBq8PDoGnV8rNaOzIOUo/w==",
       "type": "package",
@@ -4112,6 +4126,49 @@
         "system.threading.tasks.extensions.nuspec"
       ]
     },
+    "System.ValueTuple/4.5.0": {
+      "sha512": "xZtSZNEHGa+tGsKuP4sh257vxJ/yemShz4EusmomkynMzuEDDjVaErBNewpzEF6swUgbcrSQAX3ELsEp1zCOwA==",
+      "type": "package",
+      "path": "system.valuetuple/4.5.0",
+      "files": [
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.ValueTuple.dll",
+        "lib/net461/System.ValueTuple.xml",
+        "lib/net47/System.ValueTuple.dll",
+        "lib/net47/System.ValueTuple.xml",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.ValueTuple.dll",
+        "lib/netstandard1.0/System.ValueTuple.xml",
+        "lib/netstandard2.0/_._",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.xml",
+        "lib/uap10.0.16299/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.ValueTuple.dll",
+        "ref/net47/System.ValueTuple.dll",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard2.0/_._",
+        "ref/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "ref/uap10.0.16299/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.valuetuple.4.5.0.nupkg.sha512",
+        "system.valuetuple.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Xml.ReaderWriter/4.3.0": {
       "sha512": "GrprA+Z0RUXaR4N7/eW71j1rgMnEnEVlgii49GZyAjTH7uliMnrOU3HNFBr6fEDBCJCIdlVNq9hHbaDR621XBA==",
       "type": "package",
@@ -4219,16 +4276,6 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "AlphaParking.BLL.Interfaces/1.0.0": {
-      "type": "project",
-      "path": "../AlphaParking.Domain/AlphaParking.BLL.Interfaces.csproj",
-      "msbuildProject": "../AlphaParking.Domain/AlphaParking.BLL.Interfaces.csproj"
-    },
-    "AlphaParking.DAL.Interfaces/1.0.0": {
-      "type": "project",
-      "path": "../AlphaParking.DAL/AlphaParking.DAL.Interfaces.csproj",
-      "msbuildProject": "../AlphaParking.DAL/AlphaParking.DAL.Interfaces.csproj"
-    },
     "AlphaParking.DAL.Repositories/1.0.0": {
       "type": "project",
       "path": "../AlphaParking.DAL.Repositories/AlphaParking.DAL.Repositories.csproj",
@@ -4242,10 +4289,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "AlphaParking.BLL.Interfaces >= 1.0.0",
-      "AlphaParking.DAL.Interfaces >= 1.0.0",
       "AlphaParking.DAL.Repositories >= 1.0.0",
       "AlphaParking.DB.Models >= 1.0.0",
+      "AutoMapper >= 7.0.1",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
@@ -4282,12 +4328,6 @@
             "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL.Repositories\\AlphaParking.DAL.Repositories.csproj": {
               "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL.Repositories\\AlphaParking.DAL.Repositories.csproj"
             },
-            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.Interfaces.csproj": {
-              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.Interfaces.csproj"
-            },
-            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Domain\\AlphaParking.BLL.Interfaces.csproj": {
-              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Domain\\AlphaParking.BLL.Interfaces.csproj"
-            },
             "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj": {
               "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj"
             }
@@ -4303,6 +4343,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "AutoMapper": {
+            "target": "Package",
+            "version": "[7.0.1, )"
+          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",

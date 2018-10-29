@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v2.1": {
       "AlphaParking.DAL.Repositories/1.0.0": {
         "dependencies": {
-          "AlphaParking.DAL.Interfaces": "1.0.0",
           "AlphaParking.DB.Models": "1.0.0"
         },
         "runtime": {
@@ -579,20 +578,21 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "AlphaParking.DAL.Interfaces/1.0.0": {
-        "dependencies": {
-          "AlphaParking.DB.Models": "1.0.0"
-        },
-        "runtime": {
-          "AlphaParking.DAL.Interfaces.dll": {}
-        }
-      },
       "AlphaParking.DB.Models/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Proxies": "2.1.3"
+          "Microsoft.EntityFrameworkCore.Proxies": "2.1.3",
+          "Microsoft.Extensions.Identity.Core": "2.1.1.0"
         },
         "runtime": {
           "AlphaParking.DB.Models.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Identity.Core.Reference/2.1.1.0": {
+        "runtime": {
+          "Microsoft.Extensions.Identity.Core.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.18157"
+          }
         }
       }
     }
@@ -1037,13 +1037,13 @@
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
     },
-    "AlphaParking.DAL.Interfaces/1.0.0": {
+    "AlphaParking.DB.Models/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "AlphaParking.DB.Models/1.0.0": {
-      "type": "project",
+    "Microsoft.Extensions.Identity.Core.Reference/2.1.1.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

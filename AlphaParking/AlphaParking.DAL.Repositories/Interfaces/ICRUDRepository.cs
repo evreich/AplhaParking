@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaParking.DAL.Interfaces
+namespace AlphaParking.DAL.Repositories
 {
     public interface ICRUDRepository<TEntity>: IDisposable where TEntity: class
     {

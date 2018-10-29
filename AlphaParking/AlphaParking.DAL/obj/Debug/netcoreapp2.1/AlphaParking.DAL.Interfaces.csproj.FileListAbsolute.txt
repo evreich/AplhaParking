@@ -10,3 +10,5 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL\ob
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.csproj.CopyComplete
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL\obj\Debug\netcoreapp2.1\AlphaParking.DAL.Interfaces.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.DAL\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Identity.Core.xml

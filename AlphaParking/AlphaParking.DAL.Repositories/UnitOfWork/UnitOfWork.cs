@@ -1,5 +1,4 @@
-﻿using AlphaParking.DAL.Interfaces;
-using AlphaParking.DB.DbContext.Models;
+﻿using AlphaParking.DB.DbContext.Models;
 using AlphaParking.DB.Models;
 using System;
 using System.Collections.Generic;
@@ -13,19 +12,16 @@ namespace AlphaParking.DAL.Repositories.UnitOfWork
 
         public UnitOfWork(AlphaParkingDbContext dbContext, ICRUDRepository<Role> roleRepository,
             ICRUDRepository<UserRole> userRoleRepository, ICRUDRepository<User> userRepository,
-            ICRUDRepository<UserCar> userCarRepository, ICRUDRepository<Car> carRepository,
-            ICRUDRepository<ParkingSpace> parkingSpaceRepository, ICRUDRepository<ParkingSpaceCar> parkingSpaceCarRepository,
-            ICRUDRepository<TempOwnerParkingSpace> tempParkingSpaceRepository)
+            ICRUDRepository<Car> carRepository,
+            ICRUDRepository<ParkingSpace> parkingSpaceRepository, ICRUDRepository<ParkingSpaceCar> parkingSpaceCarRepository)
         {
             _dbContext = dbContext;
             RoleRepository = roleRepository;
             UserRoleRepository = userRoleRepository;
             UserRepository = userRepository;
-            UserCarRepository = userCarRepository;
             CarRepository = carRepository;
             ParkingSpaceCarRepository = parkingSpaceCarRepository;
             ParkingSpaceRepository = parkingSpaceRepository;
-            TempOwnerParkingSpaceRepository = tempParkingSpaceRepository;
         }
 
         public ICRUDRepository<Role> RoleRepository { get; }
@@ -34,15 +30,11 @@ namespace AlphaParking.DAL.Repositories.UnitOfWork
 
         public ICRUDRepository<User> UserRepository { get; }
 
-        public ICRUDRepository<UserCar> UserCarRepository { get; }
-
         public ICRUDRepository<Car> CarRepository { get; }
 
         public ICRUDRepository<ParkingSpace> ParkingSpaceRepository { get; }
 
         public ICRUDRepository<ParkingSpaceCar> ParkingSpaceCarRepository { get; }
-
-        public ICRUDRepository<TempOwnerParkingSpace> TempOwnerParkingSpaceRepository { get; }
 
         public void Dispose()
         {

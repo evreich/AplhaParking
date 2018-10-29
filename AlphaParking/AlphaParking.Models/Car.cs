@@ -9,14 +9,15 @@ namespace AlphaParking.DB.Models
     {
         //формат номера: "O115AE 136"
         [Key]
-        public string Number { get; set ; }
+        public string Number { get; set; }
 
         public string Brand { get; set; }
         public string Model { get; set; }
 
         //TODO: Добавить доп. параметры авто
 
-        public List<UserCar> UserCars { get; set; } = new List<UserCar>();
+        public Guid UserId { get; set; }
+        public User User {get; set;}
         public List<ParkingSpaceCar> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCar>();
     }
 }
