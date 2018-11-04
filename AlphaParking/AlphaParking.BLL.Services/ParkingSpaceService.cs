@@ -1,4 +1,5 @@
 ﻿using AlphaParking.BLL.Services.DTO;
+using AlphaParking.BLL.Services.Exceptions;
 using AlphaParking.BLL.Services.Utils;
 using AlphaParking.DAL.Repositories;
 using AlphaParking.DB.Models;
@@ -12,84 +13,84 @@ namespace AlphaParking.BLL.Services
 {
     public class ParkingSpaceService : IParkingSpaceService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _database;
         private readonly IMapper _mapper;
         public ParkingSpaceService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _database = unitOfWork;
             _mapper = mapper;
         }
 
         public async void CheckInOnMainParkingSpace(int numParkingSpace, string carNumber)
         {
-            var mainParkingSpace = await _unitOfWork.ParkingSpaceCarRepository
+            var mainParkingSpace = await _database.ParkingSpaceCarRepository
                 .GetElem(x =>x.ParkingSpaceNumber == numParkingSpace && x.CarNumber == carNumber && x.IsMainParkingSpace);
             if (mainParkingSpace.CheckIn)
-                throw new Exception("Основное место уже занято");
+                throw new BadRequestException("Основное место уже занято");
             mainParkingSpace.CheckIn = true;
-            _unitOfWork.Save();
+            _database.Save();
         }
 
         public async void CheckInOnOtherParkingSpace(int numParkingSpace, string carNumber)
         {
-            var parkingSpace = await _unitOfWork.ParkingSpaceCarRepository
+            var parkingSpace = await _database.ParkingSpaceCarRepository
                 .GetElem(x => x.ParkingSpaceNumber == numParkingSpace && x.CarNumber == carNumber);
             if (parkingSpace.IsMainParkingSpace)
-                throw new Exception("Это основное парковочное место");
+                throw new BadRequestException("Это основное парковочное место");
             if (parkingSpace.CheckIn)
-                throw new Exception("Основное место уже занято");
+                throw new BadRequestException("Основное место уже занято");
             parkingSpace.CheckIn = true;
-            _unitOfWork.Save();
+            _database.Save();
         }
 
         public async void GiveParkingSpaceToOther(int numParkingSpace, string ownerCarNumber, 
             string otherCarNumber, DateTime startDate, DateTime endDate)
         {
-            var parkingSpaceCar = await _unitOfWork.ParkingSpaceCarRepository
+            var parkingSpaceCar = await _database.ParkingSpaceCarRepository
                 .GetElem(x => x.ParkingSpaceNumber == numParkingSpace 
                 && x.CarNumber == ownerCarNumber);
             if (parkingSpaceCar.DelegatedCar != null)
-                throw new Exception("Место уже делегировано другому пользователю.");
+                throw new BadRequestException("Место уже делегировано другому пользователю.");
 
             parkingSpaceCar.DelegatedCarNumber = otherCarNumber;
             parkingSpaceCar.StartDelegatedDate = startDate;
             parkingSpaceCar.EndDelegatedDate = endDate;
 
-            _unitOfWork.Save();
+            _database.Save();
         }
 
         public async Task<ParkingSpaceDTO> Create(ParkingSpaceDTO parkingSpace)
         {
             return await MappingDataUtils.WrapperMappingDALFunc<ParkingSpaceDTO, ParkingSpace>
-                (_unitOfWork.ParkingSpaceRepository.Create, parkingSpace, _mapper);
+                (_database.ParkingSpaceRepository.Create, parkingSpace, _mapper);
         }
 
         public async Task<ParkingSpaceDTO> Delete(ParkingSpaceDTO parkingSpace)
         {
             return await MappingDataUtils.WrapperMappingDALFunc<ParkingSpaceDTO, ParkingSpace>
-                (_unitOfWork.ParkingSpaceRepository.Delete, parkingSpace, _mapper);
+                (_database.ParkingSpaceRepository.Delete, parkingSpace, _mapper);
         }
 
         public async Task<ParkingSpaceDTO> Get(int numberId)
         {
             return _mapper.Map<ParkingSpaceDTO>
-                (await _unitOfWork.ParkingSpaceRepository.GetElem(elem => elem.Number == numberId, elem => elem.ParkingSpaceCars));
+                (await _database.ParkingSpaceRepository.GetElem(elem => elem.Number == numberId, elem => elem.ParkingSpaceCars));
         }
 
         public async Task<ParkingSpaceDTO> Update(ParkingSpaceDTO parkingSpace)
         {
             return await MappingDataUtils.WrapperMappingDALFunc<ParkingSpaceDTO, ParkingSpace>
-                (_unitOfWork.ParkingSpaceRepository.Update, parkingSpace, _mapper);
+                (_database.ParkingSpaceRepository.Update, parkingSpace, _mapper);
         }
 
         public async Task<IEnumerable<ParkingSpaceDTO>> GetAll()
         {
-            return _mapper.Map<IEnumerable<ParkingSpace>, IEnumerable<ParkingSpaceDTO>>(await _unitOfWork.ParkingSpaceRepository.GetElems());
+            return _mapper.Map<IEnumerable<ParkingSpace>, IEnumerable<ParkingSpaceDTO>>(await _database.ParkingSpaceRepository.GetElems());
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _database.Dispose();
         }
     }
 }

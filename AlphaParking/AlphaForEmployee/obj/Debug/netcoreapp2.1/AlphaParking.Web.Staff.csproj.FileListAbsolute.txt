@@ -3,7 +3,6 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\bi
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\bin\Debug\netcoreapp2.1\AlphaParking.Web.Staff.runtimeconfig.dev.json
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\bin\Debug\netcoreapp2.1\AlphaParking.Web.Staff.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\bin\Debug\netcoreapp2.1\AlphaParking.Web.Staff.pdb
-C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.csprojAssemblyReference.cache
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.csproj.CoreCompileInputs.cache
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.RazorAssemblyInfo.cache
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.RazorAssemblyInfo.cs
@@ -12,3 +11,4 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\ob
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.RazorTargetAssemblyInfo.cache
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.pdb
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaForEmployee\obj\Debug\netcoreapp2.1\AlphaParking.Web.Staff.csprojAssemblyReference.cache

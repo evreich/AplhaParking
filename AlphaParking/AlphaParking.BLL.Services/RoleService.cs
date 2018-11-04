@@ -12,38 +12,38 @@ namespace AlphaParking.BLL.Services
 {
     public class RoleService : IRoleService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _database;
         private readonly IMapper _mapper;
 
         public RoleService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _database = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<RoleDTO> Create(RoleDTO elem)
         {
-            return await MappingDataUtils.WrapperMappingDALFunc<RoleDTO,Role>(_unitOfWork.RoleRepository.Create, elem, _mapper);
+            return await MappingDataUtils.WrapperMappingDALFunc<RoleDTO,Role>(_database.RoleRepository.Create, elem, _mapper);
         }
 
         public async Task<RoleDTO> Delete(RoleDTO elem)
         {
-            return await MappingDataUtils.WrapperMappingDALFunc<RoleDTO, Role>(_unitOfWork.RoleRepository.Delete, elem, _mapper);
+            return await MappingDataUtils.WrapperMappingDALFunc<RoleDTO, Role>(_database.RoleRepository.Delete, elem, _mapper);
         }
 
         public async Task<IEnumerable<RoleDTO>> GetAll()
         {
-            return _mapper.Map<IEnumerable<Role>, IEnumerable<RoleDTO>>(await _unitOfWork.RoleRepository.GetElems(elem => elem.UserRoles));
+            return _mapper.Map<IEnumerable<Role>, IEnumerable<RoleDTO>>(await _database.RoleRepository.GetElems(elem => elem.UserRoles));
         }
 
         public async Task<RoleDTO> Update(RoleDTO elem)
         {
-            return await MappingDataUtils.WrapperMappingDALFunc<RoleDTO, Role>(_unitOfWork.RoleRepository.Update, elem, _mapper);
+            return await MappingDataUtils.WrapperMappingDALFunc<RoleDTO, Role>(_database.RoleRepository.Update, elem, _mapper);
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _database.Dispose();
         }
     }
 }

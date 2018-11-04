@@ -14,10 +14,10 @@ namespace AlphaParking.Web.Host
 {
     public class Program
     {
-        public async static void Main(string[] args)
+        static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            await host.Services.GetRequiredService<ISeedDbService>().EnsurePopulated();
+            host.Services.GetRequiredService<ISeedDbService>().EnsurePopulated().GetAwaiter().GetResult();
             host.Run();
         }
 

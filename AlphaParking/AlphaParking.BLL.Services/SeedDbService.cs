@@ -12,69 +12,69 @@ namespace AlphaParking.BLL.Services
 {
     public class SeedDbService: ISeedDbService
     {
-        private readonly IUnitOfWork _uow;
+        private readonly IUnitOfWork _database;
 
         public SeedDbService(IUnitOfWork uow)
         {
-            _uow = uow;
+            _database = uow;
         }
 
         public async Task EnsurePopulated()
         {
-            if (!(await _uow.UserRepository.GetElems()).Any())
+            if (!(await _database.UserRepository.GetElems()).Any())
             {
-                await _uow.UserRepository.Create(UserConstants.Employee);
-                await _uow.UserRepository.Create(UserConstants.Manager);
+                await _database.UserRepository.Create(UserConstants.Employee);
+                await _database.UserRepository.Create(UserConstants.Manager);
             }
 
-            if (!(await _uow.RoleRepository.GetElems()).Any())
+            if (!(await _database.RoleRepository.GetElems()).Any())
             {
-                await _uow.RoleRepository.Create(RoleConstants.Employee);
-                await _uow.RoleRepository.Create(RoleConstants.Manager);
+                await _database.RoleRepository.Create(RoleConstants.Employee);
+                await _database.RoleRepository.Create(RoleConstants.Manager);
             }
 
-            if (!(await _uow.UserRoleRepository
+            if (!(await _database.UserRoleRepository
                             .GetElems(elem => elem.UserId == UserConstants.Employee.Id ||
                                               elem.UserId == UserConstants.Manager.Id))
                             .Any())
             {
-                await _uow.UserRoleRepository.Create(new DB.Models.UserRole
+                await _database.UserRoleRepository.Create(new DB.Models.UserRole
                 {
                     UserId = UserConstants.Manager.Id,
                     RoleId = RoleConstants.Manager.Id
                 });
-                await _uow.UserRoleRepository.Create(new DB.Models.UserRole
+                await _database.UserRoleRepository.Create(new DB.Models.UserRole
                 {
                     UserId = UserConstants.Employee.Id,
                     RoleId = RoleConstants.Employee.Id
                 });
             }
 
-            if (!(await _uow.CarRepository.GetElems()).Any())
+            if (!(await _database.CarRepository.GetElems()).Any())
             {
-                await _uow.CarRepository.Create(CarConstants.Priora);
-                await _uow.CarRepository.Create(CarConstants.Solaris);
+                await _database.CarRepository.Create(CarConstants.Priora);
+                await _database.CarRepository.Create(CarConstants.Solaris);
             }
 
-            if (!(await _uow.ParkingSpaceRepository.GetElems()).Any())
+            if (!(await _database.ParkingSpaceRepository.GetElems()).Any())
             {
-                await _uow.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceOne);
-                await _uow.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceTwo);
+                await _database.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceOne);
+                await _database.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceTwo);
             }
 
-            if (!(await _uow.ParkingSpaceCarRepository
+            if (!(await _database.ParkingSpaceCarRepository
                 .GetElems(elem => elem.CarNumber == CarConstants.Solaris.Number ||
                                   elem.CarNumber == CarConstants.Priora.Number))
                 .Any())
             {
-                await _uow.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
+                await _database.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
                 {
                     ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceOne.Number,
                     CarNumber = CarConstants.Priora.Number,
                     StartParkingTime = new TimeSpan(8,0,0),
                     EndParkingTime = new TimeSpan(17, 0, 0)
                 });
-                await _uow.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
+                await _database.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
                 {
                     ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceTwo.Number,
                     CarNumber = CarConstants.Solaris.Number,

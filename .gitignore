@@ -4,3 +4,5 @@
 
 /.vs
 /AlphaParking/.vs/AlphaParking
+/AplhaParking/AlphaParking/AlphaParking.Web.Host/appsettings.json
+/AplhaParking/AlphaParking/AlphaParking.BLL.Services/Settings/AuthOptions.cs

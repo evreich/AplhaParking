@@ -11,19 +11,20 @@ using System.Threading.Tasks;
 using AlphaParking.BLL.Services.DTO;
 using AlphaParking.DAL.Repositories;
 using AutoMapper;
+using AlphaParking.BLL.Services.Exceptions;
 
 namespace AlphaParking.BLL.Services
 {
     public class AuthService: IAuthService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _database;
         private readonly IUserService _userService;
         private readonly string _audienceJWT;
         private readonly IMapper _mapper;
 
         public AuthService(IUnitOfWork uow, IUserService userService, string audience, IMapper mapper)
         {
-            _unitOfWork = uow;
+            _database = uow;
             _userService = userService;
             _audienceJWT = audience;
             _mapper = mapper;
@@ -54,19 +55,16 @@ namespace AlphaParking.BLL.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        // TODO: сделать DI сервиса на Web, 
-        // сделать Startup окончательно, приступить к контроллерам, реализовать ViewModels and AutoMapper
-        // дропать localStorage на клиенте на логауте
         public async Task<AuthInfo> Login(string login, string password)
         {
-            UserDTO user = _mapper.Map<UserDTO>(await _unitOfWork.UserRepository.GetElem(u => u.Login.Equals(login)));
+            UserDTO user = _mapper.Map<UserDTO>(await _database.UserRepository.GetElem(u => u.Login.Equals(login)));
             if (user == null)
             {
-                throw new Exception("Данный пользователь не зарегистрирован");
+                throw new ValidationException("Данный пользователь не зарегистрирован");
             }
             if (!await _userService.IsRegistered(login, password))
             {
-                throw new Exception("Неверный пароль");
+                throw new BadRequestException("Неверный пароль");
             }
 
             var userToken = this.GenerateJwtToken(user);
@@ -96,7 +94,7 @@ namespace AlphaParking.BLL.Services
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _database.Dispose();
         }
     }
 }

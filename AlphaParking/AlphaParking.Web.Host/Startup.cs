@@ -7,18 +7,17 @@ using AlphaParking.DAL.Repositories;
 using AlphaParking.DAL.Repositories.UnitOfWork;
 using AlphaParking.DB.DbContext.Models;
 using AlphaParking.Web.Host.Extensions;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace AlphaParking.Web.Host
-{
+{   // TODO: приступить к контроллерам
+    // дропать localStorage на клиенте на логауте
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -28,19 +27,29 @@ namespace AlphaParking.Web.Host
             Configuration = configuration;
         }
 
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string _jwt_audience = Configuration.GetConnectionString("JWT_AUDIENCE");
             string _defaultConnection = Configuration.GetConnectionString("DefaultConnection");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<AlphaParkingDbContext>(options => options.UseSqlServer(_defaultConnection));
+            services.AddAutoMapper();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                   builder => builder.AllowAnyOrigin()
+                                     .AllowAnyMethod()
+                                     .AllowAnyHeader()
+                                     .AllowCredentials()
+                                     .Build());
+            });
+            services.AddJWTAuth(_jwt_audience);
+
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<ISeedDbService, SeedDbService>();
             services.AddDbRepositories();
-            services.AddServices();
+            services.AddServices(_jwt_audience);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +64,10 @@ namespace AlphaParking.Web.Host
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection();       
+            app.UseCors("AllowAnyOrigin");
+            app.UseAuthentication();
+            app.UseErrorHandlerMiddleware();
             app.UseMvc();
         }
     }

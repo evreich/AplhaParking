@@ -10,17 +10,18 @@ using AlphaParking.DAL.Repositories;
 using AutoMapper;
 using AlphaParking.BLL.Services.DTO;
 using AlphaParking.BLL.Services.Utils;
+using AlphaParking.BLL.Services.Exceptions;
 
 namespace AlphaParking.BLL.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _database;
         private readonly IMapper _mapper;
 
         public UserService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _database = unitOfWork;
             _mapper = mapper;
         }
 
@@ -37,11 +38,11 @@ namespace AlphaParking.BLL.Services
         {
             if(await IsRegistered(elem.Login, elem.Password))
             {
-                throw new ArgumentException("Пользователь уже существет");
+                throw new BadRequestException("Пользователь уже существет");
             }
-            var newUser = _mapper.Map<UserDTO>(await _unitOfWork.UserRepository.Create(MapUserFromDTO(elem)));
+            var newUser = _mapper.Map<UserDTO>(await _database.UserRepository.Create(MapUserFromDTO(elem)));
 
-            var defaultRole = _mapper.Map<RoleDTO>(await _unitOfWork.RoleRepository.GetElem(role => role.Name == RoleConstants.EMPLOYEE));
+            var defaultRole = _mapper.Map<RoleDTO>(await _database.RoleRepository.GetElem(role => role.Name == RoleConstants.EMPLOYEE));
             this.AddRoleToUser(newUser, defaultRole);
             // await _unitOfWork.UserRoleRepository.Create(new UserRole { RoleId = defaultRole.Id, UserId = newUser.Id });
 
@@ -50,34 +51,34 @@ namespace AlphaParking.BLL.Services
 
         public async Task<UserDTO> Update(UserDTO elem)
         {
-            var updatedUser = await _unitOfWork.UserRepository.Update(MapUserFromDTO(elem));
+            var updatedUser = await _database.UserRepository.Update(MapUserFromDTO(elem));
             return _mapper.Map<UserDTO>(updatedUser);
         }
 
         public async Task<UserDTO> Delete(UserDTO elem)
         {
             return await MappingDataUtils.WrapperMappingDALFunc<UserDTO, User>
-                (_unitOfWork.UserRepository.Delete, elem, _mapper);
+                (_database.UserRepository.Delete, elem, _mapper);
         }
 
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
             return _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>
-                (await _unitOfWork.UserRepository.GetElems(elem => elem.UserCars));
+                (await _database.UserRepository.GetElems(elem => elem.UserCars));
         }
 
         public async Task<UserDTO> GetUser(Guid userId)
         {
             return _mapper.Map<UserDTO>
-                (await _unitOfWork.UserRepository.GetElem(elem => elem.Id == userId, 
+                (await _database.UserRepository.GetElem(elem => elem.Id == userId, 
                 elem => elem.UserCars, elem => elem.UserRoles));
         }
 
         public async Task<IEnumerable<ParkingSpaceDTO>> GetUserParkingPlaces(Guid userId)
         {
-            var cars = _mapper.Map<UserDTO>((await _unitOfWork.UserRepository.GetElem(elem => elem.Id == userId, elem => elem.UserCars))).Cars;
+            var cars = _mapper.Map<UserDTO>((await _database.UserRepository.GetElem(elem => elem.Id == userId, elem => elem.UserCars))).Cars;
             return _mapper.Map<IEnumerable<ParkingSpace>,IEnumerable<ParkingSpaceDTO>>
-                ((await _unitOfWork.ParkingSpaceCarRepository
+                ((await _database.ParkingSpaceCarRepository
                 .GetElems(elem => cars.Any(uc => uc.Number == elem.CarNumber || uc.Number == elem.DelegatedCarNumber)))
                 .Select(elem => elem.ParkingSpace));
         }
@@ -85,24 +86,24 @@ namespace AlphaParking.BLL.Services
         public void AddRoleToUser(UserDTO user, RoleDTO role)
         {
             user.Roles.Add(role);
-            _unitOfWork.UserRepository.Update(_mapper.Map<User>(user));
+            _database.UserRepository.Update(_mapper.Map<User>(user));
         }
 
         public async Task<bool> IsRegistered(string login, string password)
         {
             var hasher = new PasswordHasher<User>();
-            return await _unitOfWork.UserRepository.GetElem(u => u.Login.Equals(login) &&
+            return await _database.UserRepository.GetElem(u => u.Login.Equals(login) &&
                             hasher.VerifyHashedPassword(u, u.Password, password) == PasswordVerificationResult.Success) != null;
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _database.Dispose();
         }
 
         public async Task<IEnumerable<CarDTO>> GetUserCars(Guid userId)
         {
-            return _mapper.Map<UserDTO>(await _unitOfWork.UserRepository.GetElem(u => u.Id == userId)).Cars;
+            return _mapper.Map<UserDTO>(await _database.UserRepository.GetElem(u => u.Id == userId)).Cars;
         }
     }
 }
