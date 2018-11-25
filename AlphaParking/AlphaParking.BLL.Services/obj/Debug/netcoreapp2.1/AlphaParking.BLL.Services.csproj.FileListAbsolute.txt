@@ -18,3 +18,5 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Se
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\AlphaParking.DAL.Repositories.pdb
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\Microsoft.IdentityModel.Tokens.xml
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.BLL.Services\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Http.Abstractions.xml

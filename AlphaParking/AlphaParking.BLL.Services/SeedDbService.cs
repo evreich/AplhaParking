@@ -1,7 +1,10 @@
 ﻿using AlphaParking.DAL.Repositories;
 using AlphaParking.DAL.Repositories.UnitOfWork;
 using AlphaParking.DB.DbContext.Models;
+using AlphaParking.DB.Models;
 using AlphaParking.DB.Models.SeedData;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,78 +13,78 @@ using System.Threading.Tasks;
 
 namespace AlphaParking.BLL.Services
 {
-    public class SeedDbService: ISeedDbService
+    public static class SeedDbService
     {
-        private readonly IUnitOfWork _database;
-
-        public SeedDbService(IUnitOfWork uow)
+        public static async Task EnsurePopulated(IApplicationBuilder app)
         {
-            _database = uow;
-        }
-
-        public async Task EnsurePopulated()
-        {
-            if (!(await _database.UserRepository.GetElems()).Any())
+            using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                await _database.UserRepository.Create(UserConstants.Employee);
-                await _database.UserRepository.Create(UserConstants.Manager);
-            }
+                var database = serviceScope.ServiceProvider.GetService<AlphaParkingDbContext>();
 
-            if (!(await _database.RoleRepository.GetElems()).Any())
-            {
-                await _database.RoleRepository.Create(RoleConstants.Employee);
-                await _database.RoleRepository.Create(RoleConstants.Manager);
-            }
-
-            if (!(await _database.UserRoleRepository
-                            .GetElems(elem => elem.UserId == UserConstants.Employee.Id ||
-                                              elem.UserId == UserConstants.Manager.Id))
-                            .Any())
-            {
-                await _database.UserRoleRepository.Create(new DB.Models.UserRole
+                using (database)
                 {
-                    UserId = UserConstants.Manager.Id,
-                    RoleId = RoleConstants.Manager.Id
-                });
-                await _database.UserRoleRepository.Create(new DB.Models.UserRole
-                {
-                    UserId = UserConstants.Employee.Id,
-                    RoleId = RoleConstants.Employee.Id
-                });
-            }
+                    if (!database.Users.Any())
+                    {
+                        await database.AddRangeAsync(new User[] { UserConstants.Employee, UserConstants.Manager });
+                        await database.SaveChangesAsync();
+                    }
 
-            if (!(await _database.CarRepository.GetElems()).Any())
-            {
-                await _database.CarRepository.Create(CarConstants.Priora);
-                await _database.CarRepository.Create(CarConstants.Solaris);
-            }
+                    if (!database.UserRoles.Any(elem => elem.UserId == UserConstants.Employee.Id ||
+                                                        elem.UserId == UserConstants.Manager.Id))
+                    {
+                        await database.AddRangeAsync(new UserRole[]
+                        {
+                            new UserRole
+                            {
+                                UserId = UserConstants.Manager.Id,
+                                RoleId = RoleConstants.Manager.Id
+                            },
+                            new UserRole
+                            {
+                                UserId = UserConstants.Employee.Id,
+                                RoleId = RoleConstants.Employee.Id
+                            }
+                        });
+                        await database.SaveChangesAsync();
+                    }
 
-            if (!(await _database.ParkingSpaceRepository.GetElems()).Any())
-            {
-                await _database.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceOne);
-                await _database.ParkingSpaceRepository.Create(ParkingSpaceConstants.ParkingSpaceTwo);
-            }
+                    if (!database.Cars.Any())
+                    {
+                        await database.AddRangeAsync(new Car[] { CarConstants.Priora, CarConstants.Solaris });
+                        await database.SaveChangesAsync();
+                    }
 
-            if (!(await _database.ParkingSpaceCarRepository
-                .GetElems(elem => elem.CarNumber == CarConstants.Solaris.Number ||
-                                  elem.CarNumber == CarConstants.Priora.Number))
-                .Any())
-            {
-                await _database.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
-                {
-                    ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceOne.Number,
-                    CarNumber = CarConstants.Priora.Number,
-                    StartParkingTime = new TimeSpan(8,0,0),
-                    EndParkingTime = new TimeSpan(17, 0, 0)
-                });
-                await _database.ParkingSpaceCarRepository.Create(new DB.Models.ParkingSpaceCar
-                {
-                    ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceTwo.Number,
-                    CarNumber = CarConstants.Solaris.Number,
-                    StartParkingTime = new TimeSpan(8, 0, 0),
-                    EndParkingTime = new TimeSpan(17, 0, 0)
-                });
-            }
+                    if (!database.ParkingSpaces.Any())
+                    {
+                        await database.AddRangeAsync(new ParkingSpace[] { ParkingSpaceConstants.ParkingSpaceOne, ParkingSpaceConstants.ParkingSpaceTwo });
+                        await database.SaveChangesAsync();
+                    }
+
+                    if (!database.ParkingSpaceCars
+                        .Any(elem => elem.CarNumber == CarConstants.Solaris.Number ||
+                                     elem.CarNumber == CarConstants.Priora.Number))
+                    {
+                        await database.AddRangeAsync(new ParkingSpaceCar[]
+                        {
+                            new ParkingSpaceCar
+                            {
+                                ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceOne.Number,
+                                CarNumber = CarConstants.Priora.Number,
+                                StartParkingTime = new TimeSpan(8,0,0),
+                                EndParkingTime = new TimeSpan(17, 0, 0)
+                            },
+                            new ParkingSpaceCar
+                            {
+                                ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceTwo.Number,
+                                CarNumber = CarConstants.Solaris.Number,
+                                StartParkingTime = new TimeSpan(8, 0, 0),
+                                EndParkingTime = new TimeSpan(17, 0, 0)
+                            }
+                        });
+                        await database.SaveChangesAsync();
+                    }
+                }
+            }             
         }
     }
 }

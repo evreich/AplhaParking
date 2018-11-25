@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="clientApp\reducerDucks\**" />
+    <Content Remove="clientApp\reducerDucks\**" />
+    <EmbeddedResource Remove="clientApp\reducerDucks\**" />
+    <None Remove="clientApp\reducerDucks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="clientApp\app.tsx" />
+    <None Remove="clientApp\components\common\MainLayout.tsx" />
+    <None Remove="clientApp\routes.tsx" />
+    <None Remove="clientApp\store.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="clientApp\constants\" />
+    <Folder Include="clientApp\containers\" />
+    <Folder Include="clientApp\settings\" />
+    <Folder Include="clientApp\stylesheets\" />
+    <Folder Include="clientApp\selectors\" />
+    <Folder Include="clientApp\utils\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="clientApp\app.tsx" />
+    <TypeScriptCompile Include="clientApp\components\common\MainLayout.tsx" />
+    <TypeScriptCompile Include="clientApp\routes.tsx" />
+    <TypeScriptCompile Include="clientApp\store.tsx" />
+  </ItemGroup>
+
+</Project>

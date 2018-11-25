@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AlphaParking.BLL.Services;
 using AlphaParking.BLL.Services.DTO;
@@ -32,9 +33,9 @@ namespace AlphaParking.Web.Host.Controllers
             ValidationUtils.CheckViewModelNotIsNull(car);
             ModelState.CheckModelStateValidation();
 
-            var carDTO = Mapper.Map<CarViewModel, CarDTO>(car);
+            var carDTO = _mapper.Map<CarViewModel, CarDTO>(car);
             carDTO = await _carService.Create(carDTO);
-            var createdCar = Mapper.Map<CarDTO, CarViewModel>(carDTO);
+            var createdCar = _mapper.Map<CarDTO, CarViewModel>(carDTO);
 
             var uri = new Uri($"{HttpContext.Request.Host}{HttpContext.Request.Path.Value}");
             return Created(uri, createdCar);
@@ -46,9 +47,9 @@ namespace AlphaParking.Web.Host.Controllers
             ValidationUtils.CheckViewModelNotIsNull(car);
             ModelState.CheckModelStateValidation();
 
-            var carDTO = Mapper.Map<CarViewModel, CarDTO>(car);
+            var carDTO = _mapper.Map<CarViewModel, CarDTO>(car);
             carDTO = await _carService.Update(carDTO);
-            var editedCar = Mapper.Map<CarDTO, CarViewModel>(carDTO);
+            var editedCar = _mapper.Map<CarDTO, CarViewModel>(carDTO);
 
             return Ok(editedCar);
         }
@@ -60,13 +61,15 @@ namespace AlphaParking.Web.Host.Controllers
             {
                 throw new BadRequestException("Получено пустое значение.");
             }
-            var deletedCar = await _carService.Delete(new CarDTO { Number = carNumber });
+            var deletedCar = _mapper.Map<CarDTO, CarViewModel>(await _carService.Delete(new CarDTO { Number = carNumber }));
             return Ok(deletedCar);
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<CarViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _carService.GetAll());
+            return Ok(_mapper.Map<IEnumerable<CarDTO>, IEnumerable<CarViewModel>>(await _carService.GetAll()));
         }
     }
 }

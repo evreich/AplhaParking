@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AlphaParking.DB.DbContext.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,15 @@ namespace AlphaParking.DAL.Repositories
 {
     public class CRUDRepository<TEntity> : ICRUDRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _dbContext;
+        protected readonly AlphaParkingDbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public CRUDRepository(DbContext dbContext)
+        public CRUDRepository(AlphaParkingDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<TEntity>();
         }
+
         public virtual async Task<TEntity> Create(TEntity elem)
         {
             var addedElem = await _dbSet.AddAsync(elem);

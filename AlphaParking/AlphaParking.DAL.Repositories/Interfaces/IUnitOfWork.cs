@@ -15,5 +15,6 @@ namespace AlphaParking.DAL.Repositories
         ICRUDRepository<ParkingSpaceCar> ParkingSpaceCarRepository { get; }
 
         void Save();
+        void TryToApplyMigration();
     }
 }

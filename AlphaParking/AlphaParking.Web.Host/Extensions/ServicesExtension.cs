@@ -18,7 +18,6 @@ namespace AlphaParking.Web.Host.Extensions
             services.AddTransient<IParkingSpaceService, ParkingSpaceService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddSingleton<ISeedDbService, SeedDbService>();
             services.AddTransient<IAuthService, AuthService>(s => new AuthService
             (
                 s.GetService<IUnitOfWork>(),

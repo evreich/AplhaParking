@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AlphaParking.BLL.Services;
+using AlphaParking.DAL.Repositories;
+using AlphaParking.DB.DbContext.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +19,6 @@ namespace AlphaParking.Web.Host
         static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            host.Services.GetRequiredService<ISeedDbService>().EnsurePopulated().GetAwaiter().GetResult();
             host.Run();
         }
 

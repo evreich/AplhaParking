@@ -1,8 +1,10 @@
 ﻿using AlphaParking.BLL.Services.Exceptions;
+using AlphaParking.Web.Host.Utils;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,10 +45,11 @@ namespace AlphaParking.Web.Host.Middlewares
 
         private async Task BuildErrorResponse(HttpContext context, Exception ex, int statusCode)
         {
-            context.Response.Body.SetLength(0);
+            context.Response.Body = new MemoryStream();
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(ex.Message));
+            var responseText = JsonConvert.SerializeObject(new ResponseError(ex.Message));
+            await context.Response.WriteAsync(responseText);
         }
     }
 }

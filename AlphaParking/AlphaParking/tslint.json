@@ -1,0 +1,70 @@
+{
+    "extends": "tslint:latest",
+    "linterOptions": {
+        "exclude": [
+          "node_modules",
+          "dist",
+          "obj",
+          "bin",
+          "lib"
+        ]
+    },
+    "rules": {
+      "align": [true, "parameters", "statements"],
+      "export-name": [0],
+      "import-name": [0],
+      "max-line-length": [true, 200],
+      "member-ordering": [true, {
+        "order": [
+            "public-static-field",
+            "protected-static-field",
+            "private-static-field",
+            "public-instance-field",
+            "protected-instance-field",
+            "private-instance-field",
+            "constructor",
+            "public-static-method",
+            "protected-static-method",
+            "private-static-method"
+          ]
+        }
+      ],
+      "curly": [true, "as-needed"],
+      "missing-jsdoc": [0],
+      "no-angle-bracket-type-assertion": true,
+      "no-any": false,
+      "no-cookies": [0],
+      "no-default-export": false,
+      "no-duplicate-variable": [true, "check-parameters"],
+      "no-empty-line-after-opening-brace": true,
+      "no-http-string": false,
+      "no-relative-imports": [0],
+      "no-require-imports": false,
+      "no-unused-variable": [true, {"ignore-pattern": "^React$"}],
+      "no-var-requires": false,
+      "prefer-type-cast": false,
+      "switch-default": false,
+      "trailing-comma": [true, {"multiline": {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "ignore"
+      }, "singleline": "never"}],
+      "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore", "allow-trailing-underscore"],
+      "eol-last": 0,
+      "member-access": [true, "no-public"],
+      "eofline": false,
+      "prefer-array-literal": [0],
+      "object-shorthand-properties-first": [0],
+      "brace-style": [true, "stroustrup", {
+        "allowSingleLine": true
+      }],
+      "ter-indent": [true, 4, {
+        "SwitchCase": 1
+      }],
+      "quotemark": [true, "single"],
+      "ter-arrow-parens": [true, "as-needed"],
+      "no-console": [true]
+    }
+}

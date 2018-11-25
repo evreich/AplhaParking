@@ -10,7 +10,7 @@ namespace AlphaParking.DB.DbContext.Models
 {
     public class AlphaParkingDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public AlphaParkingDbContext() { }
+        public AlphaParkingDbContext(DbContextOptions<AlphaParkingDbContext> options ): base(options) { }
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<ParkingSpaceCar> ParkingSpaceCars {get; set;}
@@ -36,16 +36,20 @@ namespace AlphaParking.DB.DbContext.Models
                 .WithMany(elem => elem.UserRoles)
                 .HasForeignKey(elem => elem.UserId);
 
-            //nullable one-to-many fileds
-            modelBuilder.Entity<ParkingSpaceCar>().HasOne(pc => pc.DelegatedCar)
-                .WithMany(c => c.ParkingSpaceCars)
-                .HasForeignKey(pc => pc.DelegatedCarNumber)
-                .IsRequired(false);
+            modelBuilder.Entity<ParkingSpaceCar>()
+                .HasOne(elem => elem.Car)
+                .WithMany(elem => elem.ParkingSpaceCars)
+                .HasForeignKey(elem => elem.CarNumber);
+
+            modelBuilder.Entity<ParkingSpaceCar>()
+                .HasOne(elem => elem.ParkingSpace)
+                .WithMany(elem => elem.ParkingSpaceCars)
+                .HasForeignKey(elem => elem.ParkingSpaceNumber);
 
             //init start values
             modelBuilder.Entity<Role>().HasData(
-                new Role { Id = Guid.NewGuid(), Name = RoleConstants.EMPLOYEE },
-                new Role { Id = Guid.NewGuid(), Name = RoleConstants.MANAGER }
+                new Role { Id = RoleConstants.Employee.Id, Name = RoleConstants.Employee.Name },
+                new Role { Id = RoleConstants.Manager.Id, Name = RoleConstants.Manager.Name }
             );
 
             base.OnModelCreating(modelBuilder);
@@ -53,7 +57,7 @@ namespace AlphaParking.DB.DbContext.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();
         }
 
     }

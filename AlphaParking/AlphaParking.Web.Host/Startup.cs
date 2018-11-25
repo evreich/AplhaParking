@@ -17,6 +17,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AlphaParking.Web.Host
 {   // TODO: приступить к контроллерам
+    // filter attribute для валидации попробовать
+    // настроить вебпак, сделать базу для запуска приложения реакт под ts
     // дропать localStorage на клиенте на логауте
     public class Startup
     {
@@ -34,7 +36,7 @@ namespace AlphaParking.Web.Host
             string _defaultConnection = Configuration.GetConnectionString("DefaultConnection");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<AlphaParkingDbContext>(options => options.UseSqlServer(_defaultConnection));
+            services.AddDbContext<AlphaParkingDbContext>(options => options.UseSqlServer(_defaultConnection), ServiceLifetime.Scoped);
             services.AddAutoMapper();
             services.AddCors(options =>
             {
@@ -47,7 +49,7 @@ namespace AlphaParking.Web.Host
             });
             services.AddJWTAuth(_jwt_audience);
 
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbRepositories();
             services.AddServices(_jwt_audience);
         }
@@ -64,11 +66,13 @@ namespace AlphaParking.Web.Host
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();       
+            // app.UseHttpsRedirection();       
             app.UseCors("AllowAnyOrigin");
             app.UseAuthentication();
             app.UseErrorHandlerMiddleware();
             app.UseMvc();
+
+            SeedDbService.EnsurePopulated(app).Wait();
         }
     }
 }

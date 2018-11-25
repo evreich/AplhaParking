@@ -1,5 +1,6 @@
 ﻿using AlphaParking.DB.DbContext.Models;
 using AlphaParking.DB.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,6 +45,11 @@ namespace AlphaParking.DAL.Repositories.UnitOfWork
         public void Save()
         {
             _dbContext.SaveChanges();
+        }
+
+        public void TryToApplyMigration()
+        {
+            _dbContext.Database.Migrate();
         }
     }
 }

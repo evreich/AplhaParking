@@ -6,3 +6,5 @@
 /AlphaParking/.vs/AlphaParking
 /AplhaParking/AlphaParking/AlphaParking.Web.Host/appsettings.json
 /AplhaParking/AlphaParking/AlphaParking.BLL.Services/Settings/AuthOptions.cs
+/AlphaParking/AlphaParking/AlphaParking.Web.Client/node_modules
+/AlphaParking/AlphaParking/node_modules
