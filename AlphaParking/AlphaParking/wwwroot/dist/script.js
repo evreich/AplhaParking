@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "af67a073509b9e11efea";
+/******/ 	var hotCurrentHash = "3755462b8a0153904939";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -872,7 +872,7 @@ var HelloComponent = /** @class */ (function (_super) {
         return React.createElement("div", { className: 'main' },
             "\u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043D\u044B\u0435 \u043C\u0430\u0448\u0438\u043D\u044B:",
             this.state.cars.map(function (elem) {
-                return React.createElement("span", { style: { color: '#00FF00', display: 'block' } },
+                return React.createElement("span", { style: { color: '#0000FF', display: 'block' } },
                     " ",
                     Object.entries(elem).reduce(function (accum, currVal) { return accum + currVal + ' '; }, ''));
             }));

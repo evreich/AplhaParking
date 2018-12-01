@@ -41,7 +41,7 @@ class HelloComponent extends React.Component<{}, IState> {
         return <div className='main'>
             Полученные машины:
             {this.state.cars.map((elem) =>
-                <span style={{ color: '#00FF00', display: 'block' }}> {
+                <span style={{ color: '#0000FF', display: 'block' }}> {
                     Object.entries(elem).reduce((accum: string, currVal) => accum + currVal + ' ', '')}
                 </span>
             )}</div>;

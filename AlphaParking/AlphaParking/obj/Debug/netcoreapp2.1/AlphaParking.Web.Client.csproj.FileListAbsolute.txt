@@ -21,3 +21,4 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\De
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Client.RazorTargetAssemblyInfo.cs
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Client.Views.pdb
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\AlphaParking.Web.Client.csproj.CopyComplete
+C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
