@@ -1,3 +1,6 @@
 {
-    "java.home": "C:\\Program Files (x86)\\Java\\jdk1.8.0_152"
+    "java.home": "C:\\Program Files (x86)\\Java\\jdk1.8.0_152",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "appService.defaultWebAppToDeploy": "/subscriptions/900f50eb-9763-4106-9294-8569f66c3282/resourceGroups/AlphaParkingRG/providers/Microsoft.Web/sites/alphaparkingauth",
+    "appService.deploySubpath": "AlphaParking.Java.AuthService\\javaauth\\target\\javaauth-0.0.1-SNAPSHOT.jar"
 }

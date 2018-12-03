@@ -35,7 +35,6 @@ namespace AlphaParking.Web.Host
             string _jwt_audience = Configuration.GetConnectionString("JWT_AUDIENCE");
             string _defaultConnection = Configuration.GetConnectionString("DefaultConnection");
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddDbContext<AlphaParkingDbContext>(options => options.UseSqlServer(_defaultConnection), ServiceLifetime.Scoped);
             services.AddAutoMapper();
             services.AddCors(options =>
