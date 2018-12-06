@@ -9,7 +9,7 @@
 /AlphaParking/AlphaParking.Web.Host/obj
 /AlphaParking/AlphaParking.Web.Host/bin
 /AlphaParking/AlphaParking.Web.Host/wwwroot
-/AplhaParking/AlphaParking.BLL/Settings/AuthOptions.cs
+/AlphaParking/AlphaParking.BLL/Settings/AuthOptions.cs
 /AlphaParking/AlphaParking.BLL/obj
 /AlphaParking/AlphaParking.BLL/bin
 /AlphaParking/AlphaParking.DAL/obj
@@ -52,3 +52,4 @@
 /.vs
 *.azcli
 /.vscode
+/AlphaParking.Java.AuthService/javaauth/src/main/resources/application.properties
