@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+
+  auth.api:
+    image: evreich/javaauth:${TAG:-latest}
+    build:
+      context: ./AlphaParking.Java.AuthService
+      dockerfile: Dockerfile    
+    depends_on:
+      - rabbitmq
+
+  parking.api:
+    image: evreich/parking:${TAG:-latest}
+    build:
+      context: ./AlphaParking/AlphaParking.Web.Host
+      dockerfile: Dockerfile   
+    depends_on:
+      - rabbitmq
+
+  apigateway:
+    image: evreich/apigateway:${TAG:-latest}
+    build:
+      context: ./AlphaParking/AlphaParking.Web.APIGateway
+      dockerfile: Dockerfile
+    depends_on: 
+      - auth.api
+      - parking.api
+
+  webspa:
+    image: evreich/client:${TAG:-latest}
+    build:
+      context: ./AlphaParking/AlphaParking.Web.Client
+      dockerfile: Dockerfile    
+    depends_on:
+      - apigateway

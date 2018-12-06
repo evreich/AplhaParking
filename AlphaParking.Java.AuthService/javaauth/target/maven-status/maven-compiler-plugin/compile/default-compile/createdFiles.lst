@@ -1,0 +1,5 @@
+com\auth\AuthController.class
+com\auth\Application.class
+com\auth\models\Role.class
+com\auth\repositories\RoleRepository.class
+com\auth\services\TestDbConnectionService.class

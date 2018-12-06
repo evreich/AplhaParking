@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace AlphaParking.DB.Models
+namespace AlphaParking.Models
 {
     public class UserRole
     {

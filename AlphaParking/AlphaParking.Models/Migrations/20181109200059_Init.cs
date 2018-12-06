@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AlphaParking.DB.Models.Migrations
+namespace AlphaParking.Models.Migrations
 {
     public partial class Init : Migration
     {

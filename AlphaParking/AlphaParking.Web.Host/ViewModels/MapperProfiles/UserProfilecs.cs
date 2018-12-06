@@ -1,4 +1,4 @@
-﻿using AlphaParking.BLL.Services.DTO;
+﻿using AlphaParking.BLL.DTO;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

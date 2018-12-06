@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AlphaParking.DB.Models.SeedData
+namespace AlphaParking.Models.SeedData
 {
     public static class UserConstants
     {

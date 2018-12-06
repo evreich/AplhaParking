@@ -4669,9 +4669,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj",
-      "projectName": "AlphaParking.DB.Models",
-      "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj",
+      "projectUniqueName": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.Models.csproj",
+      "projectName": "AlphaParking.Models",
+      "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.Models.csproj",
       "packagesPath": "C:\\Users\\Максим\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\obj\\",
       "projectStyle": "PackageReference",

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AlphaParking.BLL.Services;
-using AlphaParking.DAL.Repositories;
-using AlphaParking.DAL.Repositories.UnitOfWork;
-using AlphaParking.DB.DbContext.Models;
+using AlphaParking.BLL;
+using AlphaParking.DAL;
+using AlphaParking.DAL.UnitOfWork;
+using AlphaParking.DbContext.Models;
 using AlphaParking.Web.Host.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;

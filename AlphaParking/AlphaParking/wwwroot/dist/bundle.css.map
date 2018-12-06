@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./clientApp/stylesheets/common.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA,cAAc","file":"bundle.css","sourcesContent":[".main {\n  font-size: 20px;\n  font-weight: 600;\n  color: blue; }\n"],"sourceRoot":""}

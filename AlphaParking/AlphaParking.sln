@@ -3,27 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.Web.Client", "AlphaParking\AlphaParking.Web.Client.csproj", "{A9B6B0BD-D552-431E-B9A9-A4C382EB5AED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.Web.Client", "AlphaParking.Web.Client\AlphaParking.Web.Client.csproj", "{A9B6B0BD-D552-431E-B9A9-A4C382EB5AED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.DB.Models", "AlphaParking.Models\AlphaParking.DB.Models.csproj", "{612F8C73-F7DE-4212-A79F-C1E47735CDF0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlphaParking.Backend", "AlphaParking.Backend", "{551A3030-523A-49F6-BCB8-712DA4A899A1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlphaParking.Frontend", "AlphaParking.Frontend", "{D1A8B87F-F32D-48AA-ADAC-6566DEA5EDA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.Models", "AlphaParking.Models\AlphaParking.Models.csproj", "{612F8C73-F7DE-4212-A79F-C1E47735CDF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.Web.Host", "AlphaParking.Web.Host\AlphaParking.Web.Host.csproj", "{1AE6963B-3D07-475E-AAD2-24BB3D7D8CF3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlphaParking.DAL", "AlphaParking.DAL", "{B08FBFF3-A8B1-4593-BED5-2DABFDA49B7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.DAL", "AlphaParking.DAL\AlphaParking.DAL.csproj", "{059A48CF-E96A-4600-BB4F-B289663F94FC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlphaParking.BLL", "AlphaParking.BLL", "{1038FDA6-7571-42CC-8A9E-111DE97861C6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlphaParking.Web", "AlphaParking.Web", "{54AC8F6A-F3AA-4508-B077-A30BF71310D0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.DAL.Repositories", "AlphaParking.DAL.Repositories\AlphaParking.DAL.Repositories.csproj", "{059A48CF-E96A-4600-BB4F-B289663F94FC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlphaParking.DB", "AlphaParking.DB", "{E81DF101-4D30-4BE2-B9B6-83F298E82E21}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.BLL.Services", "AlphaParking.BLL.Services\AlphaParking.BLL.Services.csproj", "{A67DC187-2FE1-4EF5-A13E-75635F6BD563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.BLL", "AlphaParking.BLL\AlphaParking.BLL.csproj", "{A67DC187-2FE1-4EF5-A13E-75635F6BD563}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

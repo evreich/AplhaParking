@@ -1,4 +1,4 @@
-﻿using AlphaParking.BLL.Services.Settings;
+﻿using AlphaParking.BLL.Settings;
 using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;

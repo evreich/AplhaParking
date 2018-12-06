@@ -1,4 +1,4 @@
-﻿using AlphaParking.BLL.Services.Exceptions;
+﻿using AlphaParking.BLL.Exceptions;
 using AlphaParking.Web.Host.Utils;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;

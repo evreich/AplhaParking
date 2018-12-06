@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AlphaParking.BLL.Services;
-using AlphaParking.BLL.Services.DTO;
-using AlphaParking.BLL.Services.Exceptions;
+using AlphaParking.BLL;
+using AlphaParking.BLL.DTO;
+using AlphaParking.BLL.Exceptions;
 using AlphaParking.Web.Host.Utils;
 using AlphaParking.Web.Host.ViewModels;
 using AutoMapper;

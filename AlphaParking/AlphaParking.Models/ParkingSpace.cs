@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace AlphaParking.DB.Models
+namespace AlphaParking.Models
 {
     public class ParkingSpace
     {

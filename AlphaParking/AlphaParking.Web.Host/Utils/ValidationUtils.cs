@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AlphaParking.BLL.Services.Exceptions;
+using AlphaParking.BLL.Exceptions;
 using AlphaParking.Web.Host.ViewModels;
 
 namespace AlphaParking.Web.Host.Utils

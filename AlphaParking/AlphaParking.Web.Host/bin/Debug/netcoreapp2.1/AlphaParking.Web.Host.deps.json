@@ -24,9 +24,9 @@
     ".NETCoreApp,Version=v2.1": {
       "AlphaParking.Web.Host/1.0.0": {
         "dependencies": {
-          "AlphaParking.BLL.Services": "1.0.0",
-          "AlphaParking.DAL.Repositories": "1.0.0",
-          "AlphaParking.DB.Models": "1.0.0",
+          "AlphaParking.BLL": "1.0.0",
+          "AlphaParking.DAL": "1.0.0",
+          "AlphaParking.Models": "1.0.0",
           "AutoMapper": "7.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "5.0.1",
           "Microsoft.AspNetCore.App": "2.1.1",
@@ -767,40 +767,40 @@
         }
       },
       "System.ValueTuple/4.5.0": {},
-      "AlphaParking.BLL.Services/1.0.0": {
+      "AlphaParking.BLL/1.0.0": {
         "dependencies": {
-          "AlphaParking.DAL.Repositories": "1.0.0",
-          "AlphaParking.DB.Models": "1.0.0",
+          "AlphaParking.DAL": "1.0.0",
+          "AlphaParking.Models": "1.0.0",
           "AutoMapper": "7.0.1"
         },
         "runtime": {
-          "AlphaParking.BLL.Services.dll": {}
+          "AlphaParking.BLL.dll": {}
         },
         "compile": {
-          "AlphaParking.BLL.Services.dll": {}
+          "AlphaParking.BLL.dll": {}
         }
       },
-      "AlphaParking.DAL.Repositories/1.0.0": {
+      "AlphaParking.DAL/1.0.0": {
         "dependencies": {
-          "AlphaParking.DB.Models": "1.0.0"
+          "AlphaParking.Models": "1.0.0"
         },
         "runtime": {
-          "AlphaParking.DAL.Repositories.dll": {}
+          "AlphaParking.DAL.dll": {}
         },
         "compile": {
-          "AlphaParking.DAL.Repositories.dll": {}
+          "AlphaParking.DAL.dll": {}
         }
       },
-      "AlphaParking.DB.Models/1.0.0": {
+      "AlphaParking.Models/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Proxies": "2.1.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.4"
         },
         "runtime": {
-          "AlphaParking.DB.Models.dll": {}
+          "AlphaParking.Models.dll": {}
         },
         "compile": {
-          "AlphaParking.DB.Models.dll": {}
+          "AlphaParking.Models.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3968,17 +3968,17 @@
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
-    "AlphaParking.BLL.Services/1.0.0": {
+    "AlphaParking.BLL/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "AlphaParking.DAL.Repositories/1.0.0": {
+    "AlphaParking.DAL/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "AlphaParking.DB.Models/1.0.0": {
+    "AlphaParking.Models/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

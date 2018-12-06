@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Proxies;
-using AlphaParking.DB.Models;
-using AlphaParking.DB.Models.SeedData;
+using AlphaParking.Models;
+using AlphaParking.Models.SeedData;
 
-namespace AlphaParking.DB.DbContext.Models
+namespace AlphaParking.DbContext.Models
 {
     public class AlphaParkingDbContext : Microsoft.EntityFrameworkCore.DbContext
     {

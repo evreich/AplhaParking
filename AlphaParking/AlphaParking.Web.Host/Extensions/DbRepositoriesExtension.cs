@@ -1,5 +1,5 @@
-﻿using AlphaParking.DAL.Repositories;
-using AlphaParking.DB.Models;
+﻿using AlphaParking.DAL;
+using AlphaParking.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

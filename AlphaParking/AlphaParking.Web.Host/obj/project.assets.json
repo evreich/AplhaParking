@@ -4756,35 +4756,35 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "AlphaParking.BLL.Services/1.0.0": {
+      "AlphaParking.BLL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "AlphaParking.DAL.Repositories": "1.0.0",
-          "AlphaParking.DB.Models": "1.0.0",
+          "AlphaParking.DAL": "1.0.0",
+          "AlphaParking.Models": "1.0.0",
           "AutoMapper": "7.0.1"
         },
         "compile": {
-          "bin/placeholder/AlphaParking.BLL.Services.dll": {}
+          "bin/placeholder/AlphaParking.BLL.dll": {}
         },
         "runtime": {
-          "bin/placeholder/AlphaParking.BLL.Services.dll": {}
+          "bin/placeholder/AlphaParking.BLL.dll": {}
         }
       },
-      "AlphaParking.DAL.Repositories/1.0.0": {
+      "AlphaParking.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "AlphaParking.DB.Models": "1.0.0"
+          "AlphaParking.Models": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/AlphaParking.DAL.Repositories.dll": {}
+          "bin/placeholder/AlphaParking.DAL.dll": {}
         },
         "runtime": {
-          "bin/placeholder/AlphaParking.DAL.Repositories.dll": {}
+          "bin/placeholder/AlphaParking.DAL.dll": {}
         }
       },
-      "AlphaParking.DB.Models/1.0.0": {
+      "AlphaParking.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
@@ -4792,10 +4792,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.4"
         },
         "compile": {
-          "bin/placeholder/AlphaParking.DB.Models.dll": {}
+          "bin/placeholder/AlphaParking.Models.dll": {}
         },
         "runtime": {
-          "bin/placeholder/AlphaParking.DB.Models.dll": {}
+          "bin/placeholder/AlphaParking.Models.dll": {}
         }
       }
     }
@@ -12701,27 +12701,27 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "AlphaParking.BLL.Services/1.0.0": {
+    "AlphaParking.BLL/1.0.0": {
       "type": "project",
-      "path": "../AlphaParking.BLL.Services/AlphaParking.BLL.Services.csproj",
-      "msbuildProject": "../AlphaParking.BLL.Services/AlphaParking.BLL.Services.csproj"
+      "path": "../AlphaParking.BLL/AlphaParking.BLL.csproj",
+      "msbuildProject": "../AlphaParking.BLL/AlphaParking.BLL.csproj"
     },
-    "AlphaParking.DAL.Repositories/1.0.0": {
+    "AlphaParking.DAL/1.0.0": {
       "type": "project",
-      "path": "../AlphaParking.DAL.Repositories/AlphaParking.DAL.Repositories.csproj",
-      "msbuildProject": "../AlphaParking.DAL.Repositories/AlphaParking.DAL.Repositories.csproj"
+      "path": "../AlphaParking.DAL/AlphaParking.DAL.csproj",
+      "msbuildProject": "../AlphaParking.DAL/AlphaParking.DAL.csproj"
     },
-    "AlphaParking.DB.Models/1.0.0": {
+    "AlphaParking.Models/1.0.0": {
       "type": "project",
-      "path": "../AlphaParking.Models/AlphaParking.DB.Models.csproj",
-      "msbuildProject": "../AlphaParking.Models/AlphaParking.DB.Models.csproj"
+      "path": "../AlphaParking.Models/AlphaParking.Models.csproj",
+      "msbuildProject": "../AlphaParking.Models/AlphaParking.Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "AlphaParking.BLL.Services >= 1.0.0",
-      "AlphaParking.DAL.Repositories >= 1.0.0",
-      "AlphaParking.DB.Models >= 1.0.0",
+      "AlphaParking.BLL >= 1.0.0",
+      "AlphaParking.DAL >= 1.0.0",
+      "AlphaParking.Models >= 1.0.0",
       "AutoMapper >= 7.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 5.0.1",
       "Microsoft.AspNetCore.App >= 2.1.1",
@@ -12761,14 +12761,14 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.BLL.Services\\AlphaParking.BLL.Services.csproj": {
-              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.BLL.Services\\AlphaParking.BLL.Services.csproj"
+            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.BLL\\AlphaParking.BLL.csproj": {
+              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.BLL\\AlphaParking.BLL.csproj"
             },
-            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL.Repositories\\AlphaParking.DAL.Repositories.csproj": {
-              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL.Repositories\\AlphaParking.DAL.Repositories.csproj"
+            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.csproj": {
+              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.DAL\\AlphaParking.DAL.csproj"
             },
-            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj": {
-              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.DB.Models.csproj"
+            "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.Models.csproj": {
+              "projectPath": "C:\\Users\\Максим\\Source\\Repos\\AplhaParking\\AlphaParking\\AlphaParking.Models\\AlphaParking.Models.csproj"
             }
           }
         }

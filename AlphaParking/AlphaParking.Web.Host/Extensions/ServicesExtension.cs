@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using AlphaParking.DAL.Repositories;
-using AlphaParking.DB.Models;
+using AlphaParking.DAL;
+using AlphaParking.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AlphaParking.BLL.Services;
+using AlphaParking.BLL;
 using AutoMapper;
 
 namespace AlphaParking.Web.Host.Extensions

@@ -28,9 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlphaParking.BLL.Services\AlphaParking.BLL.Services.csproj" />
-    <ProjectReference Include="..\AlphaParking.DAL.Repositories\AlphaParking.DAL.Repositories.csproj" />
-    <ProjectReference Include="..\AlphaParking.Models\AlphaParking.DB.Models.csproj" />
+    <ProjectReference Include="..\AlphaParking.BLL\AlphaParking.BLL.csproj" />
+    <ProjectReference Include="..\AlphaParking.DAL\AlphaParking.DAL.csproj" />
+    <ProjectReference Include="..\AlphaParking.Models\AlphaParking.Models.csproj" />
   </ItemGroup>
 
 </Project>

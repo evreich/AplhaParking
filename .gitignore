@@ -2,10 +2,53 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+#.NET
 /.vs
 /AlphaParking/.vs/AlphaParking
-/AplhaParking/AlphaParking/AlphaParking.Web.Host/appsettings.json
-/AplhaParking/AlphaParking/AlphaParking.BLL.Services/Settings/AuthOptions.cs
-/AlphaParking/AlphaParking/AlphaParking.Web.Client/node_modules
-/AlphaParking/AlphaParking/node_modules
+/AplhaParking/AlphaParking.Web.Host/appsettings.json
+/AlphaParking/AlphaParking.Web.Host/obj
+/AlphaParking/AlphaParking.Web.Host/bin
+/AlphaParking/AlphaParking.Web.Host/wwwroot
+/AplhaParking/AlphaParking.BLL/Settings/AuthOptions.cs
+/AlphaParking/AlphaParking.BLL/obj
+/AlphaParking/AlphaParking.BLL/bin
+/AlphaParking/AlphaParking.DAL/obj
+/AlphaParking/AlphaParking.DAL/bin
+/AlphaParking/AlphaParking.Models/obj
+/AlphaParking/AlphaParking.Models/bin
+/AlphaParking/AlphaParking.Web.Client/node_modules
+/AlphaParking/AlphaParking.Web.Client/obj
+/AlphaParking/AlphaParking.Web.Client/bin
+/AlphaParking/AlphaParking.Web.Client/dist
+/AlphaParking/AlphaParking.Web.Client/wwwroot
+
+# Java
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+/.vs
 *.azcli
+/.vscode
