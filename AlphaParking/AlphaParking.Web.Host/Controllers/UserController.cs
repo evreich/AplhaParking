@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlphaParking.BLL;
+using AlphaParking.BLL.DTO;
+using AlphaParking.Web.Host.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlphaParking.Web.Host.Controllers
@@ -10,36 +14,19 @@ namespace AlphaParking.Web.Host.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // GET api/values
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+
+        public UserController(IUserService userService, IMapper mapper)
+        {
+            _userService = userService;
+            _mapper = mapper;
+        }
+
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<IActionResult> GetUsers()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok(_mapper.Map<IEnumerable<UserDTO>, IEnumerable<UserViewModel>>(await _userService.GetAll()));
         }
     }
 }

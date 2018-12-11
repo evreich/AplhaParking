@@ -11,7 +11,8 @@ namespace AlphaParking.BLL.DTO.MapperProfiles
         public CarProfile()
         {
             CreateMap<Car, CarDTO>()
-                .ReverseMap();
+                .ReverseMap()
+                .ForPath(car => car.User, opt => opt.Ignore());
         }
     }
 }

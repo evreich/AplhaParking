@@ -3,8 +3,8 @@ using System;
 using AlphaParking.DbContext.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AlphaParking.Models.Migrations
 {
@@ -15,11 +15,11 @@ namespace AlphaParking.Models.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("AlphaParking.DB.Models.Car", b =>
+            modelBuilder.Entity("AlphaParking.Models.Car", b =>
                 {
                     b.Property<string>("Number")
                         .ValueGeneratedOnAdd();
@@ -28,7 +28,7 @@ namespace AlphaParking.Models.Migrations
 
                     b.Property<string>("Model");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Number");
 
@@ -37,7 +37,7 @@ namespace AlphaParking.Models.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("AlphaParking.DB.Models.ParkingSpace", b =>
+            modelBuilder.Entity("AlphaParking.Models.ParkingSpace", b =>
                 {
                     b.Property<int>("Number");
 
@@ -46,7 +46,7 @@ namespace AlphaParking.Models.Migrations
                     b.ToTable("ParkingSpaces");
                 });
 
-            modelBuilder.Entity("AlphaParking.DB.Models.ParkingSpaceCar", b =>
+            modelBuilder.Entity("AlphaParking.Models.ParkingSpaceCar", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -80,37 +80,12 @@ namespace AlphaParking.Models.Migrations
                     b.ToTable("ParkingSpaceCars");
                 });
 
-            modelBuilder.Entity("AlphaParking.DB.Models.Role", b =>
+            modelBuilder.Entity("AlphaParking.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new { Id = new Guid("00000002-0000-0000-0000-000000000000"), Name = "Employee" },
-                        new { Id = new Guid("00000001-0000-0000-0000-000000000000"), Name = "Manager" }
-                    );
-                });
-
-            modelBuilder.Entity("AlphaParking.DB.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Email");
 
                     b.Property<string>("FIO");
-
-                    b.Property<string>("Login");
-
-                    b.Property<string>("Password");
 
                     b.Property<string>("Phone");
 
@@ -119,53 +94,27 @@ namespace AlphaParking.Models.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AlphaParking.DB.Models.UserRole", b =>
+            modelBuilder.Entity("AlphaParking.Models.Car", b =>
                 {
-                    b.Property<Guid>("RoleId");
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("RoleId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRoles");
-                });
-
-            modelBuilder.Entity("AlphaParking.DB.Models.Car", b =>
-                {
-                    b.HasOne("AlphaParking.DB.Models.User", "User")
+                    b.HasOne("AlphaParking.Models.User", "User")
                         .WithMany("UserCars")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("AlphaParking.DB.Models.ParkingSpaceCar", b =>
+            modelBuilder.Entity("AlphaParking.Models.ParkingSpaceCar", b =>
                 {
-                    b.HasOne("AlphaParking.DB.Models.Car", "Car")
+                    b.HasOne("AlphaParking.Models.Car", "Car")
                         .WithMany("ParkingSpaceCars")
                         .HasForeignKey("CarNumber");
 
-                    b.HasOne("AlphaParking.DB.Models.Car", "DelegatedCar")
+                    b.HasOne("AlphaParking.Models.Car", "DelegatedCar")
                         .WithMany()
                         .HasForeignKey("DelegatedCarNumber");
 
-                    b.HasOne("AlphaParking.DB.Models.ParkingSpace", "ParkingSpace")
+                    b.HasOne("AlphaParking.Models.ParkingSpace", "ParkingSpace")
                         .WithMany("ParkingSpaceCars")
                         .HasForeignKey("ParkingSpaceNumber")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("AlphaParking.DB.Models.UserRole", b =>
-                {
-                    b.HasOne("AlphaParking.DB.Models.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AlphaParking.DB.Models.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

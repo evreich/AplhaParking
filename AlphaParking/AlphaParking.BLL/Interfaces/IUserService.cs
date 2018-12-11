@@ -9,10 +9,8 @@ namespace AlphaParking.BLL
 {
     public interface IUserService: ICRUDService<UserDTO>
     {
-        Task<UserDTO> GetUser(Guid userId);
-        Task<IEnumerable<CarDTO>> GetUserCars(Guid userId);
-        Task<IEnumerable<ParkingSpaceDTO>> GetUserParkingPlaces(Guid userId);
-        void AddRoleToUser(UserDTO user, RoleDTO role);
-        Task<bool> IsRegistered(string login, string password);
+        Task<UserDTO> GetUser(int userId);
+        Task<IEnumerable<CarDTO>> GetUserCars(int userId);
+        Task<IEnumerable<ParkingSpaceDTO>> GetUserParkingPlaces(int userId);
     }
 }

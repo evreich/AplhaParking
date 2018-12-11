@@ -1,9 +1,6 @@
 ﻿using AlphaParking.DbContext.Models;
 using AlphaParking.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AlphaParking.DAL.UnitOfWork
 {
@@ -11,23 +8,16 @@ namespace AlphaParking.DAL.UnitOfWork
     {
         private readonly AlphaParkingDbContext _dbContext;
 
-        public UnitOfWork(AlphaParkingDbContext dbContext, ICRUDRepository<Role> roleRepository,
-            ICRUDRepository<UserRole> userRoleRepository, ICRUDRepository<User> userRepository,
-            ICRUDRepository<Car> carRepository,
-            ICRUDRepository<ParkingSpace> parkingSpaceRepository, ICRUDRepository<ParkingSpaceCar> parkingSpaceCarRepository)
+        public UnitOfWork(AlphaParkingDbContext dbContext,ICRUDRepository<User> userRepository,
+            ICRUDRepository<Car> carRepository, ICRUDRepository<ParkingSpace> parkingSpaceRepository, 
+            ICRUDRepository<ParkingSpaceCar> parkingSpaceCarRepository)
         {
             _dbContext = dbContext;
-            RoleRepository = roleRepository;
-            UserRoleRepository = userRoleRepository;
             UserRepository = userRepository;
             CarRepository = carRepository;
             ParkingSpaceCarRepository = parkingSpaceCarRepository;
             ParkingSpaceRepository = parkingSpaceRepository;
         }
-
-        public ICRUDRepository<Role> RoleRepository { get; }
-
-        public ICRUDRepository<UserRole> UserRoleRepository { get; }
 
         public ICRUDRepository<User> UserRepository { get; }
 

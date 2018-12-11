@@ -15,7 +15,7 @@ public class RoleRepository {
     private JdbcTemplate jdbcTemplate;
 
     public List<Role> findAll() {
-        List<Role> result = jdbcTemplate.query(
+        List<Role> result = this.jdbcTemplate.query(
                 "SELECT * FROM dbo.Roles",
                 (rs, rowNum) -> new Role
                 (

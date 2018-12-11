@@ -12,19 +12,11 @@ namespace AlphaParking.Web.Host.Extensions
 {
     static class ServicesExtension
     {
-        public static void AddServices(this IServiceCollection services, string jwtAudience)
+        public static void AddServices(this IServiceCollection services)
         {
-            services.AddTransient<ICarService, CarService>();
-            services.AddTransient<IParkingSpaceService, ParkingSpaceService>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IAuthService, AuthService>(s => new AuthService
-            (
-                s.GetService<IUnitOfWork>(),
-                s.GetService<IUserService>(),
-                jwtAudience,
-                s.GetService<IMapper>()
-            ));
+            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IParkingSpaceService, ParkingSpaceService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

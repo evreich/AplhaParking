@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AlphaParking.BLL;
+using AlphaParking.BLL.DTO.MapperProfiles;
 using AlphaParking.DAL;
 using AlphaParking.DAL.UnitOfWork;
 using AlphaParking.DbContext.Models;
@@ -14,12 +16,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
 
 namespace AlphaParking.Web.Host
-{   // TODO: приступить к контроллерам
-    // filter attribute для валидации попробовать
-    // настроить вебпак, сделать базу для запуска приложения реакт под ts
-    // дропать localStorage на клиенте на логауте
+{   // TODO: дропать localStorage на клиенте на логауте
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -32,11 +32,17 @@ namespace AlphaParking.Web.Host
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string _jwt_audience = Configuration.GetConnectionString("JWT_AUDIENCE");
             string _defaultConnection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddAutoMapper(typeof(UserProfile).GetTypeInfo().Assembly, typeof(CarProfile).GetTypeInfo().Assembly, 
+                typeof(ViewModels.MapperProfiles.CarProfile).GetTypeInfo().Assembly, typeof(ViewModels.MapperProfiles.UserProfile).GetTypeInfo().Assembly);
+            services.AddSingleton<Func<AlphaParkingDbContext>>(() =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<AlphaParkingDbContext>();
+                optionsBuilder.UseNpgsql(_defaultConnection);
+                return new AlphaParkingDbContext(optionsBuilder.Options);
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<AlphaParkingDbContext>(options => options.UseSqlServer(_defaultConnection), ServiceLifetime.Scoped);
-            services.AddAutoMapper();
+            services.AddEntityFrameworkNpgsql().AddDbContext<AlphaParkingDbContext>(options => options.UseNpgsql(_defaultConnection), ServiceLifetime.Scoped);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAnyOrigin",
@@ -46,11 +52,9 @@ namespace AlphaParking.Web.Host
                                      .AllowCredentials()
                                      .Build());
             });
-            services.AddJWTAuth(_jwt_audience);
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddServices();
             services.AddDbRepositories();
-            services.AddServices(_jwt_audience);
+            services.AddEventBus();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

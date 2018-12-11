@@ -9,13 +9,13 @@
 /AlphaParking/AlphaParking.Web.Host/obj
 /AlphaParking/AlphaParking.Web.Host/bin
 /AlphaParking/AlphaParking.Web.Host/wwwroot
-/AlphaParking/AlphaParking.BLL/Settings/AuthOptions.cs
 /AlphaParking/AlphaParking.BLL/obj
 /AlphaParking/AlphaParking.BLL/bin
 /AlphaParking/AlphaParking.DAL/obj
 /AlphaParking/AlphaParking.DAL/bin
 /AlphaParking/AlphaParking.Models/obj
 /AlphaParking/AlphaParking.Models/bin
+/AlphaParking/AlphaParking.Models/Migrations
 /AlphaParking/AlphaParking.Web.Client/node_modules
 /AlphaParking/AlphaParking.Web.Client/obj
 /AlphaParking/AlphaParking.Web.Client/bin
@@ -23,7 +23,6 @@
 /AlphaParking/AlphaParking.Web.Client/wwwroot
 
 # Java
-/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -52,4 +51,20 @@
 /.vs
 *.azcli
 /.vscode
-/AlphaParking.Java.AuthService/javaauth/src/main/resources/application.properties
+*.properties
+AlphaParking.Java.AuthService/javaauth/target/
+AlphaParking.Java.AuthService/javaauth/target/javaauth-0.0.1.jar
+AlphaParking.Java.AuthService/javaauth/target/classes/com/auth/models/Role.class
+AlphaParking.Java.AuthService/javaauth/target/javaauth-0.0.1.jar
+AlphaParking.Java.AuthService/javaauth/target/javaauth-0.0.1.jar.original
+AlphaParking.Java.AuthService/javaauth/target/classes/application.properties
+AlphaParking.Java.AuthService/javaauth/target/classes/com/auth/Application.class
+AlphaParking.Java.AuthService/javaauth/target/classes/com/auth/AuthController.class
+AlphaParking.Java.AuthService/javaauth/target/classes/com/auth/repositories/RoleRepository.class
+AlphaParking.Java.AuthService/javaauth/target/classes/com/auth/services/TestDbConnectionService.class
+AlphaParking.Java.AuthService/javaauth/target/dependency/BOOT-INF/classes/application.properties
+AlphaParking.Java.AuthService/javaauth/target/dependency/BOOT-INF/classes/com/auth/AuthController.class
+AlphaParking.Java.AuthService/javaauth/target/dependency/BOOT-INF/classes/com/auth/models/Role.class
+AlphaParking.Java.AuthService/javaauth/target/dependency/BOOT-INF/classes/com/auth/services/TestDbConnectionService.class
+AlphaParking.Java.AuthService/javaauth/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+AlphaParking.Java.AuthService/javaauth/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst

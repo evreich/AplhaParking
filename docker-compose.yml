@@ -1,37 +1,62 @@
-version: '3.7'
+version: '3.3'
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    ports:
+    - "5672:5672"
+    - "15672:15672"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   auth.api:
     image: evreich/javaauth:${TAG:-latest}
     build:
-      context: ./AlphaParking.Java.AuthService
-      dockerfile: Dockerfile    
+      context: ./AlphaParking.Java.AuthService/javaauth
+      dockerfile: Dockerfile   
+    ports:
+    - "8181:8181" 
+    links: 
+    - rabbitmq
     depends_on:
-      - rabbitmq
+    - rabbitmq
 
   parking.api:
     image: evreich/parking:${TAG:-latest}
     build:
-      context: ./AlphaParking/AlphaParking.Web.Host
-      dockerfile: Dockerfile   
+      context: ./AlphaParking
+      dockerfile: Web.Host.Dockerfile   
+    ports:
+    - "8182:8182"
+    links: 
+    - rabbitmq
     depends_on:
-      - rabbitmq
+    - rabbitmq
+    command: dockerize -wait tcp://rabbitmq:15672 -wait tcp://rabbitmq:5672
+    restart: on-failure
 
-  apigateway:
-    image: evreich/apigateway:${TAG:-latest}
-    build:
-      context: ./AlphaParking/AlphaParking.Web.APIGateway
-      dockerfile: Dockerfile
-    depends_on: 
-      - auth.api
-      - parking.api
+  # apigateway:
+  #   image: evreich/apigateway:${TAG:-latest}
+  #   build:
+  #     context: ./AlphaParking/AlphaParking.Web.APIGateway
+  #     dockerfile: Dockerfile
+  #   ports:
+  #   - "8484:8484"
+    # depends_on: 
+    #   - auth.api
+    #   - parking.api
 
   webspa:
     image: evreich/client:${TAG:-latest}
     build:
       context: ./AlphaParking/AlphaParking.Web.Client
-      dockerfile: Dockerfile    
-    depends_on:
-      - apigateway
+      dockerfile: Dockerfile  
+    ports:
+    - "8383:8383"  
+    depends_on: 
+    - auth.api
+    - parking.api
+    # depends_on:
+    #   - apigateway

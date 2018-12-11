@@ -1,8 +1,14 @@
 package com.auth.models;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     private int id;
     private String name;
+
+    public Role(){}
 
     public Role(int id, String name) {
         this.setId(id);

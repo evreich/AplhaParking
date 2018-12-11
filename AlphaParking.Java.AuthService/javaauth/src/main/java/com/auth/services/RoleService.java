@@ -9,12 +9,12 @@ import com.auth.models.Role;
 import com.auth.repositories.RoleRepository;
 
 @Service
-public class TestDbConnectionService {
+public class RoleService {
 
     @Autowired
     RoleRepository roleRepository;
 
     public List<Role> getTestData() {  
-        return roleRepository.findAll();
+        return this.roleRepository.findAll();
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace AlphaParking.Models
 {
@@ -16,7 +14,7 @@ namespace AlphaParking.Models
 
         //TODO: Добавить доп. параметры авто
 
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public User User {get; set;}
         public List<ParkingSpaceCar> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCar>();
     }

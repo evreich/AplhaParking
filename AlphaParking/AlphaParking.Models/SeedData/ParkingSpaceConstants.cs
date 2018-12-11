@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AlphaParking.Models.SeedData
+﻿namespace AlphaParking.Models.SeedData
 {
     public static class ParkingSpaceConstants
     {

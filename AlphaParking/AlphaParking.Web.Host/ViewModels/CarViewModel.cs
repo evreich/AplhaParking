@@ -11,6 +11,6 @@ namespace AlphaParking.Web.Host.ViewModels
         public string Brand { get; set; }
         public string Model { get; set; }
 
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

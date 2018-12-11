@@ -11,7 +11,7 @@ namespace AlphaParking.BLL.DTO
         public string Brand { get; set; }
         public string Model { get; set; }
 
-        public UserDTO User { get; set; }
+        public int UserId { get; set; }
         public List<ParkingSpaceCarDTO> ParkingSpaceCars { get; set; } = new List<ParkingSpaceCarDTO>();
     }
 }

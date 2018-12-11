@@ -10,14 +10,7 @@ namespace AlphaParking.Models.SeedData
             Number = "A111AA 36",
             Brand ="Hyndai",
             Model ="Solaris",
-            UserId = UserConstants.Employee.Id
-        };
-
-        public static Car Priora { get; } = new Car {
-            Number = "B111AA 36",
-            Brand = "LADA",
-            Model = "Priora",
-            UserId = UserConstants.Manager.Id
+            UserId = 1
         };
     }
 }

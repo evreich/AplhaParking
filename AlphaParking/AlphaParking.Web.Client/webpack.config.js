@@ -41,7 +41,7 @@ module.exports = env => {
     
         plugins: [
             new HtmlWebpackPlugin({
-                template: path.resolve(__dirname, 'Views', 'Spa', 'index.cshtml'),
+                template: path.resolve(__dirname, 'Views', 'Spa', 'Index.cshtml'),
                 inject: false
             }),
             new MiniCssExtractPlugin({
