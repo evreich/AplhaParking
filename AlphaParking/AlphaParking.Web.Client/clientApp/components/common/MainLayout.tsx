@@ -28,13 +28,13 @@ class HelloComponent extends React.Component<{}, IState> {
             mode: 'cors'
         };
 
-        fetch(`${consts.SERVER_API}/car`, conf)
+        fetch(`${consts.SERVER_API}/cars`, conf)
             .then((response) => response.ok && response.json())
             .then((result) =>
                 this.setState({
                     cars: result
                 }))
-            .catch((err) => err || 'Пиздец на сервере \_(O_o)_/');
+            .catch((err) => err || 'на сервере \_(O_o)_/');
     }
 
     render() {

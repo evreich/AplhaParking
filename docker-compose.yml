@@ -2,6 +2,9 @@ version: '3.3'
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    build:
+      context: ./Dockers
+      dockerfile: RabbitMQ.Dockerfile 
     ports:
     - "5672:5672"
     - "15672:15672"
@@ -30,23 +33,23 @@ services:
       dockerfile: Web.Host.Dockerfile   
     ports:
     - "8182:8182"
-    links: 
-    - rabbitmq
+    restart: on-failure
     depends_on:
     - rabbitmq
-    command: dockerize -wait tcp://rabbitmq:15672 -wait tcp://rabbitmq:5672
-    restart: on-failure
+    links: 
+    - rabbitmq
+    # command: dockerize -wait tcp://rabbitmq:15672 -wait tcp://rabbitmq:5672
 
-  # apigateway:
-  #   image: evreich/apigateway:${TAG:-latest}
-  #   build:
-  #     context: ./AlphaParking/AlphaParking.Web.APIGateway
-  #     dockerfile: Dockerfile
-  #   ports:
-  #   - "8484:8484"
-    # depends_on: 
-    #   - auth.api
-    #   - parking.api
+  gateway:
+    image: evreich/gateway:${TAG:-latest}
+    build:
+      context: ./AlphaParking/AlphaParking.Web.Gateway
+      dockerfile: Dockerfile
+    ports:
+    - "9000:9000"
+    depends_on: 
+      - auth.api
+      - parking.api
 
   webspa:
     image: evreich/client:${TAG:-latest}
@@ -55,8 +58,5 @@ services:
       dockerfile: Dockerfile  
     ports:
     - "8383:8383"  
-    depends_on: 
-    - auth.api
-    - parking.api
-    # depends_on:
-    #   - apigateway
+    depends_on:
+      - gateway

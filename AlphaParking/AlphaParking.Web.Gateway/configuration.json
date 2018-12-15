@@ -1,0 +1,45 @@
+{ 
+    "ReRoutes": [ 
+        { 
+            "DownstreamPathTemplate": "/user/create", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user", 
+            "UpstreamHttpMethod": [ "POST" ] 
+        }, 
+        { 
+            "DownstreamPathTemplate": "/", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/roles", 
+            "UpstreamHttpMethod": [ "GET" ] 
+        }, 
+        { 
+            "DownstreamPathTemplate": "/car", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8182
+                }
+            ],
+            "UpstreamPathTemplate": "/cars", 
+            "UpstreamHttpMethod": [ "GET" ] 
+        }
+    ], 
+    "GlobalConfiguration": { 
+        "BaseUrl": "http://localhost:9000",
+        "RequestIdKey": "OcRequestId",
+        "AdministrationPath": "/administration"
+    }
+}

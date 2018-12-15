@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.DAL", "AlphaPa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaParking.BLL", "AlphaParking.BLL\AlphaParking.BLL.csproj", "{A67DC187-2FE1-4EF5-A13E-75635F6BD563}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaParking.Web.Gateway", "AlphaParking.Web.Gateway\AlphaParking.Web.Gateway.csproj", "{F974B333-C020-4D75-AAE2-C86509149FFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A67DC187-2FE1-4EF5-A13E-75635F6BD563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A67DC187-2FE1-4EF5-A13E-75635F6BD563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A67DC187-2FE1-4EF5-A13E-75635F6BD563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F974B333-C020-4D75-AAE2-C86509149FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F974B333-C020-4D75-AAE2-C86509149FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F974B333-C020-4D75-AAE2-C86509149FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F974B333-C020-4D75-AAE2-C86509149FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

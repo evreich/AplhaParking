@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlphaParking.Web.Host.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     //[Authorize]
     public class CarController : ControllerBase
@@ -66,7 +66,6 @@ namespace AlphaParking.Web.Host.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<CarViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(_mapper.Map<IEnumerable<CarDTO>, IEnumerable<CarViewModel>>(await _carService.GetAll()));

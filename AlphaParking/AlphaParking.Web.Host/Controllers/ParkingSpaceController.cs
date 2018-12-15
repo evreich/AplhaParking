@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AlphaParking.Web.Host.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ParkingSpaceController : ControllerBase
     {

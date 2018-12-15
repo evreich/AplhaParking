@@ -7,16 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ViewModels\MapperProfiles\ParkingSpaceProfile.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="ViewModels\MapperProfiles\ParkingSpaceProfile.cs" />
   </ItemGroup>
 
   <ItemGroup>
