@@ -18,8 +18,8 @@ namespace AlphaParking.Web.Host.Extensions
         {
             services.AddSingleton<ConnectionFactory>(s => new ConnectionFactory()
             {
-                HostName = "192.168.99.100",
-                Port = 5672,
+                HostName = Environment.GetEnvironmentVariable("EVENTBUS_HOST"),
+                Port = Int32.Parse(Environment.GetEnvironmentVariable("EVENTBUS_PORT")),
                 UserName = "guest",
                 Password ="guest",
                 VirtualHost = "/"

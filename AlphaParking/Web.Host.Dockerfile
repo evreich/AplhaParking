@@ -1,7 +1,7 @@
 # Образ для запуска приложения
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
 WORKDIR /app
-ENV ASPNETCORE_URLS http://*:8182
+# ENV ASPNETCORE_URLS http://*:8182
 EXPOSE 8182
 
 # Образ для сборки приложения

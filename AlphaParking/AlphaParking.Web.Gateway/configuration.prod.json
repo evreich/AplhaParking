@@ -1,0 +1,44 @@
+{ 
+    "ReRoutes": [ 
+        { 
+            "DownstreamPathTemplate": "/user/create", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "auth-service",
+                  "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/user", 
+            "UpstreamHttpMethod": [ "POST" ] 
+        }, 
+        { 
+            "DownstreamPathTemplate": "/", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "auth-service",
+                  "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/roles", 
+            "UpstreamHttpMethod": [ "GET" ] 
+        }, 
+        { 
+            "DownstreamPathTemplate": "/car", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "parking-service",
+                  "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/cars", 
+            "UpstreamHttpMethod": [ "GET" ] 
+        }
+    ], 
+    "GlobalConfiguration": { 
+        "RequestIdKey": "OcRequestId",
+        "AdministrationPath": "/administration"
+    }
+}

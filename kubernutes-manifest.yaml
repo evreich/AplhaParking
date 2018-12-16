@@ -1,0 +1,230 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-deployment
+  template:
+    metadata:
+      labels:
+        app: auth-deployment
+    spec:
+      containers:
+      - name: auth-deployment
+        image: docker.io/evreich/client:latest
+        imagePullPolicy: Always
+        env:
+        - name: EVENTBUS_HOST
+          value: rabbitmq-service
+        - name: EVENTBUS_PORT
+          value: "5672"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8181
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8181
+    name: http
+  selector:
+    app: auth-deployment
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parking-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parking-deployment
+  template:
+    metadata:
+      labels:
+        app: parking-deployment
+    spec:
+      containers:
+      - name: parking-deployment
+        image: docker.io/evreich/parking:latest
+        imagePullPolicy: Always
+        env:
+        - name: EVENTBUS_HOST
+          value: rabbitmq-service
+        - name: EVENTBUS_PORT
+          value: "5672"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8182
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: parking-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8182
+    name: "http"
+  selector:
+    app: parking-deployment
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq-deployment
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-deployment
+    spec:
+      containers:
+      - name: rabbitmq-deployment
+        image: docker.io/evreich/rabbitmq:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5672
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+spec:
+  ports:
+  - port: 5672
+    targetPort: 5672
+    name: "http"
+  selector:
+    app: rabbitmq-deployment
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-deployment
+  template:
+    metadata:
+      labels:
+        app: gateway-deployment
+    spec:
+      containers:
+      - name: gateway-deployment
+        image: docker.io/evreich/gateway:latest
+        imagePullPolicy: Always
+        env:
+        # - name: AUTH_HOST
+        #   value: auth-service
+        # - name: AUTH_PORT
+        #   value: "8080"
+        # - name: PARKING_HOST
+        #   value: parking-service
+        # - name: PARKING_PORT
+        #   value: "8080"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: prod
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 9000
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 9000
+    name: "http"
+  selector:
+    app: gateway-deployment
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-deployment
+  template:
+    metadata:
+      labels:
+        app: client-deployment
+    spec:
+      containers:
+      - name: client-deployment
+        image: docker.io/evreich/client:latest
+        imagePullPolicy: Always
+        env: 
+        - name: GATEWAY_HOST
+          value: gateway-service
+        - name: GATEWAY_PORT
+          value: "8080"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8383
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8383
+    name: "http"
+  selector:
+    app: client-deployment
+  type: NodePort

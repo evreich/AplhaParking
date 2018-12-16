@@ -21,6 +21,10 @@ services:
       dockerfile: Dockerfile   
     ports:
     - "8181:8181" 
+    environment:
+    - EVENTBUS_HOST=localhost
+    - EVENTBUS_PORT=5672
+    - SERVER_PORT=8181
     links: 
     - rabbitmq
     depends_on:
@@ -33,6 +37,10 @@ services:
       dockerfile: Web.Host.Dockerfile   
     ports:
     - "8182:8182"
+    environment:
+    - EVENTBUS_HOST=localhost
+    - EVENTBUS_PORT=5672
+    - ASPNETCORE_URLS=http://*:8182
     restart: on-failure
     depends_on:
     - rabbitmq
@@ -47,6 +55,13 @@ services:
       dockerfile: Dockerfile
     ports:
     - "9000:9000"
+    environment:
+    # - AUTH_HOST=localhost
+    # - AUTH_PORT=8181
+    # - PARKING_HOST=localhost
+    # - PARKING_PORT=8182
+    - ASPNETCORE_ENVIRONMENT=dev
+    - ASPNETCORE_URLS=http://*:9000
     depends_on: 
       - auth.api
       - parking.api
@@ -58,5 +73,9 @@ services:
       dockerfile: Dockerfile  
     ports:
     - "8383:8383"  
+    environment:
+    - GATEWAY_HOST=localhost
+    - GATEWAY_PORT=9000
+    - ASPNETCORE_URLS=http://*:8383
     depends_on:
       - gateway

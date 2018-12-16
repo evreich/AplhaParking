@@ -18,8 +18,6 @@ namespace AlphaParking.Web.Gateway
             var builder = WebHost.CreateDefaultBuilder(args);
 
             builder.ConfigureServices(s => s.AddSingleton(builder))
-                .ConfigureAppConfiguration(
-                    ic => ic.AddJsonFile("configuration.json"))
                 .UseStartup<Startup>();
             var host = builder.Build();
             return host;

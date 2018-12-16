@@ -19,9 +19,9 @@ namespace AlphaParking.Web.Gateway
         public Startup(IHostingEnvironment env) 
         { 
             var builder = new ConfigurationBuilder(); 
-            builder.SetBasePath(env.ContentRootPath) 
-            .AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
-            .AddEnvironmentVariables(); 
+            builder.SetBasePath(env.ContentRootPath);
+            builder.AddJsonFile($"configuration.{env.EnvironmentName}.json", true, true);
+            builder.AddEnvironmentVariables();
 
             Configuration = builder.Build(); 
         } 
