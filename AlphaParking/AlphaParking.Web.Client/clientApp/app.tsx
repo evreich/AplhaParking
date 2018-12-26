@@ -1,14 +1,14 @@
 ﻿import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Hello from './components/common/MainLayout';
+import Router from './components/routes/Router';
 
 declare let module: any;
 
 const rootElem = document.getElementById('react-root');
-ReactDOM.render(<Hello />, rootElem);
+ReactDOM.render(<Router />, rootElem);
 
 if (module.hot)
-    module.hot.accept('./components/common/MainLayout', () => {
-        const NextApp = require('./components/common/MainLayout').default;
+    module.hot.accept('./components/routes/Router', () => {
+        const NextApp = require('./components/routes/Router').default;
         ReactDOM.render(<NextApp />, rootElem);
     });
