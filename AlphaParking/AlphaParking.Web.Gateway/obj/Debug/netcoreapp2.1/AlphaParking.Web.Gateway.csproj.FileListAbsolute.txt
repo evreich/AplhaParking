@@ -12,3 +12,17 @@ C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Web.Ga
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\bin\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.pdb
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.dll
 C:\Users\Максим\Source\Repos\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.pdb
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\bin\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.deps.json
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\bin\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.runtimeconfig.json
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\bin\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.runtimeconfig.dev.json
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\bin\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.dll
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\bin\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.pdb
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.csprojAssemblyReference.cache
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.csproj.CoreCompileInputs.cache
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.RazorAssemblyInfo.cache
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.RazorAssemblyInfo.cs
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.AssemblyInfoInputs.cache
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.AssemblyInfo.cs
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.RazorTargetAssemblyInfo.cache
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.dll
+c:\AlphaParking\AplhaParking\AlphaParking\AlphaParking.Web.Gateway\obj\Debug\netcoreapp2.1\AlphaParking.Web.Gateway.pdb

@@ -26,6 +26,7 @@ module.exports = env => {
         module: {
             rules: [{
                 test: /\.(t|j)sx?$/,
+                exclude: /(node_modules)/,
                 loader: ['ts-loader'],
             },
             {
@@ -50,5 +51,4 @@ module.exports = env => {
             })],
     };
     return [config];
-
 };

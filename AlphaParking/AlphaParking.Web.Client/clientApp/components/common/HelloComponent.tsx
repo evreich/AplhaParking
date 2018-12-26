@@ -1,4 +1,6 @@
-﻿import * as React from 'react';
+import * as React from 'react';
+
+import { Redirect } from 'react-router';
 import consts from '../../constants';
 import '../../stylesheets/common.scss';
 
@@ -23,43 +25,30 @@ class HelloComponent extends React.Component<{}, IState> {
     }
 
     componentDidMount() {
-        const confToken: RequestInit = {
-            body: JSON.stringify({
-                login: 'admin',
-                pass: 'admin'
-            }),
-            headers: {'content-type': 'application/json'},
-            method: 'POST',
+        const headers: HeadersInit = {
+            // tslint:disable-next-line:object-literal-key-quotes
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            'content-type': 'application/json'
+        };
+
+        const conf: RequestInit = {
+            headers,
+            method: 'GET',
             mode: 'cors'
         };
 
-        fetch(`${consts.SERVER_API}/token`, confToken)
-            .then((response) => response.ok && response.json())
-            .then((result) => result.access_token)
-        .then((token) => {
-            const headers: HeadersInit = {
-                // tslint:disable-next-line:object-literal-key-quotes
-                Authorization: `Bearer ${token}`,
-                'content-type': 'application/json'
-            };
-
-            const conf: RequestInit = {
-                headers,
-                method: 'GET',
-                mode: 'cors'
-            };
-
-            fetch(`${consts.SERVER_API}/cars`, conf)
+        fetch(`${consts.SERVER_API}/cars`, conf)
             .then((response) => response.ok && response.json())
             .then((result) =>
                 this.setState({
                     cars: result
                 }))
-            .catch((err) => err || 'на сервере \_(O_o)_/');
-        });
+            .catch((err) => err || 'проблемы на сервере \_(O_o)_/');
     }
 
     render() {
+        if (localStorage.getItem('access_token') == null)
+            return <Redirect to='/login' />;
         return <div className='main'>
             Полученные машины:
             {this.state.cars.map((elem) =>
