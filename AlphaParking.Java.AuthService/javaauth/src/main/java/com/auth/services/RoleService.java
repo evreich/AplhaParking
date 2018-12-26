@@ -14,7 +14,32 @@ public class RoleService {
     @Autowired
     RoleRepository roleRepository;
 
-    public List<Role> getTestData() {  
-        return this.roleRepository.findAll();
+    public List<Role> getRoles(){
+        List<Role> roles = roleRepository.getRoles();
+        return roles;
+    }
+
+    public List<String> getRoleNames(){
+        List<String> roleNames = roleRepository.getRoleNames();
+        return roleNames;
+    }
+
+    public Role create(Role role) throws Exception {
+        Role createdRole = null;
+        createdRole = this.roleRepository.create(role);
+        return createdRole;
+    }
+
+    public Role getRoleByName(String roleName){
+        Role role = roleRepository.getRoleByName(roleName);
+        return role;
+    }
+
+    public void update(Role role){
+        roleRepository.update(role);
+    }
+
+    public void delete(int roleId){
+        roleRepository.delete(roleId);
     }
 }

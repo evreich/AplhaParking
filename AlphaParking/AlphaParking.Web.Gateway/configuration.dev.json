@@ -10,10 +10,26 @@
                 }
             ],
             "UpstreamPathTemplate": "/user", 
-            "UpstreamHttpMethod": [ "POST" ] 
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
         }, 
         { 
-            "DownstreamPathTemplate": "/", 
+            "DownstreamPathTemplate": "/token", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/token", 
+            "UpstreamHttpMethod": [ "POST" ]
+        }, 
+        { 
+            "DownstreamPathTemplate": "/roles", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
                 {
@@ -22,7 +38,23 @@
                 }
             ],
             "UpstreamPathTemplate": "/roles", 
-            "UpstreamHttpMethod": [ "GET" ] 
+            "UpstreamHttpMethod": [ "GET" ]
+        }, 
+        { 
+            "DownstreamPathTemplate": "/users", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/users", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
         }, 
         { 
             "DownstreamPathTemplate": "/car", 
@@ -34,7 +66,11 @@
                 }
             ],
             "UpstreamPathTemplate": "/cars", 
-            "UpstreamHttpMethod": [ "GET" ] 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
         }
     ], 
     "GlobalConfiguration": { 

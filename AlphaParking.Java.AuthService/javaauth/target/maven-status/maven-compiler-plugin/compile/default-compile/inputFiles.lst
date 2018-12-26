@@ -1,6 +1,6 @@
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\services\RoleService.java
-c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\auth_utils\AuthService.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\repositories\RoleRepository.java
+c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\models\mappers\UserRowMapper.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\services\UserService.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\event_bus_utils\integration_events\UserCreatedIntegrationEvent.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\event_bus_utils\integration_events\IntegrationEvent.java
@@ -8,8 +8,9 @@ c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\repositories\UserRepository.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\Application.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\event_bus_utils\EventUtils.java
+c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\controllers\AuthController.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\models\Role.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\event_bus_utils\integration_events\UserRemovedIntegrationEvent.java
+c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\services\AuthService.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\configuraions\RabbitMQConfiguration.java
-c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\AuthController.java
 c:\Users\Максим\Source\repos\AplhaParking\AlphaParking.Java.AuthService\javaauth\src\main\java\com\auth\models\User.java

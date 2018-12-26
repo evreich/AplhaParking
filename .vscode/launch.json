@@ -1,9 +1,8 @@
 {
     "configurations": [
-
         {
             "type": "java",
-            "name": "CodeLens (Launch) - Application",
+            "name": "JavaAuth Launch",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
@@ -13,26 +12,43 @@
             "projectName": "javaauth"
         },
         {
+            "type": "java",
+            "name": "JavaClient Launch",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.client.Application",
+            "args": "",
+            "projectName": "javaclient"
+        },
+        {
             "name": "Attach to AlphaParking.Web (Docker)",
             "type": "coreclr",
             "request": "attach",
             "sourceFileMap": {
                 "/app": "${workspaceRoot}"
             },
-            "processId" : "${command:pickRemoteProcess}",
+            "processId": "${command:pickRemoteProcess}",
             "pipeTransport": {
                 "debuggerPath": "/vsdbg/vsdbg",
                 "pipeProgram": "docker",
                 "pipeCwd": "${workspaceRoot}",
                 "windows": {
                     "pipeProgram": "plink.exe",
-                    "pipeArgs": [ "-l", "root", "-pw", "Docker!", "localhost", "-P", "8182", "-T" ],
+                    "pipeArgs": [
+                        "-l",
+                        "root",
+                        "-pw",
+                        "Docker!",
+                        "localhost",
+                        "-P",
+                        "8182",
+                        "-T"
+                    ],
                     "quoteArgs": true
-                },
-                // "pipeArgs": [
-                //     "exec -i aplhaparking_parking.api_1"
-                // ]
-             }
+                }
+            }
         }
     ]
 }

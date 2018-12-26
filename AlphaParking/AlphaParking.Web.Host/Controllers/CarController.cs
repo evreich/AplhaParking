@@ -15,7 +15,7 @@ namespace AlphaParking.Web.Host.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize(Roles = "employee")]
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;

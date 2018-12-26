@@ -2,6 +2,7 @@ package com.auth.event_bus_utils;
 
 import com.auth.configuraions.RabbitMQConfiguration;
 import com.auth.event_bus_utils.integration_events.IntegrationEvent;
+import com.auth.utils.AppConsts;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +28,6 @@ public class EventUtils {
                             .withBody(eventJson.getBytes())
                             .setContentType(MessageProperties.CONTENT_TYPE_JSON)
                             .build();
-        this.template.convertAndSend(RabbitMQConfiguration.exchangeName, "", message);
+        this.template.convertAndSend(AppConsts.exchangeName, "", message);
     }
 }

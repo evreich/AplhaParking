@@ -7,9 +7,11 @@ com\auth\event_bus_utils\integration_events\IntegrationEvent.class
 com\auth\event_bus_utils\integration_events\UserEditedIntegrationEvent.class
 com\auth\repositories\RoleRepository.class
 com\auth\repositories\UserRepository$1.class
+com\auth\controllers\AuthController.class
 com\auth\event_bus_utils\EventUtils.class
 com\auth\services\UserService.class
+com\auth\models\mappers\UserRowMapper.class
 com\auth\services\RoleService.class
 com\auth\models\User.class
-com\auth\AuthController.class
 com\auth\configuraions\RabbitMQConfiguration.class
+com\auth\services\AuthService.class

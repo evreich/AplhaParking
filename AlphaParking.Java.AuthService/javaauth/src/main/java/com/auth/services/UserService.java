@@ -4,10 +4,11 @@ import com.auth.event_bus_utils.EventUtils;
 import com.auth.event_bus_utils.integration_events.UserCreatedIntegrationEvent;
 import com.auth.models.User;
 import com.auth.repositories.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,8 +18,19 @@ public class UserService {
     @Autowired
     EventUtils eventUtils;
 
-    public User create(User user) throws JsonProcessingException {
-        User createdUser = this.userRepository.create(user);
+    public List<User> getUsers(){
+        List<User> users = userRepository.getUsers();
+        return users;
+    }
+
+    public List<String> getLogins(){
+        List<String> logins = userRepository.getLogins();
+        return logins;
+    }
+
+    public User create(User user) throws Exception {
+        User createdUser = null;
+        createdUser = this.userRepository.create(user);
 
         // Отправка в очередь RabbitMQ интеграционного события создания нового
         // пользователя
@@ -29,5 +41,30 @@ public class UserService {
         eventUtils.publish(event);
 
         return createdUser;
+    }
+
+    public User getUserByLogin(String login){
+        User user = userRepository.getUserByLogin(login);
+        return user;
+    }
+
+    public void update(User user){
+        userRepository.update(user);
+    }
+
+    public void delete(int userId){
+        userRepository.delete(userId);
+    }
+
+    public boolean isExistsUserRole(int userId, int roleId){
+        return userRepository.isExistsUserRole(userId, roleId);
+    }
+
+    public void grantRole(int userId, int roleId){
+        userRepository.grantRole(userId, roleId);
+    }
+
+    public void revokeRole(int userId, int roleId){
+        userRepository.revokeRole(userId, roleId);
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Список пользователей</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+  </head>
+  <body>
+    <h1>Список пользователей</h1>
+    <p>For Pidoras</p>
+    <br/><br/>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Логин</th>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>Email</th>
+            <th>Адрес</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user: ${usersList}">
+            <td th:text="${user.getId()}" />
+            <td th:text="${user.getLogin()}" />
+            <td th:text="${user.getFIO()}" />
+            <td th:text="${user.getPhone()}" />
+            <td th:text="${user.getEmail()}" />
+            <td th:text="${user.getAddress()}" />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  
+</html>

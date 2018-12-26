@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-deployment
+  name: auth-dev
 spec:
   replicas: 1
   selector:
@@ -47,7 +47,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: parking-deployment
+  name: parking-dev
 spec:
   replicas: 1
   selector:
@@ -93,7 +93,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rabbitmq-deployment
+  name: rabbitmq-dev
 spec:
   replicas: 1
   selector:
@@ -134,7 +134,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway-deployment
+  name: gateway-dev
 spec:
   replicas: 1
   selector:
@@ -186,7 +186,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client-deployment
+  name: client-dev
 spec:
   replicas: 1
   selector:

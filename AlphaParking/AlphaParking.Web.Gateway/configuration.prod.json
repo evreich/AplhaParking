@@ -10,7 +10,11 @@
                 }
             ],
             "UpstreamPathTemplate": "/user", 
-            "UpstreamHttpMethod": [ "POST" ] 
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "AlphaAuthSchema",  
+                "AllowedScopes": []  
+            } 
         }, 
         { 
             "DownstreamPathTemplate": "/", 
@@ -22,7 +26,11 @@
                 }
             ],
             "UpstreamPathTemplate": "/roles", 
-            "UpstreamHttpMethod": [ "GET" ] 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "AlphaAuthSchema",  
+                "AllowedScopes": []  
+            } 
         }, 
         { 
             "DownstreamPathTemplate": "/car", 
@@ -34,7 +42,11 @@
                 }
             ],
             "UpstreamPathTemplate": "/cars", 
-            "UpstreamHttpMethod": [ "GET" ] 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "AlphaAuthSchema",  
+                "AllowedScopes": []  
+            } 
         }
     ], 
     "GlobalConfiguration": { 

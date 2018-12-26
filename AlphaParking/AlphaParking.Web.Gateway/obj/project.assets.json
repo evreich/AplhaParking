@@ -4394,6 +4394,7 @@
       "type": "package",
       "path": "fluentvalidation/7.6.104",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "fluentvalidation.7.6.104.nupkg.sha512",
         "fluentvalidation.nuspec",
@@ -7186,6 +7187,7 @@
       "type": "package",
       "path": "ocelot/12.0.1",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Ocelot.dll",
         "ocelot.12.0.1.nupkg.sha512",

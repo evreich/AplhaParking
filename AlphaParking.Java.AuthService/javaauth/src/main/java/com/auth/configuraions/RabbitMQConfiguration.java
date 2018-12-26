@@ -2,6 +2,9 @@ package com.auth.configuraions;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+
+import com.auth.utils.AppConsts;
+
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Exchange;
@@ -13,17 +16,14 @@ import org.springframework.amqp.core.QueueBuilder;
 @Configuration
 public class RabbitMQConfiguration  
 {
-	static public final String exchangeName = "alphaparking_eventbus_exhange";
-	static public final String queueName = "alphaparking_eventbus-queue";
-
     @Bean
     Queue queue() {
-        return QueueBuilder.durable(queueName).build();
+        return QueueBuilder.durable(AppConsts.queueName).build();
     }
 
     @Bean
     Exchange exchange() {
-        return ExchangeBuilder.fanoutExchange(exchangeName).build();
+        return ExchangeBuilder.fanoutExchange(AppConsts.exchangeName).build();
     }
 
     @Bean

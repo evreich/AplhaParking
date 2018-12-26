@@ -21,6 +21,10 @@
 /AlphaParking/AlphaParking.Web.Client/bin
 /AlphaParking/AlphaParking.Web.Client/dist
 /AlphaParking/AlphaParking.Web.Client/wwwroot
+/AlphaParking/AlphaParking.Web.Gateway/obj
+/AlphaParking/AlphaParking.Web.Gateway/bin
+/AlphaParking/AlphaParking.Web.Gateway/dist
+/AlphaParking/AlphaParking.Web.Gateway/wwwroot
 
 # Java
 !.mvn/wrapper/maven-wrapper.jar
