@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,7 @@ import com.auth.services.RoleService;
 import com.auth.services.UserService;
 import com.auth.utils.AuthFilter;
 import com.auth.utils.ResponseError;
+import com.auth.view_models.TokenVKViewModel;
 import com.auth.view_models.TokenViewModel;
 import com.auth.view_models.UserRoleViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,6 +51,22 @@ public class AuthController {
     private HttpServletRequest request;
 
     private ObjectNode jsonObject;
+
+    @PostMapping("/vk/auth")
+    public ResponseEntity<ObjectNode> vkLogin(@RequestBody String code) throws IOException {
+        this.jsonObject = objectMapper.createObjectNode();
+        //try {
+            TokenVKViewModel token = authService.getTokenVK(code);
+
+            ObjectNode node = objectMapper.valueToTree( token );
+            this.jsonObject.putObject("vkAuthInfo").putAll(node);
+
+            return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            
+        //}
+        //catch (Exception e) {
+        //    return new ResponseError().generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST);
+        //}
+    }
     
     @PostMapping("/login")
     public ResponseEntity<ObjectNode> login(@RequestBody TokenViewModel viewModel) throws Exception {
@@ -113,8 +132,12 @@ public class AuthController {
     @GetMapping("/roles")
     // Не делать проверку токена на метод либо сделать какой-то специальный токен для общения 
     // по HTTP между сервисами
-    public List<Role> getRoles() {
-        return roleService.getRoles();
+    public ResponseEntity<ObjectNode> getRoles() {
+        this.jsonObject = objectMapper.createObjectNode();     
+        ArrayNode node = objectMapper.valueToTree( roleService.getRoles() );
+        this.jsonObject.putArray("roles").addAll(node);
+
+        return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
     }
 
     @GetMapping("/roleNames")
@@ -146,8 +169,23 @@ public class AuthController {
         this.jsonObject.putObject("user").putAll(node);
         return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
     }
+  
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ObjectNode> getUserById(@PathVariable int userId) throws Exception {
+        this.jsonObject = objectMapper.createObjectNode();      
+        //Проверка, что запрос создан зарегистрированным ранее пользователем 
+        // (имеется подписанный данным сервером JWT token в запросе)
+        ResponseEntity<ObjectNode> authError = AuthFilter.authRequestFilter(request);
+        if(authError != null){
+            return authError;
+        }
 
-    @GetMapping("/user/{login}")
+        ObjectNode node = objectMapper.valueToTree( userService.getUserById(userId) );
+        this.jsonObject.putObject("user").putAll(node);
+        return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/get/{login}")
     public ResponseEntity<ObjectNode> getUserByLogin(@PathVariable String login) throws Exception {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
@@ -162,7 +200,7 @@ public class AuthController {
         return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
     }
 
-    @PutMapping("/user/update/")
+    @PutMapping("/user/update")
     public ResponseEntity<ObjectNode> updateUser(@RequestBody User user) {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
@@ -175,7 +213,7 @@ public class AuthController {
         return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);   
     }
 
-    @PutMapping("/user/delete/{userId}")
+    @DeleteMapping("/user/delete/{userId}")
     public ResponseEntity<ObjectNode> deleteUser(@PathVariable int userId) {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
@@ -204,7 +242,22 @@ public class AuthController {
         return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
     }
 
-    @GetMapping("/role/{name}")
+    @GetMapping("/role/{roleId}")
+    public ResponseEntity<ObjectNode> getRoleById(@PathVariable int roleId) throws Exception {
+        this.jsonObject = objectMapper.createObjectNode();      
+        //Проверка, что запрос создан зарегистрированным ранее пользователем 
+        // (имеется подписанный данным сервером JWT token в запросе)
+        ResponseEntity<ObjectNode> authError = AuthFilter.authRequestFilter(request);
+        if(authError != null){
+            return authError;
+        }
+
+        ObjectNode node = objectMapper.valueToTree( roleService.getRoleById(roleId) );
+        this.jsonObject.putObject("role").putAll(node);
+        return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
+    }
+
+    @GetMapping("/role/get/{name}")
     public ResponseEntity<ObjectNode> getRoleByName(@PathVariable String roleName) throws Exception {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
@@ -219,7 +272,7 @@ public class AuthController {
         return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
     }
 
-    @PutMapping("/role/update/")
+    @PutMapping("/role/update")
     public ResponseEntity<ObjectNode> updateRole(@RequestBody Role role) {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
@@ -244,6 +297,24 @@ public class AuthController {
         roleService.delete(roleId);
         return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);     
     }  
+
+    @GetMapping("/user/{userId}/roles")
+    // Не делать проверку токена на метод либо сделать какой-то специальный токен для общения 
+    // по HTTP между сервисами
+    public ResponseEntity<ObjectNode> getUserRoles(@PathVariable int userId) {
+        this.jsonObject = objectMapper.createObjectNode();      
+        //Проверка, что запрос создан зарегистрированным ранее пользователем 
+        // (имеется подписанный данным сервером JWT token в запросе)
+        ResponseEntity<ObjectNode> authError = AuthFilter.authRequestFilter(request);
+        if(authError != null){
+            return authError;
+        }
+
+        ArrayNode node = objectMapper.valueToTree( userService.getUserRoles(userId) );
+        this.jsonObject.putArray("roles").addAll(node);
+
+        return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);
+    }
 
 
     @GetMapping("/user/{userId}/role/{roleId}")

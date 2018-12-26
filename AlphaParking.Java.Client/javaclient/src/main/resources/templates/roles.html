@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Список ролей</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+  </head>
+  <body>
+    <a href="/">На главную</a>
+    <h1>Список ролей</h1>
+    <br/><br/>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Наименование</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="role: ${rolesList}">
+            <td th:text="${role.getId()}" />
+            <td th:text="${role.getName()}" />
+            <td><a th:href="@{'/role/' + ${role.getId()}}">Редактировать</a></td>
+            <td><a th:href="@{'/role/delete/' + ${role.getId()}}">Удалить</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  
+</html>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.auth.models.*;
 
+import java.io.IOException;
 import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,6 +21,9 @@ import javax.xml.bind.DatatypeConverter;
 import com.auth.repositories.RoleRepository;
 import com.auth.repositories.UserRepository;
 import com.auth.utils.AppConsts;
+import com.auth.utils.HttpClient;
+import com.auth.view_models.TokenVKViewModel;
+import com.microsoft.applicationinsights.core.dependencies.gson.Gson;
 
 @Service
 public class AuthService {
@@ -28,6 +32,20 @@ public class AuthService {
 
     @Autowired 
     private RoleRepository roleRepository;
+
+    @Autowired
+    HttpClient httpClient;
+
+    public TokenVKViewModel getTokenVK(String code) throws IOException{
+        Map<String, String> queryParams = new HashMap<String, String>();
+        queryParams.put("client_id", Integer.toString(AppConsts.VK_APP_ID) );
+        queryParams.put("client_secret", AppConsts.VK_CLIENT_SECRET);
+        queryParams.put("redirect_uri", AppConsts.VK_REDIRECT_URI);
+        queryParams.put("code", code);
+        String serverResponse = httpClient.getRequest(AppConsts.VK_ACCESS_TOKEN_URI, queryParams);
+        TokenVKViewModel tokenVK = new Gson().fromJson(serverResponse, TokenVKViewModel.class);
+        return tokenVK;
+    }
 
     public String getToken(String login, String pass) throws Exception {
         if (login == null || pass == null){

@@ -57,6 +57,16 @@ public class RoleRepository {
         return newRole;
     }
 
+    public Role getRoleById (int roleId) {
+        try{
+            return (Role) this.jdbcTemplate.queryForObject(
+                "SELECT * FROM roles WHERE id = ?", new RoleRowMapper(), roleId);
+        }
+        catch(EmptyResultDataAccessException e ){
+            return null;
+        }
+    }
+
     public Role getRoleByName (String name) {
         try{
             return (Role) this.jdbcTemplate.queryForObject(

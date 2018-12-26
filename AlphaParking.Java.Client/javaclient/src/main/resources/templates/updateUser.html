@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Парковка "Альфа". Администирование</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+</head>
+<body>
+    <a href="/users">Список пользователей</a> 
+    <h2>Редактирование пользователя</h2>
+    <form method="post">
+        <label>Логин</label>
+        <input type="text" name="login" th:value="${user.getLogin()}"/>
+        <br/>
+        <label>Пароль</label>
+        <input type="password" name="password"/>
+        <br/>
+        <label>ФИО</label>
+        <input type="text" name="fio" th:value="${user.getFIO()}"/>
+        <br/>
+        <label>Адрес</label>
+        <input type="text" name="address" th:value="${user.getAddress()}"/>
+        <br/>
+        <label>Телефон</label>
+        <input type="text" name="phone" th:value="${user.getPhone()}"/>
+        <br/>
+        <label>Email</label>
+        <input type="text" name="email" th:value="${user.getEmail()}"/>
+        <br/>
+
+        <table>
+            <thead>
+                <tr>
+                <th>Роли</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="role: ${userRoles}">
+                <td th:text="${role.getName()}" />
+                <td><a th:href="@{'/user/' + ${user.getId()} + '/revoke/' + ${role.getId()}}">Удалить</a></td>
+                </tr>
+            </tbody>
+         </table>
+
+        <button type="submit">Сохранить</button>
+        <a th:href="@{'/user/delete/' + ${user.getId()}}">Удалить</a>
+    </form>
+
+    <form role="form" id="grantRole" th:action="@{'/user/' + ${user.getId()} + '/grant'}" method="get">
+        <button type="submit">Добавить роль</button>
+        <select name="grantRoleId">
+            <option 
+                th:each="role: ${allRoles}"
+                th:value="${role.getId()}"
+                th:text="${role.getName()}"
+            />
+        </select>
+    </form>
+</body>
+</html>

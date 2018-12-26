@@ -1,4 +1,4 @@
-package com.client.utils;
+package com.auth.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class HttpClient {
 
         //QueryGenerator
         if(queryParams != null && queryParams.size() > 0) {
+            
             String firstKey = queryParams.keySet().iterator().next();
             String firstParam = queryParams.get(firstKey);
             StringBuilder query = new StringBuilder();
@@ -39,8 +41,19 @@ public class HttpClient {
             queryParams.remove(firstKey);
             queryParams.forEach((key, value) -> {
                 query.append("&").append(key).append(":").append(value);
-            });
+            }); 
             u = new URL(url + query.toString());
+            /*
+            StringBuilder querySB = new StringBuilder(url).append('?');
+            for (String key : queryParams.keySet())
+            {
+                String value = queryParams.get(key);
+                String encoded = URLEncoder.encode(value, "UTF-8");
+                querySB.append(key).append("&").append(encoded);
+            }
+
+            String query = querySB.toString();
+            u = new URL(query);*/
         } else {
             u = new URL(url);
         }

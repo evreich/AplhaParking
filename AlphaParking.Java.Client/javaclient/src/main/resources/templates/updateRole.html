@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Парковка "Альфа". Администирование</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+</head>
+<body>
+    <a href="/roles">Список ролей</a> 
+    <h2>Редактирование роли</h2>
+    <form method="post">
+        <label>Наименование</label>
+        <input type="text" name="name" th:value="${role.getName()}"/>
+        <br>
+        <button type="submit">Сохранить</button>
+        <a th:href="@{'/role/delete/' + ${role.getId()}}">Удалить</a>
+    </form>
+</body>
+</html>

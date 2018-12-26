@@ -25,9 +25,13 @@ public class RoleService {
     }
 
     public Role create(Role role) throws Exception {
-        Role createdRole = null;
-        createdRole = this.roleRepository.create(role);
+        Role createdRole = this.roleRepository.create(role);
         return createdRole;
+    }
+
+    public Role getRoleById(int roleId){
+        Role role = roleRepository.getRoleById(roleId);
+        return role;
     }
 
     public Role getRoleByName(String roleName){

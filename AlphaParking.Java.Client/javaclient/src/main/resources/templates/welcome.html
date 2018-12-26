@@ -6,6 +6,10 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
 </head>
 <body>
-    <h1 th:text="'Поздравляю, вход выполнен успешно,'+ ${name}" />
+    <h1 th:text="'Поздравляю, вход выполнен успешно, '+ ${name}" />
+    <a href="/users">Список пользователей</a> 
+    <a href="/roles">Список ролей</a>  
+    <a href="/user/create">Добавить пользователя</a>  
+    <a href="/role/create">Добавить роль</a> 
 </body>
 </html>

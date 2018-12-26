@@ -1,5 +1,6 @@
 package com.auth.repositories;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -38,7 +39,11 @@ public class UserRepository {
     }
 
     public User create(final User user) throws Exception{
-        User oldUser = getUserByLogin( user.getLogin() );
+        String login = user.getLogin();
+        if (login.equals(Strings.EMPTY)){
+            throw new Exception("Пользователь не может быть создан без логина");
+        }
+        User oldUser = getUserByLogin( login );
         if (oldUser != null){
             throw new Exception("Пользователь с таким логином уже существует");
         }
@@ -52,7 +57,7 @@ public class UserRepository {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql.toString(), Statement.SUCCESS_NO_INFO);
-                ps.setString(1, user.getLogin());
+                ps.setString(1, login);
                 ps.setString(2, hashedPass);
                 ps.setString(3, user.getFIO());
                 ps.setString(4, user.getAddress());
@@ -68,6 +73,16 @@ public class UserRepository {
         return user;
     }
 
+    public User getUserById (int userId) {
+        try{
+            return (User) this.jdbcTemplate.queryForObject(
+                "SELECT * FROM users WHERE id = ?", new UserRowMapper(), userId);
+        }
+        catch(EmptyResultDataAccessException e ){
+            return null;
+        }
+    }
+
     public User getUserByLogin (String login) {
         try{
             return (User) this.jdbcTemplate.queryForObject(
@@ -80,8 +95,8 @@ public class UserRepository {
 
     public void update(User user) {
         final String sql = 
-            "update users" +
-            "set login = ?, password = ?, fio = ?, address = ?, phone = ?, email = ?" + 
+            "update users " +
+            "set login = ?, fio = ?, address = ?, phone = ?, email = ? " + 
             "where id = ?";          
 
         this.jdbcTemplate.update(new PreparedStatementCreator() {
@@ -89,15 +104,32 @@ public class UserRepository {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql.toString(), Statement.SUCCESS_NO_INFO);
                 ps.setString(1, user.getLogin());
-                ps.setString(2, user.getPassword());
-                ps.setString(3, user.getFIO());
-                ps.setString(4, user.getAddress());
-                ps.setString(5, user.getPhone());
-                ps.setString(6, user.getEmail());
-                ps.setInt(7, user.getId());
+                ps.setString(2, user.getFIO());
+                ps.setString(3, user.getAddress());
+                ps.setString(4, user.getPhone());
+                ps.setString(5, user.getEmail());
+                ps.setInt(6, user.getId());
                 return ps;
             }
         });
+
+        if (user.getPassword().equals(Strings.EMPTY)){
+            return;
+        }
+        final String sqlPassword = 
+        "update users " +
+        "set password = ? " + 
+        "where id = ?";          
+
+    this.jdbcTemplate.update(new PreparedStatementCreator() {
+        @Override
+        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+            PreparedStatement ps = connection.prepareStatement(sqlPassword.toString(), Statement.SUCCESS_NO_INFO);
+            ps.setString(1, new BCryptPasswordEncoder().encode( user.getPassword() ) );
+            ps.setInt(2, user.getId());
+            return ps;
+        }
+    });
     }
 
     public void delete(int userId) {

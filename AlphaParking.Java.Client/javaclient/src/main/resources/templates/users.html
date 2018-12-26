@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
   </head>
   <body>
+    <a href="/">На главную</a>
     <h1>Список пользователей</h1>
-    <p>For Pidoras</p>
     <br/><br/>
     <div>
       <table>
@@ -29,6 +29,8 @@
             <td th:text="${user.getPhone()}" />
             <td th:text="${user.getEmail()}" />
             <td th:text="${user.getAddress()}" />
+            <td><a th:href="@{'/user/' + ${user.getId()}}">Редактировать</a></td>
+            <td><a th:href="@{'/user/delete/' + ${user.getId()}}">Удалить</a></td>
           </tr>
         </tbody>
       </table>
