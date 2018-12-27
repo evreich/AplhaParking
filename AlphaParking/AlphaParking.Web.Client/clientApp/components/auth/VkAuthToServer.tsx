@@ -46,7 +46,7 @@ class VkAuthToServer extends React.Component<IProps, IState> {
                 () => localStorage.setItem('access_token', payload.access_token))
             )
             .catch((err) => this.setState({
-                error: err
+                error: err.message
             }));
     }
 
@@ -54,7 +54,7 @@ class VkAuthToServer extends React.Component<IProps, IState> {
         const { loading, requestSended, error } = this.state;
         const { location: { search }, history } = this.props;
         if (error)
-            return <div style={{color: 'red'}}>error</div>;
+            return <div style={{color: 'red'}}>{error}</div>;
         if (!requestSended)
             this.setState({
                 loading: true,
