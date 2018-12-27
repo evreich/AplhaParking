@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Login from '../auth/Login';
 import Registration from '../auth/Registration';
-import VKAuthToServer from '../auth/VKAuthToServer';
+import VKAuthServerWaiter from '../auth/VKAuthServerWaiter';
 import Hello from '../common/HelloComponent';
 import Home from '../Home';
 
@@ -19,7 +19,7 @@ class RouterComponent extends React.Component {
                     <Route path='/hello' component={Hello} />
                     <Route path='/registration' component={Registration} />
                     <Route path='/login' component={Login} />
-                    <Route path='/vk/auth' component={VKAuthToServer} />
+                    <Route path='/vk/auth' component={VKAuthServerWaiter} />
                 </Switch>
             </>
         </Router>;

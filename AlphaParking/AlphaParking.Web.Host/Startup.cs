@@ -77,12 +77,12 @@ namespace AlphaParking.Web.Host
                 app.UseHsts();
             }
             // app.UseHttpsRedirection();       
-            //app.UseCors("AllowAnyOrigin");
-            //app.UseErrorHandlerMiddleware();
+            app.UseCors("AllowAnyOrigin");
+            app.UseErrorHandlerMiddleware();
             app.UseAuthentication();
             app.UseMvc();
 
-            //SeedDbService.EnsurePopulated(app).Wait();
+            SeedDbService.EnsurePopulated(app).Wait();
         }
     }
 }

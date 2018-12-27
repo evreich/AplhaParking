@@ -12,13 +12,15 @@
 	<groupId>com.client</groupId>
 	<artifactId>javaclient</artifactId>
 	<version>0.0.1</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	
 	<name>javaclient</name>
 	<description>Client project for Spring Boot</description>
 
 	<properties>
+		<azure.version>2.0.5</azure.version>
 		<java.version>1.8</java.version>
+		<docker.image.prefix>evreich</docker.image.prefix> 
 	</properties>
 
 	<dependencies>
@@ -37,15 +39,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
-		</dependency>	
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -61,12 +54,48 @@
 			<version>0.9.1</version>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-spring-boot-bom</artifactId>
+				<version>${azure.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- Зависимости для деплоя сборки maven в Azure app service -->
+			<plugin>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-webapp-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<configuration>
+					<deploymentType>jar</deploymentType>
+
+					<!-- configure app to run on port 80, required by App Service -->
+					<appSettings>
+						<property> 
+						<name>JAVA_OPTS</name> 
+						<value>-Dserver.port=80</value> 
+						</property> 
+					</appSettings>
+
+					<!-- Web App information -->
+					<resourceGroup>AlphaParkingRG</resourceGroup>
+					<appName>alphaparkingauth</appName>
+					<region>West Europe</region>  
+
+					<!-- Java Runtime Stack for Web App on Linux-->
+					<javaWebContainer>jre8</javaWebContainer>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

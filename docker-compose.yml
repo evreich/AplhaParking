@@ -67,7 +67,7 @@ services:
     - parking.api
 
   webmvc:
-    image: evreich/mvcclient:${TAG:-latest}
+    image: evreich/javaclient:${TAG:-latest}
     build:
       context: ./AlphaParking.Java.Client/javaclient
       dockerfile: Dockerfile  

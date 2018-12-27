@@ -17,7 +17,7 @@
             } 
         }, 
         { 
-            "DownstreamPathTemplate": "/token", 
+            "DownstreamPathTemplate": "/login", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
                 {
@@ -25,7 +25,19 @@
                   "Port": 8181
                 }
             ],
-            "UpstreamPathTemplate": "/token", 
+            "UpstreamPathTemplate": "/login", 
+            "UpstreamHttpMethod": [ "POST" ]
+        }, 
+        { 
+            "DownstreamPathTemplate": "/vk/auth", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/vk/auth", 
             "UpstreamHttpMethod": [ "POST" ]
         }, 
         { 

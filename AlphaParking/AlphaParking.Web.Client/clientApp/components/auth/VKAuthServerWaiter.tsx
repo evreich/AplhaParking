@@ -12,7 +12,7 @@ interface IState {
     error: string;
 }
 
-class VkAuthToServer extends React.Component<IProps, IState> {
+class VKAuthServerWaiter extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
@@ -68,4 +68,4 @@ class VkAuthToServer extends React.Component<IProps, IState> {
     }
 }
 
-export default withRouter(VkAuthToServer);
+export default withRouter(VKAuthServerWaiter);

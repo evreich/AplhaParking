@@ -25,14 +25,12 @@ class HelloComponent extends React.Component<{}, IState> {
     }
 
     componentDidMount() {
-        const headers: HeadersInit = {
-            // tslint:disable-next-line:object-literal-key-quotes
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            'content-type': 'application/json'
-        };
-
         const conf: RequestInit = {
-            headers,
+            headers: {
+                // 'Access-Control-Allow-Origin': '*',
+                // tslint:disable-next-line:object-literal-key-quotes
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json'},
             method: 'GET',
             mode: 'cors'
         };
@@ -51,7 +49,7 @@ class HelloComponent extends React.Component<{}, IState> {
             return <Redirect to='/login' />;
         return <div className='main'>
             Полученные машины:
-            {this.state.cars.map((elem) =>
+            {this.state.cars && this.state.cars.map((elem) =>
                 <span style={{ color: '#0000FF', display: 'block' }}> {
                     Object.entries(elem).reduce((accum: string, currVal) => accum + currVal + ' ', '')}
                 </span>
