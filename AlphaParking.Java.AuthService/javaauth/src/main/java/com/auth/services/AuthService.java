@@ -44,6 +44,7 @@ public class AuthService {
         queryParams.put("code", code);
         String serverResponse = httpClient.getRequest(AppConsts.VK_ACCESS_TOKEN_URI, queryParams);
         TokenVKViewModel tokenVK = new Gson().fromJson(serverResponse, TokenVKViewModel.class);
+        //TODO: check generated token and answer from VK
         return tokenVK;
     }
 

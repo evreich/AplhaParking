@@ -9,6 +9,7 @@ interface IProps extends RouteComponentProps { }
 interface IState {
     loading: boolean;
     requestSended: boolean;
+    error: string;
 }
 
 class VkAuthToServer extends React.Component<IProps, IState> {
@@ -16,6 +17,7 @@ class VkAuthToServer extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
+            error: '',
             loading: false,
             requestSended: false
         };
@@ -23,24 +25,36 @@ class VkAuthToServer extends React.Component<IProps, IState> {
 
     sendRequestToServer = (code: string) => {
         const confToken: RequestInit = {
-            method: 'GET',
+            body: code,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            method: 'POST',
             mode: 'cors'
         };
-        fetch(`${consts.SERVER_API}?code=${code}`, confToken)
-            .then((response) =>
-                response.ok && response.json()
-            )
-            .then((accessToken) => this.setState({
+        fetch(`${consts.SERVER_API}/vk/auth`, confToken)
+            .then((response) => {
+                if (response.ok)
+                    return response.json();
+                else
+                    throw new Error(`Произошла ошибка. Статус ошибки: ${response.status}`);
+            })
+            .then((payload: {access_token: string}) => this.setState({
                 loading: false
             },
-                () => localStorage.setItem('access_token', accessToken))
+                () => localStorage.setItem('access_token', payload.access_token))
             )
-            .catch((err) => err);
+            .catch((err) => this.setState({
+                error: err
+            }));
     }
 
     render() {
-        const { loading, requestSended } = this.state;
+        const { loading, requestSended, error } = this.state;
         const { location: { search }, history } = this.props;
+        if (error)
+            return <div style={{color: 'red'}}>error</div>;
         if (!requestSended)
             this.setState({
                 loading: true,

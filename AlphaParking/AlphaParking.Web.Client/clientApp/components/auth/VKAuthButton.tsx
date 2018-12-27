@@ -5,7 +5,7 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 import consts from '../../constants';
 
 const VKAuthButton: React.SFC = () => {
-    const queryParams = `?client_id=${consts.VK_CLIENT_ID}&display=page&redirect_uri=http://127.0.0.1:8383/vk/auth&scope=email&response_type=code&v=5.92`;
+    const queryParams = `?client_id=${consts.VK_CLIENT_ID}&display=page&redirect_uri=http://localhost:8383/vk/auth&scope=email&response_type=code&v=5.92`;
     const url = `${consts.OAUTH_VK_AUTH}${queryParams}`;
 
     const vkAuthHandler = (event: React.MouseEvent<Button>): void => {

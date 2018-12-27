@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class AuthController {
 
     private ObjectNode jsonObject;
 
+    @CrossOrigin(origins = "http://localhost:8383")
     @PostMapping("/vk/auth")
     public ResponseEntity<ObjectNode> vkLogin(@RequestBody String code) throws IOException {
         this.jsonObject = objectMapper.createObjectNode();
@@ -59,6 +61,8 @@ public class AuthController {
             TokenVKViewModel token = authService.getTokenVK(code);
 
             ObjectNode node = objectMapper.valueToTree( token );
+            //TODO: generate our JWT token, which based on VK info, 
+            //TODO: add user and VK auth token to db
             this.jsonObject.putObject("vkAuthInfo").putAll(node);
 
             return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            

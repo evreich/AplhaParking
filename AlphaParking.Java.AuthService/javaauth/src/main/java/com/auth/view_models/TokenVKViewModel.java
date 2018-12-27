@@ -1,7 +1,7 @@
 package com.auth.view_models;
 
 public class TokenVKViewModel {
-    public String accessToken;  
-    public int expiresIn;
-    public int userId;
+    public String access_token;  
+    public int expires_in;
+    public int user_id;
 }

@@ -37,10 +37,10 @@ public class HttpClient {
             String firstKey = queryParams.keySet().iterator().next();
             String firstParam = queryParams.get(firstKey);
             StringBuilder query = new StringBuilder();
-            query.append("?").append(firstKey).append(":").append(firstParam);
+            query.append("?").append(firstKey).append("=").append(firstParam);
             queryParams.remove(firstKey);
             queryParams.forEach((key, value) -> {
-                query.append("&").append(key).append(":").append(value);
+                query.append("&").append(key).append("=").append(value);
             }); 
             u = new URL(url + query.toString());
             /*
