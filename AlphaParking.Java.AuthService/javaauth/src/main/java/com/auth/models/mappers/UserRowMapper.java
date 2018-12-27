@@ -18,6 +18,8 @@ public class UserRowMapper implements RowMapper
         user.setEmail(rs.getString("email"));
         user.setAddress(rs.getString("address"));
         user.setPhone(rs.getString("phone"));
+        user.setVkId(rs.getInt("vkId"));
+        user.setVkToken(rs.getString("vkToken"));
 		return user;
 	}
 	

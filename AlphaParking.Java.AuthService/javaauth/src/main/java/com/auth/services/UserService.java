@@ -5,6 +5,7 @@ import com.auth.event_bus_utils.integration_events.UserCreatedIntegrationEvent;
 import com.auth.models.Role;
 import com.auth.models.User;
 import com.auth.repositories.UserRepository;
+import com.auth.view_models.TokenVKViewModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,11 @@ public class UserService {
 
     @Autowired
     EventUtils eventUtils;
+
+    public User getUserByVkToken (TokenVKViewModel tokenVk) throws Exception {
+        User user = userRepository.getUserByVkToken(tokenVk);
+        return user;
+    }
 
     public List<User> getUsers(){
         List<User> users = userRepository.getUsers();
@@ -35,11 +41,11 @@ public class UserService {
 
         // Отправка в очередь RabbitMQ интеграционного события создания нового
         // пользователя
-        //UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
+        UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        //eventUtils.publish(event);
+        eventUtils.publish(event);
 
         return createdUser;
     }

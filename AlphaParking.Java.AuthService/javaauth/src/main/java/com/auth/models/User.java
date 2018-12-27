@@ -13,6 +13,9 @@ public class User implements Serializable {
     private String phone;
     private String email;
 
+    private int vkId;
+    private String vkToken;
+
     public User(){}
 
     public User(int id, String login, String password, String fio, 
@@ -34,6 +37,17 @@ public class User implements Serializable {
         this.setAddress(address);
         this.setPhone(phone);
         this.setEmail(email);
+    }
+
+    public User(int vkId, String vkToken, String fio, String phone, String email) {
+        this.setLogin("");
+        this.setPassword("");
+        this.setVkId(vkId);
+        this.setVkToken(vkToken);
+        this.setFIO(fio);
+        this.setPhone(phone);
+        this.setEmail(email);
+        this.setAddress("");
     }
 
     /**
@@ -132,5 +146,33 @@ public class User implements Serializable {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+        /**
+     * @return the vkId
+     */
+    public int getVkId() {
+        return vkId;
+    }
+
+    /**
+     * @param vkId the vkId to set
+     */
+    public void setVkId(int vkId) {
+        this.vkId = vkId;
+    }
+
+    /**
+     * @return the vkToken
+     */
+    public String getVkToken() {
+        return vkToken;
+    }
+
+    /**
+     * @param vkToken the vkToken to set
+     */
+    public void setVkToken(String vkToken) {
+        this.vkToken = vkToken;
     }
 }

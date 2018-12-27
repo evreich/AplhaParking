@@ -57,26 +57,31 @@ public class AuthController {
     @PostMapping("/vk/auth")
     public ResponseEntity<ObjectNode> vkLogin(@RequestBody String code) throws IOException {
         this.jsonObject = objectMapper.createObjectNode();
-        //try {
+        try {
             TokenVKViewModel token = authService.getTokenVK(code);
 
             ObjectNode node = objectMapper.valueToTree( token );
-            //TODO: generate our JWT token, which based on VK info, 
-            //TODO: add user and VK auth token to db
-            this.jsonObject.putObject("vkAuthInfo").putAll(node);
+
+            this.jsonObject.putObject("vkAuthInfo").putAll(node); 
+
+            User user = userService.getUserByVkToken(token);
+            if (user != null){
+                String appToken = authService.getToken(user.getLogin(), user.getPassword(), token);
+                this.jsonObject.put("access_token", appToken);
+            }
 
             return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            
-        //}
-        //catch (Exception e) {
-        //    return new ResponseError().generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST);
-        //}
+        }
+        catch (Exception e) {
+            return new ResponseError().generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
     
     @PostMapping("/login")
     public ResponseEntity<ObjectNode> login(@RequestBody TokenViewModel viewModel) throws Exception {
         this.jsonObject = objectMapper.createObjectNode();
         try {
-            String token = authService.getToken(viewModel.login, viewModel.pass);
+            String token = authService.getToken(viewModel.login, viewModel.pass, null);
             this.jsonObject.put("access_token", token);
             return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            
         } catch (EmptyResultDataAccessException e) {
@@ -91,7 +96,7 @@ public class AuthController {
         this.jsonObject = objectMapper.createObjectNode();
         try {
             User newUser = userService.create(user);
-            String token = authService.getToken(newUser.getLogin(), newUser.getPassword());
+            String token = authService.getToken(newUser.getLogin(), newUser.getPassword(), null);
             this.jsonObject.put("userId", newUser.getId());
             this.jsonObject.put("access_token", token);
             return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            

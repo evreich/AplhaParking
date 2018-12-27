@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.subst.Token;
+
 import com.auth.models.*;
 
 import java.io.IOException;
@@ -48,12 +50,13 @@ public class AuthService {
         return tokenVK;
     }
 
-    public String getToken(String login, String pass) throws Exception {
+    public String getToken(String login, String pass, TokenVKViewModel vkToken) throws Exception {
         if (login == null || pass == null){
             return null;
         }
-        User user = userRepository.getUserByLogin(login);       
-        if (userRepository.checkPassword(login, pass)) { 
+        User user = vkToken == null ? userRepository.getUserByLogin(login) : userRepository.getUserByVkId(vkToken.user_id);
+    
+        if (vkToken != null || userRepository.checkPassword(login, pass)) { 
             if (roleRepository.getRoleByName("employee") == null)
                 throw new EmptyResultDataAccessException("Ошибка БД! Стандартной роли пользователя не существует.", 1);
 
@@ -65,6 +68,10 @@ public class AuthService {
 
             claims.put(AppConsts.ROLES_CLAIM, userRepository.getUserRoles( user.getId() )
                 .stream().map(role -> role.getName()).collect(Collectors.toList()));
+
+            if (vkToken != null){
+                claims.put(AppConsts.VK_CLAIM, vkToken.access_token);   
+            }  
 
             String token = jwtBuilder
                 .setClaims(claims)
