@@ -63,8 +63,22 @@ services:
     - ASPNETCORE_ENVIRONMENT=dev
     - ASPNETCORE_URLS=http://*:9000
     depends_on: 
-      - auth.api
-      - parking.api
+    - auth.api
+    - parking.api
+
+  webmvc:
+    image: evreich/mvcclient:${TAG:-latest}
+    build:
+      context: ./AlphaParking.Java.Client/javaclient
+      dockerfile: Dockerfile  
+    ports:
+    - "8585:8585"  
+    environment:
+    - GATEWAY_HOST=localhost
+    - GATEWAY_PORT=9000
+    - SERVER_PORT=8585
+    depends_on:
+    - gateway
 
   webspa:
     image: evreich/client:${TAG:-latest}
@@ -78,4 +92,4 @@ services:
     - GATEWAY_PORT=9000
     - ASPNETCORE_URLS=http://*:8383
     depends_on:
-      - gateway
+    - gateway
