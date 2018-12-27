@@ -2,6 +2,8 @@
 import * as ReactDOM from 'react-dom';
 import Router from './components/routes/Router';
 
+import './stylesheets/common.scss';
+
 declare let module: any;
 
 const rootElem = document.getElementById('react-root');

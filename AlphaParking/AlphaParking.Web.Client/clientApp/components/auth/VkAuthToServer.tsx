@@ -54,14 +54,14 @@ class VkAuthToServer extends React.Component<IProps, IState> {
         const { loading, requestSended, error } = this.state;
         const { location: { search }, history } = this.props;
         if (error)
-            return <div style={{color: 'red'}}>{error}</div>;
+            return <h2 style={{color: 'red'}}>{error}</h2>;
         if (!requestSended)
             this.setState({
                 loading: true,
                 requestSended: true
             }, () => this.sendRequestToServer(search.split('=')[1].toString()));
         if (loading && requestSended)
-            return <div>Ожидание ответа от сервера...</div>;
+            return <h2>Ожидание ответа от сервера...</h2>;
         if (!loading && requestSended)
             history.push('/hello');
         return null;
