@@ -3,7 +3,6 @@ FROM maven:alpine as build
 WORKDIR /main
 COPY . .
 RUN mvn clean package
-COPY . .
 
 # package without maven
 FROM openjdk:8-jdk-alpine

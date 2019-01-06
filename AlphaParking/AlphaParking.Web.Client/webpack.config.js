@@ -9,7 +9,7 @@ module.exports = env => {
     const config = {
         mode: mode,
         entry: {
-            app: ['./clientApp/app.tsx']
+            app: ['./clientApp/index.tsx']
         },
     
         output: {

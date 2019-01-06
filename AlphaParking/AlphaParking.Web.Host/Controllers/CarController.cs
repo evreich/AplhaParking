@@ -19,6 +19,7 @@ namespace AlphaParking.Web.Host.Controllers
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
         public CarController(ICarService carService, IMapper mapper)

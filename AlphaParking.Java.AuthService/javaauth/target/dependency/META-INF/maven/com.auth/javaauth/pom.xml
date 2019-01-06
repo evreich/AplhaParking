@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<azure.version>2.0.5</azure.version>
+		<!-- <azure.version>2.0.5</azure.version> -->
 		<java.version>1.8</java.version>
 		<docker.image.prefix>evreich</docker.image.prefix> 
 	</properties>
@@ -35,10 +35,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.microsoft.azure</groupId>
 			<artifactId>azure-storage-spring-boot-starter</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -49,10 +49,25 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
 			<version>7.0.0.jre8</version>
+		</dependency> -->
+		<dependency>
+		<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>postgres-socket-factory</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
+			<version>1.0.0.RELEASE</version>
 		</dependency>
 		<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,8 +88,14 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-crypto</artifactId>
+    		<version>3.1.0.RELEASE</version>
+		</dependency>
 	</dependencies>
-	<dependencyManagement>
+	<!-- <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.microsoft.azure</groupId>
@@ -84,7 +105,7 @@
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
-	</dependencyManagement>
+	</dependencyManagement> -->
 
 	<build>
 		<plugins>
@@ -93,30 +114,30 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!-- Зависимости для деплоя сборки maven в Azure app service -->
-			<plugin>
+			<!-- <plugin>
 				<groupId>com.microsoft.azure</groupId>
 				<artifactId>azure-webapp-maven-plugin</artifactId>
 				<version>1.4.0</version>
 				<configuration>
-					<deploymentType>jar</deploymentType>
+					<deploymentType>jar</deploymentType> -->
 
 					<!-- configure app to run on port 80, required by App Service -->
-					<appSettings>
+					<!-- <appSettings>
 						<property> 
 						<name>JAVA_OPTS</name> 
 						<value>-Dserver.port=80</value> 
 						</property> 
-					</appSettings>
+					</appSettings> -->
 
 					<!-- Web App information -->
-					<resourceGroup>AlphaParkingRG</resourceGroup>
+					<!-- <resourceGroup>AlphaParkingRG</resourceGroup>
 					<appName>alphaparkingauth</appName>
-					<region>West Europe</region>  
+					<region>West Europe</region>   -->
 
 					<!-- Java Runtime Stack for Web App on Linux-->
-					<javaWebContainer>jre8</javaWebContainer>
+					<!-- <javaWebContainer>jre8</javaWebContainer>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<!-- Зависимости для билда образа докера на основе сборки maven -->
 			<plugin>
 				<groupId>com.spotify</groupId>

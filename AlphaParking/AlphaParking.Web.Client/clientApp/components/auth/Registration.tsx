@@ -1,12 +1,13 @@
 import * as React from 'react';
 
+import RegistrationForm from './forms/RegistrationForm';
 import VKAuthButton from './VKAuthButton';
 
 export default class Registration extends React.Component {
     render() {
         return <div>
-            <h2>Страница регистрации</h2>
-            <p>Место для формы регистрации</p>
+            <h2>Форма регистрации</h2>
+            <RegistrationForm />
             <hr />
             <VKAuthButton />
         </div>;

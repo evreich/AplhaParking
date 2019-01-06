@@ -25,7 +25,6 @@ import com.auth.repositories.UserRepository;
 import com.auth.utils.AppConsts;
 import com.auth.utils.HttpClient;
 import com.auth.view_models.TokenVKViewModel;
-import com.microsoft.applicationinsights.core.dependencies.gson.Gson;
 
 @Service
 public class AuthService {
@@ -45,7 +44,7 @@ public class AuthService {
         queryParams.put("redirect_uri", AppConsts.VK_REDIRECT_URI);
         queryParams.put("code", code);
         String serverResponse = httpClient.getRequest(AppConsts.VK_ACCESS_TOKEN_URI, queryParams);
-        TokenVKViewModel tokenVK = new Gson().fromJson(serverResponse, TokenVKViewModel.class);
+        TokenVKViewModel tokenVK = new com.google.gson.Gson().fromJson(serverResponse, TokenVKViewModel.class);
         //TODO: check generated token and answer from VK
         return tokenVK;
     }

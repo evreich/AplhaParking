@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import LoginForm from './LoginForm';
+import LoginForm from './forms/LoginForm';
 
 // tslint:disable-next-line:no-empty-interface
 interface ILoginProps extends RouteComponentProps { }
@@ -10,7 +10,7 @@ interface ILoginProps extends RouteComponentProps { }
 const Login: React.SFC<ILoginProps> = (props) => {
     const onVkRegBtnClick = () => props.history.push('/registration');
     return <>
-        <h2>Страница входа</h2>
+        <h2>Форма входа</h2>
         <br />
         <LoginForm />
         <hr />

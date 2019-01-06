@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import consts from '../../constants';
+import * as Consts from '../../constants/common';
 
 // tslint:disable-next-line:no-empty-interface
 interface IProps extends RouteComponentProps { }
@@ -33,7 +33,7 @@ class VKAuthServerWaiter extends React.Component<IProps, IState> {
             method: 'POST',
             mode: 'cors'
         };
-        fetch(`${consts.SERVER_API}/vk/auth`, confToken)
+        fetch(`${Consts.SERVER_API}/vk/auth`, confToken)
             .then((response) => {
                 if (response.ok)
                     return response.json();

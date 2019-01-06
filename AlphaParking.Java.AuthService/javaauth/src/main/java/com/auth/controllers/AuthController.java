@@ -29,6 +29,7 @@ import com.auth.utils.ResponseError;
 import com.auth.view_models.TokenVKViewModel;
 import com.auth.view_models.TokenViewModel;
 import com.auth.view_models.UserRoleViewModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -83,6 +84,10 @@ public class AuthController {
         try {
             String token = authService.getToken(viewModel.login, viewModel.pass, null);
             this.jsonObject.put("access_token", token);
+            // !!!!!!!!внесены изменения
+            ObjectNode node = objectMapper.valueToTree(userService.getUserByLogin(viewModel.login));
+            this.jsonObject.putObject("user").putAll(node);
+            // !!!!!!!
             return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            
         } catch (EmptyResultDataAccessException e) {
             return new ResponseError().generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -97,7 +102,10 @@ public class AuthController {
         try {
             User newUser = userService.create(user);
             String token = authService.getToken(newUser.getLogin(), newUser.getPassword(), null);
-            this.jsonObject.put("userId", newUser.getId());
+            // !!!!!!!!внесены изменения
+            ObjectNode node = objectMapper.valueToTree(newUser);
+            this.jsonObject.putObject("user").putAll(node);
+            // !!!!!!!
             this.jsonObject.put("access_token", token);
             return new ResponseEntity<ObjectNode>(this.jsonObject, HttpStatus.OK);            
         } catch (EmptyResultDataAccessException e) {
@@ -210,7 +218,7 @@ public class AuthController {
     }
 
     @PutMapping("/user/update")
-    public ResponseEntity<ObjectNode> updateUser(@RequestBody User user) {
+    public ResponseEntity<ObjectNode> updateUser(@RequestBody User user) throws JsonProcessingException {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
         // (имеется подписанный данным сервером JWT token в запросе)
@@ -223,7 +231,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/user/delete/{userId}")
-    public ResponseEntity<ObjectNode> deleteUser(@PathVariable int userId) {
+    public ResponseEntity<ObjectNode> deleteUser(@PathVariable int userId) throws JsonProcessingException {
         this.jsonObject = objectMapper.createObjectNode();      
         //Проверка, что запрос создан зарегистрированным ранее пользователем 
         // (имеется подписанный данным сервером JWT token в запросе)

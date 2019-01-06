@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: javaauth
 Implementation-Version: 0.0.1
-Built-By: Максим
+Built-By: User
 Implementation-Vendor-Id: com.auth
 Spring-Boot-Version: 2.1.0.RELEASE
 Main-Class: org.springframework.boot.loader.JarLauncher
@@ -9,7 +9,7 @@ Start-Class: com.auth.Application
 Spring-Boot-Classes: BOOT-INF/classes/
 Spring-Boot-Lib: BOOT-INF/lib/
 Created-By: Apache Maven 3.6.0
-Build-Jdk: 1.8.0_152
+Build-Jdk: 1.8.0_192
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/javaauth
 

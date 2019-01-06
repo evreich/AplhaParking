@@ -54,9 +54,12 @@ namespace AlphaParking.BLL
 
         public async Task<IEnumerable<CarDTO>> GetUserCars(int userId)
         {
-            return _mapper.Map<UserDTO>(await _database.UserRepository.GetElem(u => u.Id == userId)).Cars;
+            return _mapper.Map<IEnumerable<Car>,IEnumerable<CarDTO>>(
+                await _database.CarRepository.GetElems(
+                    car => car.UserId == userId, 
+                    car => car.User)
+            );
         }
-
         public async Task<UserDTO> Create(UserDTO elem)
         {
             return await MappingDataUtils.WrapperMappingDALFunc<UserDTO, User>

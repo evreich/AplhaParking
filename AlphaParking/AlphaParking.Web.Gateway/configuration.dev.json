@@ -28,6 +28,18 @@
             "UpstreamPathTemplate": "/login", 
             "UpstreamHttpMethod": [ "POST" ]
         }, 
+        {
+            "DownstreamPathTemplate": "/register", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/register", 
+            "UpstreamHttpMethod": [ "POST" ]
+        },
         { 
             "DownstreamPathTemplate": "/vk/auth", 
             "DownstreamScheme": "http", 
@@ -78,6 +90,22 @@
                 }
             ],
             "UpstreamPathTemplate": "/cars", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+        { 
+            "DownstreamPathTemplate": "/user/cars", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8182
+                }
+            ],
+            "UpstreamPathTemplate": "/user/cars", 
             "UpstreamHttpMethod": [ "GET" ],
             "AuthenticationOptions": {  
                 "AuthenticationProviderKey": "Bearer",  

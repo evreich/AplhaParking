@@ -4,26 +4,31 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from '../auth/Login';
 import Registration from '../auth/Registration';
 import VKAuthServerWaiter from '../auth/VKAuthServerWaiter';
-import Hello from '../common/HelloComponent';
+import UserCars from '../cars/UserCars';
+import ForbiddenErrorPage from '../common/ForbiddenErrorPage';
 import Home from '../Home';
+import AllParkingPlaces from '../parkPlaces/AllParkingPlaces';
+import NotAuthOnlyRoute from './NotAuthOnlyRoute';
+import PrivateRoute from './PrivateRoute';
 
-class RouterComponent extends React.Component {
-    render() {
-        return <Router>
-            <>
-                {/* TODO: Layout for every page */}
-                <div>Шапка меню приложения для всех страниц</div>
-                <hr />
-                <Switch>
-                    <Route exact path='/' component={Home} />
-                    <Route path='/hello' component={Hello} />
-                    <Route path='/registration' component={Registration} />
-                    <Route path='/login' component={Login} />
-                    <Route path='/vk/auth' component={VKAuthServerWaiter} />
-                </Switch>
-            </>
-        </Router>;
-    }
+interface IProps {
+    isAuth: boolean;
 }
+
+const RouterComponent: React.SFC<IProps> = (props) => {
+    const { isAuth } = props;
+
+    return <Router>
+        <Switch>
+            <NotAuthOnlyRoute exact path='/' component={Home} isAuth={isAuth}/>
+            <NotAuthOnlyRoute path='/registration' component={Registration} isAuth={isAuth}/>
+            <NotAuthOnlyRoute path='/login' component={Login} isAuth={isAuth}/>
+            <NotAuthOnlyRoute path='/vk/auth' component={VKAuthServerWaiter} isAuth={isAuth}/>
+            <Route path='/forbidden' component={ForbiddenErrorPage}/>
+            <PrivateRoute path='/cars' component={UserCars} isAuth={isAuth} />
+            <PrivateRoute path='/parkPlaces' component={AllParkingPlaces} isAuth={isAuth} />
+        </Switch>
+    </Router>;
+};
 
 export default RouterComponent;

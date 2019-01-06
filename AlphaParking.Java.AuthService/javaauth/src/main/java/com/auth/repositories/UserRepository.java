@@ -1,22 +1,12 @@
 package com.auth.repositories;
 
-import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import com.auth.models.Role;
 import com.auth.models.User;
@@ -26,7 +16,16 @@ import com.auth.utils.HttpClient;
 import com.auth.view_models.TokenVKViewModel;
 import com.auth.view_models.VkProfileViewModel;
 import com.auth.view_models.VkUserViewModel;
-import com.microsoft.applicationinsights.core.dependencies.gson.Gson;
+import com.google.gson.Gson;
+
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository {
@@ -37,18 +36,17 @@ public class UserRepository {
     @Autowired
     private HttpClient htppClient;
 
-    public User getUserByVkToken (TokenVKViewModel vkToken) throws Exception {
-        
+    public User getUserByVkToken(TokenVKViewModel vkToken) throws Exception {
+
         User user = null;
-        try{
-            user = (User) this.jdbcTemplate.queryForObject(
-                "SELECT * FROM users WHERE vkId = ?", new UserRowMapper(), vkToken.user_id);
-        }
-        catch(EmptyResultDataAccessException e ){
+        try {
+            user = (User) this.jdbcTemplate.queryForObject("SELECT * FROM users WHERE vkId = ?", new UserRowMapper(),
+                    vkToken.user_id);
+        } catch (EmptyResultDataAccessException e) {
             user = null;
         }
 
-        if (user != null){
+        if (user != null) {
             return user;
         }
 
