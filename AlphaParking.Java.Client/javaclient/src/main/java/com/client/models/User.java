@@ -23,7 +23,7 @@ public class User implements Serializable {
         this.setId(id);
         this.setLogin(login);
         this.setPassword(password);
-        this.setFIO(fio);
+        this.setFio(fio);
         this.setAddress(address);
         this.setPhone(phone);
         this.setEmail(email);
@@ -33,7 +33,7 @@ public class User implements Serializable {
     String phone, String email) {
         this.setLogin(login);
         this.setPassword(password);
-        this.setFIO(fio);
+        this.setFio(fio);
         this.setAddress(address);
         this.setPhone(phone);
         this.setEmail(email);
@@ -42,7 +42,7 @@ public class User implements Serializable {
     public User(int vkId, String vkToken, String fio, String phone, String email) {
         this.setVkId(vkId);
         this.setVkToken(vkToken);
-        this.setFIO(fio);
+        this.setFio(fio);
         this.setPhone(phone);
         this.setEmail(email);
     }
@@ -92,15 +92,15 @@ public class User implements Serializable {
     /**
      * @return the fIO
      */
-    public String getFIO() {
+    public String getFio() {
         return fio;
     }
 
     /**
      * @param fIO the fIO to set
      */
-    public void setFIO(String fIO) {
-        this.fio = fIO;
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 
     /**

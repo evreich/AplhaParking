@@ -8,15 +8,21 @@
 <body>
     <a href="/users">Список пользователей</a> 
     <h2>Создание пользователя</h2>
-    <form method="post" action="create">
+
+    <div th:if="${errorMessage != null}"
+        th:utext="${errorMessage}" class="error">...
+    </div>
+    <form method="post" action="" th:object="${user}">
         <label>Логин</label>
-        <input type="text" name="login" placeholder="Например, test1"/>
+        <input type="text" name="login" th:field="*{login}" placeholder="Например, test1"/>
+        <span class="error" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span>
         <br/>
         <label>Пароль</label>
         <input type="password" name="password" placeholder="Например, 12345678"/>
         <br/>
         <label>ФИО</label>
-        <input type="text" name="fio" placeholder="Например, Иванов И.И."/>
+        <input type="text" name="fio" th:field="*{fio}" placeholder="Например, Иванов И.И."/>
+        <span class="error" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">..</span>
         <br/>
         <label>Адрес</label>
         <input type="text" name="address"/>
@@ -25,7 +31,8 @@
         <input type="text" name="phone" placeholder="Например, 89154201782"/>
         <br/>
         <label>Email</label>
-        <input type="text" name="email" placeholder="Например, ivanov11@yandex.ru"/>
+        <input type="text" name="email" th:field="*{email}" placeholder="Например, ivanov11@yandex.ru"/>
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>
         <br/>
         <button type="submit">Создать</button>
     </form>
