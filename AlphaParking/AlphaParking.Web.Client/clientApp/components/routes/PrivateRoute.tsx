@@ -8,9 +8,10 @@ interface IProps {
     rest?: any;
 }
 
-const PrivateRoute: React.SFC<IProps> = ({ component, isAuth, path, ...rest }) => (
-    <Route path={path} render={(props) => (
-        isAuth ? {component} : <Redirect to='/forbidden' />
-    )} {...rest} />);
+const PrivateRoute: React.SFC<IProps> = ({ component, isAuth, path, ...rest }) => {
+    return isAuth ?
+        <Route path={path} component={component} {...rest} /> :
+        <Redirect to='/forbidden' />;
+};
 
 export default PrivateRoute;

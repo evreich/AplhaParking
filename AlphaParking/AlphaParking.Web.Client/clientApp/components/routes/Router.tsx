@@ -18,8 +18,7 @@ interface IProps {
 const RouterComponent: React.SFC<IProps> = (props) => {
     const { isAuth } = props;
 
-    return <Router>
-        <Switch>
+    return <Switch>
             <NotAuthOnlyRoute exact path='/' component={Home} isAuth={isAuth}/>
             <NotAuthOnlyRoute path='/registration' component={Registration} isAuth={isAuth}/>
             <NotAuthOnlyRoute path='/login' component={Login} isAuth={isAuth}/>
@@ -27,8 +26,7 @@ const RouterComponent: React.SFC<IProps> = (props) => {
             <Route path='/forbidden' component={ForbiddenErrorPage}/>
             <PrivateRoute path='/cars' component={UserCars} isAuth={isAuth} />
             <PrivateRoute path='/parkPlaces' component={AllParkingPlaces} isAuth={isAuth} />
-        </Switch>
-    </Router>;
+        </Switch>;
 };
 
 export default RouterComponent;

@@ -8,9 +8,10 @@ interface IProps {
     exact?: boolean;
 }
 
-const NotAuthOnlyRoute: React.SFC<IProps> = ({ component, isAuth, path, exact, ...rest }) => (
-    <Route path={path} render={(props) => (
-        !isAuth ? {component} : <Redirect to='/cars' />
-    )} {...rest} />);
+const NotAuthOnlyRoute: React.SFC<IProps> = ({ component, isAuth, path, exact, ...rest }) => {
+    return !isAuth ?
+        <Route path={path} component={component} exact={exact} {...rest} /> :
+        <Redirect to='/cars' />;
+};
 
 export default NotAuthOnlyRoute;

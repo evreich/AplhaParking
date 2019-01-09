@@ -93,8 +93,8 @@ public class UserRepository {
             throw new Exception("Пользователь с таким логином уже существует");
         }
 
-        final String sql = "insert into users(id,login,password,fio,address,phone,email, vkId, vkToken)"+
-                           "values(NEXT VALUE FOR dbo.UserSeq,?,?,?,?,?,?,?,?)";
+        final String sql = "insert into users(login,password,fio,address,phone,email, vkId, vkToken)"+
+                           "values(?,?,?,?,?,?,?,?)";
   
         String hashedPass = password.equals(Strings.EMPTY) ? Strings.EMPTY : new BCryptPasswordEncoder().encode( user.getPassword());              
 
@@ -113,11 +113,9 @@ public class UserRepository {
                 return ps;
             }
         });
-
-        Long newUserId = jdbcTemplate.queryForObject("SELECT current_value FROM sys.sequences WHERE name = 'UserSeq';", Long.class);
      
-        user.setId(Math.toIntExact(newUserId));
-        return user;
+        User newUser = this.getUserByLogin(user.getLogin());
+        return newUser;
     }
 
     public User getUserById (int userId) {

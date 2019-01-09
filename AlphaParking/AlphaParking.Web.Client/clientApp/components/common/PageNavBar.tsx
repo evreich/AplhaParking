@@ -82,7 +82,7 @@ const PageNavBar: React.SFC<IProps & IMapDispatchToProps> = (props) => {
                 </Navbar.Brand>
             </Navbar.Header>
             {isAuth ? authMenu : notAuthMenu}
-        </Navbar>;
+        </Navbar>
     </>);
 };
 

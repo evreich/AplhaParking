@@ -23,26 +23,21 @@ public class RoleRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Role> getRoles () {
-        return this.jdbcTemplate.query(
-            "SELECT * FROM roles",
-            new BeanPropertyRowMapper(Role.class));
+    public List<Role> getRoles() {
+        return this.jdbcTemplate.query("SELECT * FROM roles", new BeanPropertyRowMapper(Role.class));
     }
 
-    public List<String> getRoleNames () {
-        return this.jdbcTemplate.queryForList(
-            "SELECT name FROM roles",
-            String.class);
+    public List<String> getRoleNames() {
+        return this.jdbcTemplate.queryForList("SELECT name FROM roles", String.class);
     }
 
-    public Role create(final Role role) throws Exception{
-        Role oldRole = getRoleByName( role.getName() );
-        if (oldRole != null){
+    public Role create(final Role role) throws Exception {
+        Role oldRole = getRoleByName(role.getName());
+        if (oldRole != null) {
             throw new Exception("Роль с таким наименованием уже существует");
         }
 
-        final String sql = "insert into roles(name)"+
-                           "values(?)";            
+        final String sql = "insert into roles(name)" + "values(?)";
 
         this.jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -57,28 +52,26 @@ public class RoleRepository {
         return newRole;
     }
 
-    public Role getRoleById (int roleId) {
-        try{
-            return (Role) this.jdbcTemplate.queryForObject(
-                "SELECT * FROM roles WHERE id = ?", new RoleRowMapper(), roleId);
-        }
-        catch(EmptyResultDataAccessException e ){
+    public Role getRoleById(int roleId) {
+        try {
+            return (Role) this.jdbcTemplate.queryForObject("SELECT * FROM roles WHERE id = ?", new RoleRowMapper(),
+                    roleId);
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
-    public Role getRoleByName (String name) {
-        try{
-            return (Role) this.jdbcTemplate.queryForObject(
-                "SELECT * FROM roles WHERE lower(name) = ?", new RoleRowMapper(), name.toLowerCase());
-        }
-        catch(EmptyResultDataAccessException e ){
+    public Role getRoleByName(String name) {
+        try {
+            return (Role) this.jdbcTemplate.queryForObject("SELECT * FROM roles WHERE lower(name) = ?",
+                    new RoleRowMapper(), name.toLowerCase());
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
-    public void update(Role role){
-        final String sql = "update roles set name = ? where id = ?";          
+    public void update(Role role) {
+        final String sql = "update roles set name = ? where id = ?";
 
         this.jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -91,8 +84,8 @@ public class RoleRepository {
         });
     }
 
-    public void delete(int roleId){
-        final String sql = "delete roles where id = ?";          
+    public void delete(int roleId) {
+        final String sql = "delete roles where id = ?";
 
         this.jdbcTemplate.update(new PreparedStatementCreator() {
             @Override

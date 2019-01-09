@@ -10,6 +10,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class Application {
 	public static void main(String[] args) {
 	    ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-		context.getBean(SeedDb.class).seedDefaultRoles();
+		// Заполнение бд дефолтными значениями
+		SeedDb seedDb = context.getBean(SeedDb.class);
+		seedDb.seedDefaultRoles();
+		seedDb.seedDefaultUsers();
+		seedDb.setUserRoleRelationships();
 	}
 }
