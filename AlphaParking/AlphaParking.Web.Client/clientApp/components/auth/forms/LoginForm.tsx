@@ -16,7 +16,11 @@ interface IMapDispatchToProps {
     login: (login: string, pass: string) => void;
 }
 
-class LoginForm extends React.Component<IMapDispatchToProps, ILoginFormState> {
+interface IProps {
+    regBtn: JSX.Element;
+}
+
+class LoginForm extends React.Component<IMapDispatchToProps & IProps, ILoginFormState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -65,13 +69,16 @@ class LoginForm extends React.Component<IMapDispatchToProps, ILoginFormState> {
     }
 
     loginBtnClickHandler = (event: React.MouseEvent<Button>) => {
-        const { login, password: pass } = this.state;
+        const { login, password: pass, error } = this.state;
         const { login: loginRequest } = this.props;
-        loginRequest(login, pass);
+        if (!error && login !== '' && pass !== '')
+            loginRequest(login, pass);
     }
 
     render() {
         const { login, password, error } = this.state;
+        const { regBtn } = this.props;
+        const disableBtn = !!error || login === '' || password === '';
         return <div className='main'>
             <FieldGroup
                 id='formControlsText'
@@ -88,8 +95,12 @@ class LoginForm extends React.Component<IMapDispatchToProps, ILoginFormState> {
                 onChange={this.passwordHandler}
                 type='password'
                 placeholder='Например, ivanovPass' />
-            <Button bsStyle='success' bsSize='large' onClick={this.loginBtnClickHandler}>Войти</Button>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Button disabled={disableBtn} bsStyle='success' bsSize='large' onClick={this.loginBtnClickHandler}>Войти</Button>
+                {regBtn}
+            </div>
+            <hr />
+            {error && <p style={{ color: 'red', fontSize: '20px' }}>{error}</p>}
         </div>;
     }
 }

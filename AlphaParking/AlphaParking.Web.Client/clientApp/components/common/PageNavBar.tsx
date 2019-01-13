@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { logoutAction } from '../../ducks/user';
@@ -28,22 +28,32 @@ const PageNavBar: React.SFC<IProps & IMapDispatchToProps> = (props) => {
     };
 
     const carsClick = (event: React.MouseEvent<NavItem>) => {
+        event.preventDefault();
         push('/cars');
     };
 
+    const regClick = (event: React.MouseEvent<NavItem>) => {
+        event.preventDefault();
+        push('/registration');
+    };
+
     const parkingPlacesClick = (event: React.MouseEvent<NavItem>) => {
+        event.preventDefault();
         push('/parkPlaces');
     };
 
     const profileClick = (event: React.MouseEvent<NavItem>) => {
+        event.preventDefault();
         push('/profile');
     };
 
     const loginClick = (event: React.MouseEvent<NavItem>) => {
+        event.preventDefault();
         push('/login');
     };
 
     const logoutClick = (event: React.MouseEvent<NavItem>) => {
+        event.preventDefault();
         logout();
         push('/');
     };
@@ -68,7 +78,10 @@ const PageNavBar: React.SFC<IProps & IMapDispatchToProps> = (props) => {
     </>;
     const notAuthMenu = <>
         <Nav pullRight>
-            <NavItem eventKey={1} onClick={loginClick}>
+            <NavItem eventKey={1} onClick={regClick}>
+                Регистрация
+            </NavItem>
+            <NavItem eventKey={2} onClick={loginClick}>
                 Войти
             </NavItem>
         </Nav>

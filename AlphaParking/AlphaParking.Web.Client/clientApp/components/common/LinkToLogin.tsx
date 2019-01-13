@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-interface IProps extends RouteComponentProps {
+interface IProps {
     text: string;
 }
 
 const LinkToLogin: React.SFC<IProps> = (props) => {
-    const { history: { push }, text } = props;
-    return <a onClick={() => push('/login')}>{text}</a>;
+    const { text } = props;
+    return <Link to={'/login'}>{text}</Link>;
 } ;
 
-export default withRouter(LinkToLogin);
+export default LinkToLogin;

@@ -1,5 +1,5 @@
 export default abstract class Model {
-    toJSON() {
+    getJSON() {
         return JSON.stringify(this);
     }
 }

@@ -30,7 +30,7 @@ namespace AlphaParking.Web.Host.Controllers
         {
             return Ok(_mapper.Map<IEnumerable<UserDTO>, IEnumerable<UserViewModel>>(await _userService.GetAll()));
         }
-        [HttpGet("/cars")]
+        [HttpGet("/user/cars")]
         public async Task<IActionResult> GetUserCars([FromQuery] int userId)
         {
             return Ok(_mapper.Map<IEnumerable<CarDTO>, IEnumerable<CarViewModel>>(await _userService.GetUserCars(userId)));

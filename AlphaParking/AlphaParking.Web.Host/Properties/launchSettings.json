@@ -28,7 +28,7 @@
         "EVENTBUS_HOST": "localhost",
         "EVENTBUS_PORT": "5672"
       },
-      "applicationUrl": "https://localhost:8283;http://localhost:8182"
+      "applicationUrl": "http://localhost:8182"
     }
   }
 }

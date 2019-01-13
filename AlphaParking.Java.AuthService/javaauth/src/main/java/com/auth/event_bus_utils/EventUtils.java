@@ -21,13 +21,13 @@ public class EventUtils {
     @Autowired
     private RabbitTemplate template;
 
-    public void publish(IntegrationEvent event) throws JsonProcessingException
+    public void publish(IntegrationEvent event, String exchangeName) throws JsonProcessingException
     {
         String eventJson = objectMapper.writeValueAsString(event);
         Message message = MessageBuilder
                             .withBody(eventJson.getBytes())
                             .setContentType(MessageProperties.CONTENT_TYPE_JSON)
                             .build();
-        this.template.convertAndSend(AppConsts.exchangeName, "", message);
+        this.template.convertAndSend(exchangeName, "", message);
     }
 }

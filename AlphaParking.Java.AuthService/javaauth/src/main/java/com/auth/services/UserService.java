@@ -43,23 +43,14 @@ public class UserService {
         User createdUser = null;
         createdUser = this.userRepository.create(user);
 
-        if (createdUser != null){
-            grantRole (createdUser.getId(), AppConsts.ROLE_EMPLOYEE_ID);
+        // Отправка в очередь RabbitMQ интеграционного события создания нового
+        // пользователя
+        UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
+        // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
+        // не будет создаваться и отправлятсья в брокер
+        // Возможно стоит переделать
+        eventUtils.publish(event, AppConsts.topicExchangeNameAdd);
 
-            // Отправка в очередь RabbitMQ интеграционного события создания нового
-            // пользователя
-            UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
-            // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
-            // не будет создаваться и отправлятсья в брокер
-            // Возможно стоит переделать
-            try{
-                eventUtils.publish(event);
-            }
-            catch (Exception e){
-                // Заглушка для ситуаций, когда сервер .Net не поднят
-            }
-        }
-        
         return createdUser;
     }
 
@@ -82,12 +73,7 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        try{
-            eventUtils.publish(event);
-        }
-        catch (Exception e){
-            // Заглушка для ситуаций, когда сервер .Net не поднят
-        }
+        eventUtils.publish(event, AppConsts.topicExchangeNameEdit);
     }
 
     public void delete(int userId) throws JsonProcessingException {
@@ -100,12 +86,7 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        try{
-            eventUtils.publish(event);
-        }
-        catch (Exception e){
-            // Заглушка для ситуаций, когда сервер .Net не поднят
-        }
+        eventUtils.publish(event, AppConsts.topicExchangeNameDelete);
     }
 
     public List<Role> getUserRoles (int userId){

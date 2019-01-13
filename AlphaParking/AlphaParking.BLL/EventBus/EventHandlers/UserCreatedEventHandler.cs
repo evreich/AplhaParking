@@ -14,17 +14,17 @@ namespace AlphaParking.BLL.EventBus.EventHandlers
     public class UserCreatedEventHandler : IIntegrationEventHandler<UserCreatedIntegrationEvent>
     {
         private readonly IMapper _mapper;
-        private readonly Func<AlphaParkingDbContext> dbContextFactory;
+        private readonly Func<AlphaParkingDbContext> _dbContextFactory;
 
-        public UserCreatedEventHandler(Func<AlphaParkingDbContext> _dbContextFactory, IMapper mapper)
+        public UserCreatedEventHandler(Func<AlphaParkingDbContext> dbContextFactory, IMapper mapper)
         {
             _mapper = mapper;
-            dbContextFactory = _dbContextFactory;
+            _dbContextFactory = dbContextFactory;
         }
 
         public async Task Handle(UserCreatedIntegrationEvent @event)
         {
-            using (var context = dbContextFactory())
+            using (var context = _dbContextFactory())
             {
                 await context.AddAsync(@event.User);
                 await context.SaveChangesAsync();

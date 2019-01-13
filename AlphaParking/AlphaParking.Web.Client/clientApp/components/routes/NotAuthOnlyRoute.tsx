@@ -3,7 +3,7 @@ import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 
 interface IProps {
     isAuth: boolean;
-    component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+    component: any;
     path: string;
     exact?: boolean;
 }

@@ -4,5 +4,6 @@
     {
         public static ParkingSpace ParkingSpaceOne { get; } = new ParkingSpace { Number = 1 };
         public static ParkingSpace ParkingSpaceTwo { get; } = new ParkingSpace { Number = 2 };
+        public static ParkingSpace ParkingSpaceThree { get; } = new ParkingSpace { Number = 3 };
     }
 }

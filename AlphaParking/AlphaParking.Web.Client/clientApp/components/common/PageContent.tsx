@@ -10,7 +10,8 @@ interface IMapStateToProps {
 
 const PageContent: React.SFC<IMapStateToProps> = ({ isFetching, children }) => {
     return <div className='container'>
-        {isFetching ? <Loader /> : {children}}
+        {isFetching && <Loader />}
+        {children}
     </div>;
 };
 

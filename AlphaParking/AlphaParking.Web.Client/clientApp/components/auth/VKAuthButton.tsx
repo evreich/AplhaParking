@@ -4,7 +4,7 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 
 import * as Consts from '../../constants/vkAuth';
 
-const VKAuthButton: React.SFC = () => {
+const VKAuthButton: React.SFC<{ text: string; }> = (props) => {
     const url = Consts.OAUTH_VK_AUTH;
 
     const vkAuthHandler = (event: React.MouseEvent<Button>): void => {
@@ -14,7 +14,7 @@ const VKAuthButton: React.SFC = () => {
 
     return <ButtonToolbar>
         <Button bsStyle='primary' bsSize='large' onClick={vkAuthHandler}>
-            Регистрация VK
+            {props.text}
         </Button>
     </ButtonToolbar>;
 };

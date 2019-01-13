@@ -17,17 +17,47 @@ import org.springframework.amqp.core.QueueBuilder;
 public class RabbitMQConfiguration  
 {
     @Bean
-    Queue queue() {
-        return QueueBuilder.durable(AppConsts.queueName).build();
+    Queue queueAdd() {
+        return QueueBuilder.durable(AppConsts.queueNameAdd).build();
     }
 
     @Bean
-    Exchange exchange() {
-        return ExchangeBuilder.fanoutExchange(AppConsts.exchangeName).build();
+    Exchange exchangeAdd() {
+        return ExchangeBuilder.fanoutExchange(AppConsts.topicExchangeNameAdd).build();
     }
 
     @Bean
-    Binding binding(Queue queue, FanoutExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange);
+    Binding bindingAdd() {
+        return BindingBuilder.bind(queueAdd()).to((FanoutExchange) exchangeAdd());
+    }
+
+    @Bean
+    Queue queueEdit() {
+        return QueueBuilder.durable(AppConsts.queueNameEdit).build();
+    }
+
+    @Bean
+    Exchange exchangeEdit() {
+        return ExchangeBuilder.fanoutExchange(AppConsts.topicExchangeNameEdit).build();
+    }
+
+    @Bean
+    Binding bindingEdit() {
+        return BindingBuilder.bind(queueEdit()).to((FanoutExchange) exchangeEdit());
+    }
+
+    @Bean
+    Queue queueDelete() {
+        return QueueBuilder.durable(AppConsts.queueNameDelete).build();
+    }
+
+    @Bean
+    Exchange exchangeDelete() {
+        return ExchangeBuilder.fanoutExchange(AppConsts.topicExchangeNameDelete).build();
+    }
+
+    @Bean
+    Binding bindingDelete() {
+        return BindingBuilder.bind(queueDelete()).to((FanoutExchange) exchangeDelete());
     }
 }
