@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 interface IMapStateToProps {
@@ -12,7 +13,11 @@ class ErrorNotification extends React.Component<IMapStateToProps> {
 
     render() {
         const { error } = this.props;
-        return error && <div style={{color: 'red'}}>{error}</div>;
+        return error &&
+            <Alert bsStyle='danger'>
+                <h4>You got an error!</h4>
+                <p>{error}</p>
+            </Alert>;
     }
 }
 

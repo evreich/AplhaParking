@@ -1,5 +1,6 @@
 // action types
 export const requestActionTypes = {
+    CLEAR_ERROR: 'CLEAR_ERROR',
     REQUEST_ERROR: 'REQUEST_ERROR',
     REQUEST_SENDED: 'REQUEST_SENDED',
     REQUEST_SUCCESS: 'REQUEST_SUCCESS'
@@ -12,6 +13,7 @@ export const errorRequestAction = (error: string) => ({
     payload: { error },
     type: requestActionTypes.REQUEST_ERROR
 });
+export const clearErrorAction = () => ({ type: requestActionTypes.CLEAR_ERROR});
 
 // reducer
 const initState = {
@@ -37,6 +39,8 @@ const requestReducer = (state = initState, action: any) => {
                 error,
                 isFetching: false
             };
+        case requestActionTypes.CLEAR_ERROR:
+            return { error: ''};
         default:
             return state;
     }

@@ -1,6 +1,22 @@
 { 
     "ReRoutes": [ 
         { 
+            "DownstreamPathTemplate": "/user/cars?userId={userId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8182
+                }
+            ],
+            "UpstreamPathTemplate": "/user/cars?userId={userId}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+        { 
             "DownstreamPathTemplate": "/user/create", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
@@ -37,7 +53,7 @@
                   "Port": 8181
                 }
             ],
-            "UpstreamPathTemplate": "/register", 
+            "UpstreamPathTemplate": "/registration", 
             "UpstreamHttpMethod": [ "POST" ]
         },
         { 
@@ -65,6 +81,18 @@
             "UpstreamHttpMethod": [ "GET" ]
         }, 
         { 
+            "DownstreamPathTemplate": "/user/{userId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/{userId}", 
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        { 
             "DownstreamPathTemplate": "/users", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
@@ -90,22 +118,6 @@
                 }
             ],
             "UpstreamPathTemplate": "/cars", 
-            "UpstreamHttpMethod": [ "GET" ],
-            "AuthenticationOptions": {  
-                "AuthenticationProviderKey": "Bearer",  
-                "AllowedScopes": []  
-            } 
-        },
-        { 
-            "DownstreamPathTemplate": "/user/cars", 
-            "DownstreamScheme": "http", 
-            "DownstreamHostAndPorts": [
-                {
-                  "Host": "localhost",
-                  "Port": 8182
-                }
-            ],
-            "UpstreamPathTemplate": "/user/cars", 
             "UpstreamHttpMethod": [ "GET" ],
             "AuthenticationOptions": {  
                 "AuthenticationProviderKey": "Bearer",  

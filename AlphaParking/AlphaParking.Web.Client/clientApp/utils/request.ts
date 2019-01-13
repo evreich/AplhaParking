@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
 import * as Consts from '../constants/common';
-import { errorRequestAction } from '../ducks/request';
+import { clearErrorAction, errorRequestAction } from '../ducks/request';
 import { getItem } from './localStorageTools';
 
 export const getAuthHeader = () => {
@@ -11,8 +11,9 @@ export const getAuthHeader = () => {
 };
 
 export const notifyError = (error: AxiosError, dispatch: Dispatch) => {
-    if (error.response)
+    if (error.response && error.response.data)
         dispatch(errorRequestAction(error.response.data.error));
     else
         dispatch(errorRequestAction(error.message));
+    setTimeout(() => dispatch(clearErrorAction()), 5000);
 };

@@ -21,19 +21,22 @@ namespace AlphaParking.BLL
                 {
                     if (!database.Users.Any())
                     {
-                        await database.AddRangeAsync(new User[] { UserConstants.Manager });
+                        await database.AddRangeAsync(new User[] { UserConstants.Manager, UserConstants.Admin, UserConstants.Employee });
                         await database.SaveChangesAsync();
                     }
 
                     if (!database.Cars.Any())
                     {
-                        await database.AddRangeAsync(new Car[] { CarConstants.Solaris });
+                        await database.AddRangeAsync(new Car[] { CarConstants.Solaris, CarConstants.Accept, CarConstants.Rapid });
                         await database.SaveChangesAsync();
                     }
 
                     if (!database.ParkingSpaces.Any())
                     {
-                        await database.AddRangeAsync(new ParkingSpace[] { ParkingSpaceConstants.ParkingSpaceOne, ParkingSpaceConstants.ParkingSpaceTwo });
+                        await database.AddRangeAsync(new ParkingSpace[] {
+                            ParkingSpaceConstants.ParkingSpaceOne,
+                            ParkingSpaceConstants.ParkingSpaceTwo,
+                            ParkingSpaceConstants.ParkingSpaceThree });
                         await database.SaveChangesAsync();
                     }
 
@@ -44,8 +47,22 @@ namespace AlphaParking.BLL
                         {
                             new ParkingSpaceCar
                             {
-                                ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceTwo.Number,
+                                ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceOne.Number,
                                 CarNumber = CarConstants.Solaris.Number,
+                                StartParkingTime = new TimeSpan(8, 0, 0),
+                                EndParkingTime = new TimeSpan(17, 0, 0)
+                            },
+                            new ParkingSpaceCar
+                            {
+                                ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceTwo.Number,
+                                CarNumber = CarConstants.Accept.Number,
+                                StartParkingTime = new TimeSpan(8, 0, 0),
+                                EndParkingTime = new TimeSpan(17, 0, 0)
+                            },
+                            new ParkingSpaceCar
+                            {
+                                ParkingSpaceNumber = ParkingSpaceConstants.ParkingSpaceThree.Number,
+                                CarNumber = CarConstants.Rapid.Number,
                                 StartParkingTime = new TimeSpan(8, 0, 0),
                                 EndParkingTime = new TimeSpan(17, 0, 0)
                             }
@@ -53,7 +70,7 @@ namespace AlphaParking.BLL
                         await database.SaveChangesAsync();
                     }
                 }
-            }             
+            }
         }
     }
 }

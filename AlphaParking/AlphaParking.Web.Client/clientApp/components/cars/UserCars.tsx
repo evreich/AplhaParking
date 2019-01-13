@@ -19,7 +19,7 @@ interface IMapStateToProps {
     userId: number;
 }
 
-class UserCars extends React.Component<IProps & IMapStateToProps, IState> {
+class UserCars extends React.PureComponent<IProps & IMapStateToProps, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -30,7 +30,7 @@ class UserCars extends React.Component<IProps & IMapStateToProps, IState> {
     componentDidMount() {
         const { userId, dispatch } = this.props;
         CarApi.getUserCars(userId, dispatch)
-            .then((cars) => this.setState({
+            .then((cars) => cars && this.setState({
                 cars: cars.map((car) => new Car(car.number, car.brand, car.model, car.userId))
             }));
     }
@@ -38,27 +38,32 @@ class UserCars extends React.Component<IProps & IMapStateToProps, IState> {
     render() {
         const { cars } = this.state;
 
-        const editBtn = <Button className='btn-edit' bsSize='medium'>Изменить</Button>;
-        const removeBtn = <Button className='btn-remove' bsSize='medium'>Удалить</Button>;
+        const editBtn = <Button className='btn-edit' bsSize='small'>Изменить</Button>;
+        const removeBtn = <Button className='btn-remove' bsSize='small'>Удалить</Button>;
 
-        return <Table striped bordered condensed hover>
-            <thead>
-                <tr>
-                    <th>Номер</th>
-                    <th>Марка</th>
-                    <th>Модель</th>
-                    <th>Действия</th>
-                </tr>
-            </thead>
-            <tbody>
-                {cars.map((car) => <tr>
-                    <td>{car.number}</td>
-                    <td>{car.brand}</td>
-                    <td>{car.model}</td>
-                    <td>{editBtn}{removeBtn}</td>
-                </tr>)}
-            </tbody>
-        </Table>;
+        return <>
+            <h2>Список автомобилей</h2>
+            <Table striped bordered condensed hover>
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Марка</th>
+                        <th>Модель</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {!cars.length && <tr><td colSpan={4} className='empty-table-msg'>
+                        Данные о машинах отсутствуют</td></tr>}
+                    {cars.map((car) => <tr>
+                        <td>{car.number}</td>
+                        <td>{car.brand}</td>
+                        <td>{car.model}</td>
+                        <td>{editBtn}{removeBtn}</td>
+                    </tr>)}
+                </tbody>
+            </Table>
+        </>;
     }
 }
 

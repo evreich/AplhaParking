@@ -5,12 +5,11 @@ interface IProps {
     isAuth: boolean;
     component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
     path: string;
-    rest?: any;
 }
 
-const PrivateRoute: React.SFC<IProps> = ({ component, isAuth, path, ...rest }) => {
+const PrivateRoute: React.SFC<IProps> = ({ component, isAuth, path }) => {
     return isAuth ?
-        <Route path={path} component={component} {...rest} /> :
+        <Route path={path} component={component} /> :
         <Redirect to='/forbidden' />;
 };
 

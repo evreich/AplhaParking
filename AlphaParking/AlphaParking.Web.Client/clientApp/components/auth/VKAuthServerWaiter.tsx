@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import * as Consts from '../../constants/common';
-
-// tslint:disable-next-line:no-empty-interface
-interface IProps extends RouteComponentProps { }
+import { vkAuthAction } from '../../ducks/user';
+import LoaderComponent from '../common/Loader';
 
 interface IState {
     loading: boolean;
@@ -12,7 +14,11 @@ interface IState {
     error: string;
 }
 
-class VKAuthServerWaiter extends React.Component<IProps, IState> {
+interface IMapDispatchToProps {
+    login: (payload: any) => void;
+}
+
+class VKAuthServerWaiter extends React.Component<RouteComponentProps<any> & IMapDispatchToProps, IState> {
     constructor(props: any) {
         super(props);
 
@@ -40,11 +46,14 @@ class VKAuthServerWaiter extends React.Component<IProps, IState> {
                 else
                     throw new Error(`Произошла ошибка. Статус ошибки: ${response.status}`);
             })
-            .then((payload: {access_token: string}) => this.setState({
+            .then((payload) => this.setState({
                 loading: false
-            },
-                () => localStorage.setItem('access_token', payload.access_token))
-            )
+                },
+                () => {
+                    const { login } = this.props;
+                    login(payload);
+                }
+            ))
             .catch((err) => this.setState({
                 error: err.message
             }));
@@ -61,11 +70,17 @@ class VKAuthServerWaiter extends React.Component<IProps, IState> {
                 requestSended: true
             }, () => this.sendRequestToServer(search.split('=')[1].toString()));
         if (loading && requestSended)
-            return <h2>Ожидание ответа от сервера...</h2>;
+            return <LoaderComponent />;
         if (!loading && requestSended)
-            history.push('/hello');
+            history.push('/cars');
         return null;
     }
 }
 
-export default withRouter(VKAuthServerWaiter);
+const mapDispatchToProps = (dispatch: Dispatch): IMapDispatchToProps => {
+    return {
+        login: (payload) => dispatch(vkAuthAction(payload))
+    };
+};
+
+export default withRouter(connect(undefined, mapDispatchToProps)(VKAuthServerWaiter)as React.ComponentType<any>);

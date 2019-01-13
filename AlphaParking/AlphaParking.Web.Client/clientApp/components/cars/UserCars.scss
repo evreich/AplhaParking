@@ -3,11 +3,18 @@
         margin-right: 10px;
     }
     &-edit{
-        background-color: yellow !important;
+        background-color: darkblue !important;
         color: white !important
     }
     &-remove{
         background-color: red !important;
         color: white !important
     }
+}
+td{
+    vertical-align: middle !important;
+}
+
+.empty-table-msg{
+    text-align: center;
 }

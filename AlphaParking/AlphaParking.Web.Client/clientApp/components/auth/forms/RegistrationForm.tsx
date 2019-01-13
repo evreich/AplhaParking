@@ -22,7 +22,11 @@ interface IMapDispatchToProps {
     registration: (user: User) => void;
 }
 
-class RegistrationForm extends React.Component<IMapDispatchToProps, IRegistrationFormState> {
+interface IProps {
+    regBtn: JSX.Element;
+}
+
+class RegistrationForm extends React.Component<IMapDispatchToProps & IProps, IRegistrationFormState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -84,17 +88,31 @@ class RegistrationForm extends React.Component<IMapDispatchToProps, IRegistratio
             id,
             login,
             password,
-            phone } = this.state;
+            phone,
+            error } = this.state;
         const { registration: registRequest } = this.props;
         const user = new User(id, login, password, fio, address, phone, email);
-        registRequest(user);
+        if (!error && login !== '' && password !== '' &&
+            fio !== '' && address !== '' && phone !== '' && email !== '')
+            registRequest(user);
     }
 
     render() {
-        const { login, password, error } = this.state;
+        const {
+            login,
+            password,
+            error,
+            fio,
+            address,
+            phone,
+            email
+        } = this.state;
+        const disableBtn = !!error || login === '' || password === '' ||
+            fio === '' || address === '' || phone === '' || email === '';
+
         return <div className='main'>
             <FieldGroup
-                id='formControlsText'
+                id='login'
                 type='text'
                 value={login}
                 label='Логин'
@@ -102,7 +120,7 @@ class RegistrationForm extends React.Component<IMapDispatchToProps, IRegistratio
                 placeholder='Например, ivanov95'
             />
             <FieldGroup
-                id='formControlsPassword'
+                id='password'
                 label='Пароль'
                 value={password}
                 onChange={this.passwordHandler}
@@ -110,35 +128,39 @@ class RegistrationForm extends React.Component<IMapDispatchToProps, IRegistratio
                 placeholder='Например, ivanovPass'
             />
             <FieldGroup
-                id='formControlsText'
+                id='fio'
                 type='text'
-                value={login}
+                value={fio}
                 label='ФИО'
                 onChange={this.textHandler}
             />
             <FieldGroup
-                id='formControlsText'
+                id='email'
                 type='text'
-                value={login}
+                value={email}
                 label='Email'
                 onChange={this.textHandler}
             />
             <FieldGroup
-                id='formControlsText'
+                id='phone'
                 type='text'
-                value={login}
+                value={phone}
                 label='Телефон'
                 onChange={this.textHandler}
             />
             <FieldGroup
-                id='formControlsText'
+                id='address'
                 type='text'
-                value={login}
+                value={address}
                 label='Адрес'
                 onChange={this.textHandler}
             />
-            <Button bsStyle='success' bsSize='large' onClick={this.registrationBtnClickHandler}>Зарегистрироваться</Button>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button disabled={disableBtn} bsStyle='success' bsSize='large' onClick={this.registrationBtnClickHandler}>Зарегистрироваться</Button>
+                {this.props.regBtn}
+            </div>
+            <hr />
+            {error && <p style={{ color: 'red', fontSize: '20px' }}>{error}</p>}
         </div>;
     }
 }

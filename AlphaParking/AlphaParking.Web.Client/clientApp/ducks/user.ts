@@ -21,8 +21,39 @@ export const userActionTypes = {
 export const logoutAction = (): ThunkAction<{}, {}, {}, AnyAction> =>
     (dispatch: ThunkDispatch<{}, {}, AnyAction>): {} => {
         localStorage.removeItem(Consts.JWT_TOKEN_KEY);
+        localStorage.removeItem(Consts.USER_ID_KEY);
         return dispatch({ type: userActionTypes.LOGOUT });
     };
+
+export const editUserAction = (payload: any) => {
+    return {
+        payload: {
+            address: payload.address,
+            email: payload.email,
+            fio: payload.fio,
+            id: payload.id,
+            jwtToken: payload.access_token,
+            login: payload.login,
+            phone: payload.phone
+        },
+        type: userActionTypes.EDIT_USER
+    };
+};
+
+export const vkAuthAction = (payload: any) => {
+    return {
+        payload: {
+            address: payload.user.address,
+            email: payload.user.email,
+            fio: payload.user.fio,
+            id: payload.user.id,
+            jwtToken: payload.access_token,
+            login: payload.user.login,
+            phone: payload.user.phone
+        },
+        type: userActionTypes.LOGIN
+    };
+};
 
 export const loginAction = (login: string, pass: string): ThunkAction<Promise<void>, {}, {}, AnyAction> =>
     (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
@@ -32,17 +63,16 @@ export const loginAction = (login: string, pass: string): ThunkAction<Promise<vo
             .then((payload) => {
                 dispatch({
                     payload: {
-                        address: payload.address,
-                        email: payload.email,
-                        fio: payload.fio,
-                        id: payload.id,
+                        address: payload.user.address,
+                        email: payload.user.email,
+                        fio: payload.user.fio,
+                        id: payload.user.id,
                         jwtToken: payload.access_token,
-                        login: payload.login,
-                        phone: payload.phone
+                        login: payload.user.login,
+                        phone: payload.user.phone
                     },
                     type: userActionTypes.LOGIN
                 });
-                StorageUtils.setItem(Consts.JWT_TOKEN_KEY, payload.access_token);
                 dispatch(successRequestAction());
             })
             .catch((error: AxiosError) => notifyError(error, dispatch));
@@ -56,17 +86,16 @@ export const registrAction = (user: User): ThunkAction<Promise<void>, {}, {}, An
             .then((payload) => {
                 dispatch({
                     payload: {
-                        address: payload.address,
-                        email: payload.email,
-                        fio: payload.fio,
-                        id: payload.id,
+                        address: payload.user.address,
+                        email: payload.user.email,
+                        fio: payload.user.fio,
+                        id: payload.user.id,
                         jwtToken: payload.access_token,
-                        login: payload.login,
-                        phone: payload.phone
+                        login: payload.user.login,
+                        phone: payload.user.phone
                     },
                     type: userActionTypes.LOGIN
                 });
-                StorageUtils.setItem(Consts.JWT_TOKEN_KEY, payload.access_token);
                 dispatch(successRequestAction());
             })
             .catch((error: AxiosError) => notifyError(error, dispatch));
@@ -77,13 +106,13 @@ const initState = {
     address: '',
     email: '',
     fio: '',
-    id: 0,
+    id: StorageUtils.getItem(Consts.USER_ID_KEY) || 0,
     jwtToken: StorageUtils.getItem(Consts.JWT_TOKEN_KEY),
     login: '',
     phone: ''
 };
 
-const requestReducer = (state = initState, action: any) => {
+const userReducer = (state = initState, action: any) => {
     switch (action.type) {
         case userActionTypes.LOGOUT:
             return {
@@ -96,6 +125,8 @@ const requestReducer = (state = initState, action: any) => {
                 phone: ''
             };
         case userActionTypes.LOGIN:
+            StorageUtils.setItem(Consts.JWT_TOKEN_KEY, action.payload.jwtToken);
+            StorageUtils.setItem(Consts.USER_ID_KEY, action.payload.id);
             return {
                 ...action.payload
             };
@@ -108,4 +139,4 @@ const requestReducer = (state = initState, action: any) => {
     }
 };
 
-export default requestReducer;
+export default userReducer;

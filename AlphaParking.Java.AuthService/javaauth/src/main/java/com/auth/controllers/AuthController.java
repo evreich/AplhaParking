@@ -54,7 +54,6 @@ public class AuthController {
 
     private ObjectNode jsonObject;
 
-    @CrossOrigin(origins = "http://localhost:8383")
     @PostMapping("/vk/auth")
     public ResponseEntity<ObjectNode> vkLogin(@RequestBody String code) throws IOException {
         this.jsonObject = objectMapper.createObjectNode();
@@ -67,6 +66,9 @@ public class AuthController {
 
             User user = userService.getUserByVkToken(token);
             if (user != null){
+                ObjectNode userNode = objectMapper.valueToTree(user);
+                this.jsonObject.putObject("user").putAll(userNode);
+
                 String appToken = authService.getToken(user.getLogin(), user.getPassword(), token);
                 this.jsonObject.put("access_token", appToken);
             }
@@ -101,7 +103,7 @@ public class AuthController {
         this.jsonObject = objectMapper.createObjectNode();
         try {
             User newUser = userService.create(user);
-            String token = authService.getToken(newUser.getLogin(), newUser.getPassword(), null);
+            String token = authService.getToken(newUser.getLogin(), user.getPassword(), null);
             // !!!!!!!!внесены изменения
             ObjectNode node = objectMapper.valueToTree(newUser);
             this.jsonObject.putObject("user").putAll(node);

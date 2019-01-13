@@ -5,11 +5,10 @@ import VKAuthButton from './VKAuthButton';
 
 export default class Registration extends React.Component {
     render() {
+        const regBtn = <VKAuthButton text={'Регистрация VK'}/>;
         return <div>
             <h2>Форма регистрации</h2>
-            <RegistrationForm />
-            <hr />
-            <VKAuthButton />
+            <RegistrationForm regBtn={regBtn} />
         </div>;
     }
 }

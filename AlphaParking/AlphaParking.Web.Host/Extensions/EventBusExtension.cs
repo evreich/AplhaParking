@@ -21,12 +21,18 @@ namespace AlphaParking.Web.Host.Extensions
                 HostName = Environment.GetEnvironmentVariable("EVENTBUS_HOST"),
                 Port = Int32.Parse(Environment.GetEnvironmentVariable("EVENTBUS_PORT")),
                 UserName = "guest",
-                Password ="guest",
+                Password = "guest",
                 VirtualHost = "/"
             });
             services.AddSingleton<EventBus>();
             services.AddScoped<IIntegrationEventHandler<UserCreatedIntegrationEvent>, UserCreatedEventHandler>();
             services.AddHostedService<UserCreatedListenerBackgroundService>();
+
+            services.AddScoped<IIntegrationEventHandler<UserEditedIntegrationEvent>, UserEditedEventHandler>();
+            services.AddHostedService<UserEditedListenerBackgroundService>();
+
+            services.AddScoped<IIntegrationEventHandler<UserRemovedIntegrationEvent>, UserRemovedEventHandler>();
+            services.AddHostedService<UserRemovedListenerBackgroundService>();
         }
     }
 }

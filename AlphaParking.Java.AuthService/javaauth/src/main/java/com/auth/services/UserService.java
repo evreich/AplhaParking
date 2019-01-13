@@ -7,6 +7,7 @@ import com.auth.event_bus_utils.integration_events.UserRemovedIntegrationEvent;
 import com.auth.models.Role;
 import com.auth.models.User;
 import com.auth.repositories.UserRepository;
+import com.auth.utils.AppConsts;
 import com.auth.view_models.TokenVKViewModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -48,7 +49,7 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event);
+        eventUtils.publish(event, AppConsts.topicExchangeNameAdd);
 
         return createdUser;
     }
@@ -72,7 +73,7 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event);
+        eventUtils.publish(event, AppConsts.topicExchangeNameEdit);
     }
 
     public void delete(int userId) throws JsonProcessingException {
@@ -85,7 +86,7 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event);
+        eventUtils.publish(event, AppConsts.topicExchangeNameDelete);
     }
 
     public List<Role> getUserRoles (int userId){

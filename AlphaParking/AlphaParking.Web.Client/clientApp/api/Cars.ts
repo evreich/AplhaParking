@@ -35,6 +35,8 @@ export default class CarApi {
                 dispatch(successRequestAction());
                 return payload;
             })
-            .catch((error: AxiosError) => requestUtils.notifyError(error, dispatch));
+            .catch((error: AxiosError) => {
+                requestUtils.notifyError(error, dispatch);
+            });
     }
 }
