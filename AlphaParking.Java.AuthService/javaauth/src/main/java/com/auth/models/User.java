@@ -39,8 +39,8 @@ public class User implements Serializable {
         this.setEmail(email);
     }
 
-    public User(int vkId, String vkToken, String fio, String phone, String email) {
-        this.setLogin("");
+    public User(int vkId, String vkToken, String fio, String phone, String email, String login) {
+        this.setLogin(login);
         this.setPassword("");
         this.setVkId(vkId);
         this.setVkToken(vkToken);

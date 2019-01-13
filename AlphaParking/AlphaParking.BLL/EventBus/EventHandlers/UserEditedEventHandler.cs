@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 using AlphaParking.BLL.DTO;
 using AlphaParking.BLL.EventBus.Abstractions;
 using AlphaParking.BLL.EventBus.IntegrationEvents;
@@ -26,7 +27,13 @@ namespace AlphaParking.BLL.EventBus.EventHandlers
         {
             using (var context = _dbContextFactory())
             {
-                context.Users.Update(@event.UpdatedUser);
+                User currentUser = context.Users.Single(user => user.Login == @event.OldUser.Login);
+
+                currentUser.Login = @event.UpdatedUser.Login;
+                currentUser.FIO = @event.UpdatedUser.FIO;
+                currentUser.Phone = @event.UpdatedUser.Phone;
+
+                context.Users.Update(currentUser);
                 await context.SaveChangesAsync();
             }
         }

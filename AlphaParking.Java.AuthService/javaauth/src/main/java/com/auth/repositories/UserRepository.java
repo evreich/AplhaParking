@@ -63,8 +63,9 @@ public class UserRepository {
         String userFio = userInfo.first_name + ' ' + userInfo.last_name;
         String userPhone = "";
         String userEmail = vkToken.email;
+        String userLogin = vkToken.email+userInfo.id;
 
-        user = new User(vkToken.user_id, vkToken.access_token, userFio, userPhone, userEmail);
+        user = new User(vkToken.user_id, vkToken.access_token, userFio, userPhone, userEmail, userLogin);
 
         return create(user);
     }

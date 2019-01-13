@@ -24,17 +24,34 @@ public class UserService {
     @Autowired
     EventUtils eventUtils;
 
-    public User getUserByVkToken (TokenVKViewModel tokenVk) throws Exception {
+    public User getUserByVkToken(TokenVKViewModel tokenVk) throws Exception {
         User user = userRepository.getUserByVkToken(tokenVk);
+        if (user == null) {
+            return user;
+        }
+
+        this.grantRole(user.getId(), AppConsts.ROLE_EMPLOYEE_ID);
+        // Отправка в очередь RabbitMQ интеграционного события создания нового
+        // пользователя
+        UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(user);
+        // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
+        // не будет создаваться и отправлятсья в брокер
+        // Возможно стоит переделать
+        try {
+            eventUtils.publish(event, AppConsts.topicExchangeNameAdd);
+
+        } catch (Exception e) {
+        }
+
         return user;
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         List<User> users = userRepository.getUsers();
         return users;
     }
 
-    public List<String> getLogins(){
+    public List<String> getLogins() {
         List<String> logins = userRepository.getLogins();
         return logins;
     }
@@ -42,41 +59,54 @@ public class UserService {
     public User create(User user) throws Exception {
         User createdUser = null;
         createdUser = this.userRepository.create(user);
+        if (createdUser == null) {
+            return createdUser;
+        }
 
+        this.grantRole(createdUser.getId(), AppConsts.ROLE_EMPLOYEE_ID);
         // Отправка в очередь RabbitMQ интеграционного события создания нового
         // пользователя
         UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event, AppConsts.topicExchangeNameAdd);
+        try {
+            eventUtils.publish(event, AppConsts.topicExchangeNameAdd);
+
+        } catch (Exception e) {
+        }
 
         return createdUser;
     }
 
-    public User getUserById(int userId){
+    public User getUserById(int userId) {
         User user = userRepository.getUserById(userId);
         return user;
     }
 
-    public User getUserByLogin(String login){
+    public User getUserByLogin(String login) {
         User user = userRepository.getUserByLogin(login);
         return user;
     }
 
-    public void update(User user) throws JsonProcessingException{
+    public void update(User user) {
         User currUser = userRepository.getUserById(user.getId());
         userRepository.update(user);
+
         // Отправка в очередь RabbitMQ интеграционного события создания нового
         // пользователя
         UserEditedIntegrationEvent event = new UserEditedIntegrationEvent(user, currUser);
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event, AppConsts.topicExchangeNameEdit);
+        try {
+            eventUtils.publish(event, AppConsts.topicExchangeNameEdit);
+
+        } catch (Exception e) {
+        }
     }
 
-    public void delete(int userId) throws JsonProcessingException {
+    public void delete(int userId) {
         User user = userRepository.getUserById(userId);
 
         userRepository.delete(userId);
@@ -86,22 +116,27 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event, AppConsts.topicExchangeNameDelete);
+
+        try {
+            eventUtils.publish(event, AppConsts.topicExchangeNameDelete);
+
+        } catch (Exception e) {
+        }
     }
 
-    public List<Role> getUserRoles (int userId){
+    public List<Role> getUserRoles(int userId) {
         return userRepository.getUserRoles(userId);
     }
 
-    public boolean isExistsUserRole(int userId, int roleId){
+    public boolean isExistsUserRole(int userId, int roleId) {
         return userRepository.isExistsUserRole(userId, roleId);
     }
 
-    public void grantRole(int userId, int roleId){
+    public void grantRole(int userId, int roleId) {
         userRepository.grantRole(userId, roleId);
     }
 
-    public void revokeRole(int userId, int roleId){
+    public void revokeRole(int userId, int roleId) {
         userRepository.revokeRole(userId, roleId);
     }
 }

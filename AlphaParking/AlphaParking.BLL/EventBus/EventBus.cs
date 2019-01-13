@@ -65,9 +65,13 @@ namespace AlphaParking.BLL.EventBus
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, args) =>
                 {
-                    string message = Encoding.UTF8.GetString(args.Body);
-                    var @event = JsonConvert.DeserializeObject<T>(message);
-                    await eventHandler.Handle(@event);
+                    try
+                    {
+                        string message = Encoding.UTF8.GetString(args.Body);
+                        var @event = JsonConvert.DeserializeObject<T>(message);
+                        await eventHandler.Handle(@event);
+                    }
+                    catch (Exception) { }
                 };
             _channel.BasicConsume(queue: queueName,
                                             autoAck: true,

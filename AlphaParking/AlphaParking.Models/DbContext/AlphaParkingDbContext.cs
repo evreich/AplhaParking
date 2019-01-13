@@ -37,6 +37,10 @@ namespace AlphaParking.DbContext.Models
                 .WithMany(elem => elem.ParkingSpaceCars)
                 .HasForeignKey(elem => elem.ParkingSpaceNumber);
 
+            modelBuilder.Entity<User>()
+                .HasIndex(elem => elem.Login)
+                .IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
 

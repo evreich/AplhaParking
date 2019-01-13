@@ -87,9 +87,14 @@ namespace AlphaParking.Models.Migrations
 
                     b.Property<string>("FIO");
 
+                    b.Property<string>("Login");
+
                     b.Property<string>("Phone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Login")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
