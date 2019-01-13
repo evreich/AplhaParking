@@ -3,13 +3,10 @@
 <head>
     <title>Парковка "Альфа". Администирование</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
 </head>
 <body>
-    <h1 th:text="'Поздравляю, вход выполнен успешно, '+ ${name}" />
-    <a href="/users">Список пользователей</a> 
-    <a href="/roles">Список ролей</a>  
-    <a href="/user/create">Добавить пользователя</a>  
-    <a href="/role/create">Добавить роль</a> 
+    <th:block th:include="/_menu"></th:block> 
+    <h1 th:text="'Поздравляем, вход выполнен успешно, '+ ${name}" />
 </body>
 </html>

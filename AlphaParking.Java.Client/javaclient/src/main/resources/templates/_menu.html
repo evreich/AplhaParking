@@ -1,0 +1,14 @@
+<div class="menu" xmlns:th="http://www.thymeleaf.org">
+    <a href="/">На главную</a> 
+    | &nbsp;
+    <a href="/users">Список пользователей</a> 
+    | &nbsp;
+    <a href="/roles">Список ролей</a>  
+    | &nbsp;
+    <a href="/user/create">Добавить пользователя</a>  
+    | &nbsp;
+    <a href="/role/create">Добавить роль</a> 
+    | &nbsp;
+    <a th:if="${isLogin == null || !isLogin}" href="/login">Вход в систему</a>
+    <a th:if="${isLogin}" href="/logout">Выход из системы</a>
+</div>

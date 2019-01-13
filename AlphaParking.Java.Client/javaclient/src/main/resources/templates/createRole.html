@@ -3,16 +3,28 @@
 <head>
     <title>Парковка "Альфа". Администирование</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
 </head>
 <body>
-    <a href="/roles">Список ролей</a> 
+    <th:block th:include="/_menu"></th:block> 
     <h2>Создание роли</h2>
-    <form method="post" action="create">
-        <label>Наименование</label>
-        <input type="text" name="name" placeholder="Например, Employee"/>
-        <br/>
-        <button type="submit">Создать</button>
+
+    <div th:if="${error != null}"
+        th:utext="${error}" class="error">...
+    </div>
+
+    <form method="post" action="create" th:object="${role}">
+        <div class="form-group">
+            <label>Наименование
+            <input type="text" name="name" th:field="*{name}" placeholder="Например, Employee"/>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">..</span>
+            </label>       
+        </div>
+        <div class="submit-block">
+            <div class="submit-button">
+                <input type="submit" value="Создать">
+            </div>
+        </div>
     </form>
 </body>
 </html>

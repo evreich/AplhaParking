@@ -3,13 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>Список ролей</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
   </head>
   <body>
-    <a href="/">На главную</a>
+    <th:block th:include="/_menu"></th:block> 
     <h1>Список ролей</h1>
-    <br/><br/>
-    <div>
+
+    <div th:if="${error != null}"
+      th:utext="${error}" class="error">...
+    </div>
+
+    <div th:if="${rolesList != null && rolesList.size() > 0}">
       <table>
         <thead>
           <tr>
@@ -21,8 +25,8 @@
           <tr th:each="role: ${rolesList}">
             <td th:text="${role.getId()}" />
             <td th:text="${role.getName()}" />
-            <td><a th:href="@{'/role/' + ${role.getId()}}">Редактировать</a></td>
-            <td><a th:href="@{'/role/delete/' + ${role.getId()}}">Удалить</a></td>
+            <td class="btnCol"><form th:action="@{'/role/' + ${role.getId()}}"><input type="submit" value="Редактировать"></form></td>
+            <td class="btnCol"><form method="POST" th:action="@{'/role/delete/' + ${role.getId()}}"><input type="submit" value="Удалить"></form></td>
           </tr>
         </tbody>
       </table>

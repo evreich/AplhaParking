@@ -2,6 +2,7 @@ package com.client.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -70,27 +71,24 @@ public class HttpClient {
         
         connection.connect();
         int status = connection.getResponseCode();
-
-        switch (status) {
-            case 200:
-            case 201:
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    sb.append(line+"\n");
-                }
-                br.close();
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                return sb.toString();
-            default:
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                return "Возникла ошибка получения данных от сервера. Код ошибки:" + status;
+        String test = connection.getResponseMessage();
+        InputStream stream;
+        if (status < HttpURLConnection.HTTP_BAD_REQUEST){
+            stream = connection.getInputStream();
+        }else{
+            stream = connection.getErrorStream();
         }
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line+"\n");
+        }
+        br.close();
+        if (connection != null) {
+            connection.disconnect();
+        }
+        return sb.toString();
     }
 
     public String getRequest(String url) throws IOException {

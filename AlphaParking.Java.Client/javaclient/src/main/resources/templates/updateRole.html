@@ -3,17 +3,30 @@
 <head>
     <title>Парковка "Альфа". Администирование</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
 </head>
 <body>
-    <a href="/roles">Список ролей</a> 
+    <th:block th:include="/_menu"></th:block> 
     <h2>Редактирование роли</h2>
-    <form method="post">
-        <label>Наименование</label>
-        <input type="text" name="name" th:value="${role.getName()}"/>
-        <br>
-        <button type="submit">Сохранить</button>
-        <a th:href="@{'/role/delete/' + ${role.getId()}}">Удалить</a>
+
+    <div th:if="${error != null}"
+        th:utext="${error}" class="error">...
+    </div>
+
+    <form th:if="${role.getId() != 0}" method="post" th:object="${role}">
+        <div class="form-group">
+            <input type="hidden" name="id" th:field="*{id}" th:value="${role.getId()}"/>
+            <label>Наименование
+            <input type="text" name="name" th:field="*{name}" th:value="${role.getName()}"/>
+            </label>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">..</span>
+        </div>
+        
+        <div class="submit-block">
+            <div class="submit-button">
+                <input type="submit" value="Сохранить">
+            </div>
+        </div>
     </form>
 </body>
 </html>

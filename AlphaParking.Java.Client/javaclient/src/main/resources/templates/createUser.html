@@ -3,38 +3,51 @@
 <head>
     <title>Парковка "Альфа". Администирование</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
 </head>
 <body>
-    <a href="/users">Список пользователей</a> 
+    <th:block th:include="/_menu"></th:block>  
     <h2>Создание пользователя</h2>
 
-    <div th:if="${errorMessage != null}"
-        th:utext="${errorMessage}" class="error">...
+    <div th:if="${error != null}"
+        th:utext="${error}" class="error">...
     </div>
-    <form method="post" action="" th:object="${user}">
-        <label>Логин</label>
-        <input type="text" name="login" th:field="*{login}" placeholder="Например, test1"/>
-        <span class="error" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span>
-        <br/>
-        <label>Пароль</label>
-        <input type="password" name="password" placeholder="Например, 12345678"/>
-        <br/>
-        <label>ФИО</label>
-        <input type="text" name="fio" th:field="*{fio}" placeholder="Например, Иванов И.И."/>
-        <span class="error" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">..</span>
-        <br/>
-        <label>Адрес</label>
-        <input type="text" name="address"/>
-        <br/>
-        <label>Телефон</label>
-        <input type="text" name="phone" placeholder="Например, 89154201782"/>
-        <br/>
-        <label>Email</label>
-        <input type="text" name="email" th:field="*{email}" placeholder="Например, ivanov11@yandex.ru"/>
-        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>
-        <br/>
-        <button type="submit">Создать</button>
+
+    <form method="post" action="" th:object="${user}" class="alpha-form">
+        <div class="stripes-block">
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Логин
+            <input type="text" name="login" th:field="*{login}" placeholder="Например, test1"/>
+            <span class="error" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span>
+            </label>
+            <label>Пароль
+            <input type="password" name="password" th:field="*{password}" placeholder="Например, 12345678"/>
+            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">..</span>
+            </label>  
+            <label>ФИО
+            <input type="text" name="fio" th:field="*{fio}" placeholder="Например, Иванов И.И."/>
+            <span class="error" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">..</span>
+            </label>  
+            <label>Адрес
+            <input type="text" name="address"/>
+            </label>
+            <label>Телефон
+            <input type="text" name="phone" placeholder="Например, 89154201782"/>
+            </label>
+            <label>Email
+            <input type="text" name="email" th:field="*{email}" placeholder="Например, ivanov11@yandex.ru"/>
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>    
+            </label>
+            
+        </div>
+        <div class="submit-block">
+            <div class="submit-button">
+                <input type="submit" value="Создать">
+            </div>
+        </div>
     </form>
 </body>
 </html>

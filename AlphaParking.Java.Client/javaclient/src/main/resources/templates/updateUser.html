@@ -3,58 +3,83 @@
 <head>
     <title>Парковка "Альфа". Администирование</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
 </head>
 <body>
-    <a href="/users">Список пользователей</a> 
+    <th:block th:include="/_menu"></th:block> 
     <h2>Редактирование пользователя</h2>
-    <form method="post">
-        <label>Логин</label>
-        <input type="text" name="login" th:value="${user.getLogin()}"/>
-        <br/>
-        <label>Пароль</label>
-        <input type="password" name="password"/>
-        <br/>
-        <label>ФИО</label>
-        <input type="text" name="fio" th:value="${user.getFio()}"/>
-        <br/>
-        <label>Адрес</label>
-        <input type="text" name="address" th:value="${user.getAddress()}"/>
-        <br/>
-        <label>Телефон</label>
-        <input type="text" name="phone" th:value="${user.getPhone()}"/>
-        <br/>
-        <label>Email</label>
-        <input type="text" name="email" th:value="${user.getEmail()}"/>
-        <br/>
 
-        <table>
-            <thead>
-                <tr>
-                <th>Роли</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="role: ${userRoles}">
-                <td th:text="${role.getName()}" />
-                <td><a th:href="@{'/user/' + ${user.getId()} + '/revoke/' + ${role.getId()}}">Удалить</a></td>
-                </tr>
-            </tbody>
-         </table>
+    <div th:if="${error != null}"
+      th:utext="${error}" class="error">...
+    </div>
 
-        <button type="submit">Сохранить</button>
-        <a th:href="@{'/user/delete/' + ${user.getId()}}">Удалить</a>
+    <form th:if="${user.getId() != 0}" method="post" th:object="${user}">
+        <div class="form-group">
+            <input type="hidden" name="id" th:field="*{id}" th:value="${user.getId()}"/>
+            <label>Логин
+            <input type="text" name="login" th:field="*{login}" th:value="${user.getLogin()}"/>
+            </label>
+            <span class="error" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span>
+            <br/>
+            <label>Пароль
+            <input type="password" name="password"/>
+            </label>
+            <br/>
+            <label>ФИО
+            <input type="text" name="fio" th:field="*{fio}" th:value="${user.getFio()}"/>
+            </label>
+            <span class="error" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">..</span>
+            <br/>
+            <label>Адрес
+            <input type="text" name="address" th:value="${user.getAddress()}"/>
+            </label>
+            <br/>
+            <label>Телефон
+            <input type="text" name="phone" th:value="${user.getPhone()}"/>
+            </label>
+            <br/>
+            <label>Email
+            <input type="text" name="email" th:field="*{email}" th:value="${user.getEmail()}"/>
+            </label>
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>
+        </div>
+
+         <div class="submit-block">
+            <div class="submit-button">
+                <input type="submit" value="Сохранить">
+            </div>
+        </div>
     </form>
 
-    <form role="form" id="grantRole" th:action="@{'/user/' + ${user.getId()} + '/grant'}" method="get">
-        <button type="submit">Добавить роль</button>
-        <select name="grantRoleId">
-            <option 
-                th:each="role: ${allRoles}"
-                th:value="${role.getId()}"
-                th:text="${role.getName()}"
-            />
-        </select>
+    <div class="form-group form-many">
+    <table>
+        <thead>
+            <tr>
+            <th>Роли</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="role: ${userRoles}">
+            <td th:text="${role.getName()}" />
+            <td class="btnCol"><form method="POST" th:action="@{'/user/' + ${user.getId()} + '/revoke/' + ${role.getId()}}"><input type="submit" value="Удалить"></form></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="form-group form-many">
+    <form method="POST" th:if="${user.getId() != 0}" role="form" id="grantRole" th:action="@{'/user/' + ${user.getId()} + '/grant'}">
+        <span class="alpha-dropdown">
+            <select name="grantRoleId">
+                    <option 
+                        th:each="role: ${allRoles}"
+                        th:value="${role.getId()}"
+                        th:text="${role.getName()}"
+                    />
+            </select>   
+        </span>   
+        <input type="submit" value="Добавить роль">
     </form>
+    </div>
 </body>
 </html>

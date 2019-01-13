@@ -7,6 +7,7 @@ import com.auth.event_bus_utils.integration_events.UserRemovedIntegrationEvent;
 import com.auth.models.Role;
 import com.auth.models.User;
 import com.auth.repositories.UserRepository;
+import com.auth.utils.AppConsts;
 import com.auth.view_models.TokenVKViewModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -42,14 +43,23 @@ public class UserService {
         User createdUser = null;
         createdUser = this.userRepository.create(user);
 
-        // Отправка в очередь RabbitMQ интеграционного события создания нового
-        // пользователя
-        UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
-        // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
-        // не будет создаваться и отправлятсья в брокер
-        // Возможно стоит переделать
-        eventUtils.publish(event);
+        if (createdUser != null){
+            grantRole (createdUser.getId(), AppConsts.ROLE_EMPLOYEE_ID);
 
+            // Отправка в очередь RabbitMQ интеграционного события создания нового
+            // пользователя
+            UserCreatedIntegrationEvent event = new UserCreatedIntegrationEvent(createdUser);
+            // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
+            // не будет создаваться и отправлятсья в брокер
+            // Возможно стоит переделать
+            try{
+                eventUtils.publish(event);
+            }
+            catch (Exception e){
+                // Заглушка для ситуаций, когда сервер .Net не поднят
+            }
+        }
+        
         return createdUser;
     }
 
@@ -72,7 +82,12 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event);
+        try{
+            eventUtils.publish(event);
+        }
+        catch (Exception e){
+            // Заглушка для ситуаций, когда сервер .Net не поднят
+        }
     }
 
     public void delete(int userId) throws JsonProcessingException {
@@ -85,7 +100,12 @@ public class UserService {
         // TODO: на текущий момент за счет exception в методе при ошибке запроса ивент
         // не будет создаваться и отправлятсья в брокер
         // Возможно стоит переделать
-        eventUtils.publish(event);
+        try{
+            eventUtils.publish(event);
+        }
+        catch (Exception e){
+            // Заглушка для ситуаций, когда сервер .Net не поднят
+        }
     }
 
     public List<Role> getUserRoles (int userId){

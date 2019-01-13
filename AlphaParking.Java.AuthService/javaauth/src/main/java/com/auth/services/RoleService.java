@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.auth.models.Role;
 import com.auth.repositories.RoleRepository;
+import com.auth.utils.AppConsts;
 
 @Service
 public class RoleService {
@@ -43,7 +44,17 @@ public class RoleService {
         roleRepository.update(role);
     }
 
-    public void delete(int roleId){
-        roleRepository.delete(roleId);
+    public void delete(int roleId) throws Exception{
+        switch (roleId){
+            case AppConsts.ROLE_ADMIN_ID:
+                throw new Exception("Запрещено удалять роль администратора");
+            case AppConsts.ROLE_MANAGER_ID:
+                throw new Exception("Запрещено удалять роль менеджера");
+            case AppConsts.ROLE_EMPLOYEE_ID:
+                throw new Exception("Запрещено удалять роль работника");
+            default:
+                roleRepository.delete(roleId);
+                break;
+        }
     }
 }

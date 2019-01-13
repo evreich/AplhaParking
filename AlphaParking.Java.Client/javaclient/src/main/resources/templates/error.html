@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu"></th:block> 
+<h1>Обнаружена ошибка! Описание ошибки:</h1>
+<table>
+    <tr>
+        <td>Дата</td>
+        <td th:text="${timestamp}"/>
+    </tr>
+    <tr>
+        <td>Путь</td>
+        <td th:text="${path}"/>
+    </tr>
+    <tr>
+        <td>Ошибка</td>
+        <td th:text="${error}"/>
+    </tr>
+    <tr>
+        <td>Статус</td>
+        <td th:text="${status}"/>
+    </tr>
+    <tr>
+        <td>Сообщение</td>
+        <td th:text="${message}"/>
+    </tr>
+    <tr>
+        <td>Исключение</td>
+        <td th:text="${exception}"/>
+    </tr>
+    <tr>
+        <td>Стек</td>
+        <td>
+            <pre th:text="${trace}"/>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -4,4 +4,5 @@ import com.client.models.Role;
 
 public class RoleResponse {
     public Role role;
+    public String error;
 }

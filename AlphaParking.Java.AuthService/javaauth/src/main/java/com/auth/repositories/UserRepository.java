@@ -191,7 +191,18 @@ public class UserRepository {
     }
 
     public void delete(int userId) {
-        final String sql = "delete users where id = ?";          
+        String sqlDeleteRoles = "delete user_role where userId = ?";          
+
+        this.jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(sqlDeleteRoles.toString(), Statement.SUCCESS_NO_INFO);
+                ps.setInt(1, userId);
+                return ps;
+            }
+        });
+
+        String sql = "delete users where id = ?";          
 
         this.jdbcTemplate.update(new PreparedStatementCreator() {
             @Override

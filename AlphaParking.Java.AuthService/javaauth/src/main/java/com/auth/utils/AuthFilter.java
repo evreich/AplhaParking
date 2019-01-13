@@ -45,7 +45,7 @@ public class AuthFilter {
         List<String> roleNames = (List<String>) tokenClaims.get(AppConsts.ROLES_CLAIM, List.class);
         
         for (String roleName : roleNames){
-            if (roleName.toLowerCase().equals(AppConsts.ROLE_ADMIN)){
+            if (roleName.toLowerCase().equals(AppConsts.ROLE_ADMIN) || roleName.toLowerCase().equals(AppConsts.ROLE_MANAGER)){
                 return null;
             }
         }

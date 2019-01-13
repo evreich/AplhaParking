@@ -6,4 +6,5 @@ import com.client.models.User;
 
 public class UsersResponse {
     public List<User> users;
+    public String error;
 }

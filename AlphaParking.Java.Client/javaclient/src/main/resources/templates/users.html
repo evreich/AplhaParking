@@ -3,13 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>Список пользователей</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}"/>
   </head>
   <body>
-    <a href="/">На главную</a>
+    <th:block th:include="/_menu"></th:block> 
     <h1>Список пользователей</h1>
-    <br/><br/>
-    <div>
+
+    <div th:if="${error != null}"
+      th:utext="${error}" class="error">...
+    </div>
+
+    <div th:if="${usersList != null && usersList.size() > 0}">
       <table>
         <thead>
           <tr>
@@ -29,8 +33,8 @@
             <td th:text="${user.getPhone()}" />
             <td th:text="${user.getEmail()}" />
             <td th:text="${user.getAddress()}" />
-            <td><a th:href="@{'/user/' + ${user.getId()}}">Редактировать</a></td>
-            <td><a th:href="@{'/user/delete/' + ${user.getId()}}">Удалить</a></td>
+            <td class="btnCol"><form th:action="@{'/user/' + ${user.getId()}}"><input type="submit" value="Редактировать"></form></td>
+            <td class="btnCol"><form method="POST" th:action="@{'/user/delete/' + ${user.getId()}}"><input type="submit" value="Удалить"></form></td>
           </tr>
         </tbody>
       </table>

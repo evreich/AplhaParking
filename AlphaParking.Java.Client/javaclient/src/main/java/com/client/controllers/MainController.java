@@ -1,7 +1,6 @@
 package com.client.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,11 +11,11 @@ import com.client.response_jsons.*;
 import com.client.utils.AuthUtils;
 import com.client.utils.HttpClient;
 import com.client.utils.ServerInfo;
+import com.client.validator.RoleValidator;
 import com.client.validator.UserValidator;
 import com.client.view_models.UserLoginViewModel;
 import com.client.view_models.UserRoleViewMovel;
 import com.google.gson.Gson;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,347 +44,475 @@ public class MainController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private RoleValidator roleValidator;
+
+    private String getToken(Model model, HttpServletResponse response){
+        boolean isLogin;         
+        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
+        if(jwt_token == null || jwt_token == ""){
+            AuthUtils.clearJWTCookie(response);
+            isLogin = false;
+        }else{
+            isLogin = true;
+        }
+        model.addAttribute("isLogin", isLogin);
+
+        return jwt_token;
+    }
+
+    private String getToken(ModelMap model, HttpServletResponse response){
+        boolean isLogin;         
+        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
+        if(jwt_token == null || jwt_token == ""){
+            AuthUtils.clearJWTCookie(response);
+            isLogin = false;
+        }else{
+            isLogin = true;
+        }
+        model.addAttribute("isLogin", isLogin);
+
+        return jwt_token;
+    }
+
     // Set a form validator
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
-        // Form target
         Object target = dataBinder.getTarget();
         if (target == null) {
             return;
         }
 
-        if (target.getClass() == User.class) {
+        Class<?> targetClass = target.getClass();
+        if (targetClass == User.class) {
             dataBinder.setValidator(userValidator);
+        }else if (targetClass == Role.class){
+            dataBinder.setValidator(roleValidator);
         }
-    // ...
     }
 
     @GetMapping("/")
-    public String index(Model model){
-        return "index";
+    public String index(Model model, HttpServletResponse response) throws Exception {
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+        return "redirect:/welcome?name=" + AuthUtils.getJWTClaims(jwt_token).getSubject();
     }
 
     @GetMapping("/login")
-    public String login(Model model) {      
+    public String login(Model model, HttpServletResponse response) {      
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(Model model, HttpServletResponse response) {  
+        AuthUtils.clearJWTCookie(response);
+        return "login";    
+    }
+
     @PostMapping("/login")
-    public ModelAndView login(ModelMap model, @RequestParam String login, @RequestParam String password, HttpServletResponse response) throws IOException {   
+    public String login(ModelMap model, @RequestParam String login, @RequestParam String password, HttpServletResponse response) throws IOException {   
         String request = new Gson().toJson(new UserLoginViewModel(login, password));
-        //!! String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/login", request);
-        //!! String jwt_token = new Gson().fromJson(serverResponse, LoginResponse.class).access_token;
-        String jwt_token = "test_token"; //!!
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/login", request);
+
+        LoginResponse loginResponse = new Gson().fromJson(serverResponse, LoginResponse.class);
+        if (loginResponse.error != null){
+            model.addAttribute("error", loginResponse.error);
+            return "login";
+        }
+
+        String jwt_token = loginResponse.access_token;
+
         AuthUtils.setJWTToCookie(jwt_token, response);
-        //!! String username = AuthUtils.getJWTClaims(jwt_token).getSubject();
-        String username = "test_user"; //!!
+        String username = AuthUtils.getJWTClaims(jwt_token).getSubject();
         model.addAttribute("name", username);
-        return new ModelAndView("redirect:/welcome", model);
+        return "redirect:/welcome";        
     }
 
     @GetMapping("/welcome")
-    public String welcome(ModelMap model, @RequestParam String name){
+    public String welcome(ModelMap model, @RequestParam String name, HttpServletResponse response){
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+
         model.addAttribute("name", name);
         return "welcome";
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model, HttpServletResponse response) {
-        try {
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return "login";
-            }
-            //!! String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/users", jwt_token);
-            //!! UsersResponse usersResponse = new Gson().fromJson(serverResponse, UsersResponse.class);
-    
-            UsersResponse usersResponse = new UsersResponse(); //!!
-            usersResponse.users = new ArrayList<User>(); //!!
-            usersResponse.users.add( //!!
-                new User("test", "testPw", "Тест Тестов", "Тест адрес", "222", "test@yandex.ru")); //!!
-
-            model.addAttribute("usersList", usersResponse.users);
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("usersList", new User(0, "login", "password", "fio", "address", "phone", "email"));
+    public String getUsers(Model model, HttpServletResponse response) throws IOException {
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
+
+        String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/users", jwt_token);
+        UsersResponse usersResponse = new Gson().fromJson(serverResponse, UsersResponse.class);
+
+        if (usersResponse.error != null){
+            model.addAttribute("error", usersResponse.error);
+            return "users";
+        }
+
+        model.addAttribute("usersList", usersResponse.users);
 
         return "users";
     }
 
     @GetMapping("/user/create")
-    public String createUser(Model model) { 
+    public String createUser(Model model,  HttpServletResponse response) { 
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+
         User user = new User();
         model.addAttribute("user", user);
         return "createUser";
     }
 
-    /*
-            @RequestParam String login, @RequestParam String password, @RequestParam String fio,
-        @RequestParam String address, @RequestParam String phone, @RequestParam String email, 
-        */
-
     @PostMapping("/user/create")
     public String createUser(ModelMap model, @ModelAttribute("user") @Validated User user,
         BindingResult result, final RedirectAttributes redirectAttributes,
         HttpServletResponse response) throws IOException {  
-            
-        if (result.hasErrors()) {
-            return "createUser";
-           // return new ModelAndView("redirect:/user/create/");
+
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
 
-        try {
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return "redirect:/login";
-                //return new ModelAndView("redirect:/login", model);
-            }
-            //User user = new User(login, password, fio, address, phone, email);
-            String request = new Gson().toJson(user);
-            //!! String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user/create", request, jwt_token);
-            //!! UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class);
-
-            UserResponse userResponse = new UserResponse(); //!!
-            userResponse.user = new User("newTest", "testPw", "Новый Тест Тестов", "Тест адрес", "222", "test@yandex.ru"); //!!
-
-            model.addAttribute("user", userResponse.user);
-
-            redirectAttributes.addFlashAttribute("flashUser", userResponse.user);
-            return "redirect:/user/" + userResponse.user.getId();
-            //return new ModelAndView("redirect:/user/" + userResponse.user.getId(), model);
-        } catch (Exception e) {
-            String message = e.getMessage();
-
-            model.addAttribute("error", message);
+        if (result.hasErrors()) {
             return "createUser";
-            //return new ModelAndView("redirect:/user/create/");
-        }       
+        }
+
+        String request = new Gson().toJson(user);
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user/create", request, jwt_token);
+        UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class);
+
+        if (userResponse.error != null){
+            model.addAttribute("error", userResponse.error);
+            return "createUser";
+        }
+
+        model.addAttribute("user", userResponse.user);
+
+        return "redirect:/user/" + userResponse.user.getId();    
     }
 
     @GetMapping("/user/{userId}")
-    public String updateUser(Model model, @PathVariable int userId, HttpServletResponse response) { 
-        try{
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return "login";
-            }
-    
-            //!! String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId, jwt_token);
-            //!! UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class);  
-            UserResponse userResponse = new UserResponse(); //!!
-            userResponse.user = new User("newTest", "testPw", "Новый Тест Тестов", "Тест адрес", "222", "test@yandex.ru"); //!! 
-            model.addAttribute("user", userResponse.user);
-                  
-            //!! serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId + "/roles", jwt_token);
-            //!! RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);  
-            RolesResponse rolesResponse = new RolesResponse(); //!!
-            rolesResponse.roles = new ArrayList<Role>(); //!!
-            rolesResponse.roles.add(new Role("testRole")); //!!
-            model.addAttribute("userRoles", rolesResponse.roles);      
-            
-            //!! serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
-            //!! rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);   
-            model.addAttribute("allRoles", rolesResponse.roles);  
-        } 
-        catch (Exception e){
-            String message = e.getMessage();
-            model.addAttribute("error", message);
-        } 
+    public String updateUser(Model model, @PathVariable int userId, HttpServletResponse response) throws IOException { 
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+
+        String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId, jwt_token);
+        UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class); 
+        
+        if (userResponse.error != null){
+            model.addAttribute("error", userResponse.error);
+            model.addAttribute("user", new User());
+            return "updateUser";
+        }
+        
+        model.addAttribute("user", userResponse.user);
+                
+        serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId + "/roles", jwt_token);
+        RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class); 
+
+        model.addAttribute("userRoles", rolesResponse.roles);      
+        
+        serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+        rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);  
+
+        model.addAttribute("allRoles", rolesResponse.roles);  
         
         return "updateUser";
     }
 
     @PostMapping("/user/{userId}")
-    public ModelAndView updateUser(ModelMap model, @PathVariable int userId,
-        @RequestParam String login, @RequestParam String password, @RequestParam String fio,
-        @RequestParam String address, @RequestParam String phone, @RequestParam String email, 
-        HttpServletResponse response) throws IOException {   
+    public String updateUser(ModelMap model, @PathVariable int userId,
+        @ModelAttribute("user") @Validated User user,
+        BindingResult result, final RedirectAttributes redirectAttributes,
+        HttpServletResponse response) throws IOException {  
 
-        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-        if(jwt_token == null || jwt_token == ""){
-            AuthUtils.clearJWTCookie(response);
-            return new ModelAndView("redirect:/login", model);
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
-        User user = new User(userId, login, password, fio, address, phone, email);
-        String request = new Gson().toJson(user);
-        // !!httpClient.putRequest(ServerInfo.SERVER_URL + "/user/update", request, jwt_token);
 
-        model.addAttribute("user", user);
+        if (result.hasErrors()) {
+            model.addAttribute("user", user);
+            String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId + "/roles", jwt_token);
+            RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);  
+            model.addAttribute("userRoles", rolesResponse.roles);      
+            
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+            rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);   
+            model.addAttribute("allRoles", rolesResponse.roles);
+
+            return "updateUser";
+        }
+
+        String request = new Gson().toJson(user);
+        String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/user/update", request, jwt_token); 
+        ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+        if (errorResponse.error != null){
+            model.addAttribute("error", errorResponse.error);
+
+            model.addAttribute("user", user);
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId + "/roles", jwt_token);
+            RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);  
+            model.addAttribute("userRoles", rolesResponse.roles);      
+            
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+            rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);   
+            model.addAttribute("allRoles", rolesResponse.roles);
+
+            return "roles";
+        }
         
-        return new ModelAndView("redirect:/user/" + userId, model);
+        return "redirect:/user/" + userId;
     }
 
-    @GetMapping("/user/delete/{userId}")
-    public ModelAndView deleteUser(ModelMap model, @PathVariable int userId, 
+    @PostMapping("/user/delete/{userId}")
+    public String deleteUser(ModelMap model, @PathVariable int userId, 
         HttpServletResponse response) throws IOException {   
 
-        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-        if(jwt_token == null || jwt_token == ""){
-            AuthUtils.clearJWTCookie(response);
-            return new ModelAndView("redirect:/login", model);
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
         
-        // !!httpClient.deleteRequest(ServerInfo.SERVER_URL + "/user/delete/" + userId, jwt_token);       
-        return new ModelAndView("redirect:/users", model);
+        String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/user/delete/" + userId, jwt_token); 
+        ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+        if (errorResponse.error != null){
+            model.addAttribute("error", errorResponse.error);
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+            UsersResponse usersResponse = new Gson().fromJson(serverResponse, UsersResponse.class);
+    
+            if (usersResponse.error != null){
+                model.addAttribute("error", usersResponse.error);
+                return "users";
+            }
+    
+            model.addAttribute("usersList", usersResponse.users);
+
+            return "users";
+        }      
+        return "redirect:/users";
     }
 
     @GetMapping("/roles")
-    public String getRoles(Model model, HttpServletResponse response) {
-        try {
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return "login";
-            }
-            // !!String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
-            // !!RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);
-
-            RolesResponse rolesResponse = new RolesResponse(); //!!
-            rolesResponse.roles = new ArrayList<Role>(); //!!
-            rolesResponse.roles.add( //!!
-                new Role("testRole")); //!!
-    
-            model.addAttribute("rolesList", rolesResponse.roles);
-        } catch (Exception e) {
-            String message = e.getMessage();
-
-            model.addAttribute("error", message);
-            model.addAttribute("rolesList", new Role(0, "name"));
+    public String getRoles(Model model, HttpServletResponse response) throws IOException {
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
+
+        String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+        RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);
+
+        if (rolesResponse.error != null){
+            model.addAttribute("error", rolesResponse.error);
+            return "roles";
+        }
+
+        model.addAttribute("rolesList", rolesResponse.roles);
 
         return "roles";
     }
 
     @GetMapping("/role/create")
-    public String createRole(Model model) {      
+    public String createRole(Model model, HttpServletResponse response) { 
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+        
+        Role role = new Role();
+        model.addAttribute("role", role);    
         return "createRole";
     }
 
     @PostMapping("/role/create")
-    public ModelAndView createRole(ModelMap model, 
-        @RequestParam String name, HttpServletResponse response) throws IOException {   
+    public String createRole(ModelMap model, @ModelAttribute("role") @Validated Role role,
+    BindingResult result, final RedirectAttributes redirectAttributes,
+    HttpServletResponse response) throws IOException {   
 
-        //try {
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return new ModelAndView("redirect:/login", model);
-            }
-            Role role = new Role(name);
-            String request = new Gson().toJson(role);
-            // !!String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/role/create", request, jwt_token);
-            // !!RoleResponse roleResponse = new Gson().fromJson(serverResponse, RoleResponse.class);
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
 
-            RoleResponse roleResponse = new RoleResponse(); //!!
-            roleResponse.role = new Role("newTestRole"); //!!
-        //} catch (Exception e) {
-        //    String message = e.getMessage();
+        if (result.hasErrors()) {
+            return "createRole";
+        }
 
-         //   model.addAttribute("error", message);
-       // }
-        
+        String request = new Gson().toJson(role);
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/role/create", request, jwt_token);
+        RoleResponse roleResponse = new Gson().fromJson(serverResponse, RoleResponse.class);
+
+        if (roleResponse.error != null){
+            model.addAttribute("error", roleResponse.error);
+            return "createRole";
+        }
         model.addAttribute("role", roleResponse.role);
-        return new ModelAndView("redirect:/role/" + roleResponse.role.getId(), model);
+        return "redirect:/role/" + roleResponse.role.getId();
     }
 
     @GetMapping("/role/{roleId}")
-    public String updateRole(Model model, @PathVariable int roleId, HttpServletResponse response) { 
-        try{
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return "login";
-            }
-    
-            // !!String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/role/" + roleId, jwt_token);
-            // !!RoleResponse roleResponse = new Gson().fromJson(serverResponse, RoleResponse.class);
-    
-            //List<Role> roles = (List<Role>)new Gson().fromJson(serverResponse, List.class);
-           
-            RoleResponse roleResponse = new RoleResponse(); //!!
-            roleResponse.role = new Role("newTestRole"); //!!
-            model.addAttribute("role", roleResponse.role);
-    
-            //model.addAttribute("name", userId);         
-        } 
-        catch (Exception e){
-            String message = e.getMessage();
-            model.addAttribute("error", message);
-        } 
+    public String updateRole(Model model, @PathVariable int roleId, HttpServletResponse response) throws IOException { 
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+
+        String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/role/" + roleId, jwt_token);
+        RoleResponse roleResponse = new Gson().fromJson(serverResponse, RoleResponse.class);
+
+        if (roleResponse.error != null){
+            model.addAttribute("error", roleResponse.error);
+            model.addAttribute("role", new Role());
+            return "updateRole";
+        }
+
+        model.addAttribute("role", roleResponse.role);      
         
         return "updateRole";
     }
 
     @PostMapping("/role/{roleId}")
-    public ModelAndView updateRole(ModelMap model, 
-        @PathVariable int roleId, @RequestParam String name, 
+    public String updateRole(ModelMap model, 
+        @PathVariable int roleId, @ModelAttribute("role") @Validated Role role,
+        BindingResult result, final RedirectAttributes redirectAttributes, 
         HttpServletResponse response) throws IOException {   
 
-        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-        if(jwt_token == null || jwt_token == ""){
-            AuthUtils.clearJWTCookie(response);
-            return new ModelAndView("redirect:/login", model);
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
-        Role role = new Role(roleId, name);
+
+        if (result.hasErrors()) {
+            return "updateRole";
+        }
+
         String request = new Gson().toJson(role);
-        // !!httpClient.putRequest(ServerInfo.SERVER_URL + "/role/update", request, jwt_token);
+        String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/role/update", request, jwt_token);
+        ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+        if (errorResponse.error != null){
+            model.addAttribute("error", errorResponse.error);
+            model.addAttribute("role", role);
+            return "roles";
+        }
 
         model.addAttribute("role", role);
 
-        return new ModelAndView("redirect:/role/" + roleId, model);
+        return "redirect:/role/" + roleId;
     }
 
-    @GetMapping("/role/delete/{roleId}")
-    public ModelAndView deleteRole(ModelMap model, @PathVariable int roleId, 
+    @PostMapping("/role/delete/{roleId}")
+    public String deleteRole(ModelMap model, @PathVariable int roleId, 
         HttpServletResponse response) throws IOException {   
 
-        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-        if(jwt_token == null || jwt_token == ""){
-            AuthUtils.clearJWTCookie(response);
-            return new ModelAndView("redirect:/login", model);
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
         
-        // !!httpClient.deleteRequest(ServerInfo.SERVER_URL + "/role/delete/" + roleId, jwt_token);       
-        return new ModelAndView("redirect:/roles", model);
+        String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/role/delete/" + roleId, jwt_token); 
+        ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+        if (errorResponse.error != null){
+            model.addAttribute("error", errorResponse.error);
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+            RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);
+    
+            if (rolesResponse.error != null){
+                model.addAttribute("error", rolesResponse.error);
+                return "roles";
+            }
+    
+            model.addAttribute("rolesList", rolesResponse.roles);
+
+            return "roles";
+        } 
+             
+        return "redirect:/roles";
     }
 
     
-    @GetMapping("/user/{userId}/grant")
-    public ModelAndView grantRole(ModelMap model, @PathVariable int userId, @RequestParam int grantRoleId, 
+    @PostMapping("/user/{userId}/grant")
+    public String grantRole(ModelMap model, @PathVariable int userId, @RequestParam int grantRoleId, 
         HttpServletResponse response) throws IOException {   
 
-        String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-        if(jwt_token == null || jwt_token == ""){
-            AuthUtils.clearJWTCookie(response);
-            return new ModelAndView("redirect:/login", model);
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
         }
         
         UserRoleViewMovel userRole = new UserRoleViewMovel(userId, grantRoleId);
         String request = new Gson().toJson(userRole);
 
-        // !!httpClient.postRequest(ServerInfo.SERVER_URL + "/user/grant", request, jwt_token);       
-        return new ModelAndView("redirect:/user/" + userId, model);
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user/grant", request, jwt_token);        
+        ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+        if (errorResponse.error != null){
+            model.addAttribute("error", errorResponse.error);
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId, jwt_token);
+            UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class);  
+            model.addAttribute("user", userResponse.user); 
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId + "/roles", jwt_token);
+            RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);  
+            model.addAttribute("userRoles", rolesResponse.roles);      
+            
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+            rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);   
+            model.addAttribute("allRoles", rolesResponse.roles);
+
+            return "updateUser";
+        } 
+
+        return "redirect:/user/" + userId;
     }
 
     
-    @GetMapping("/user/{userId}/revoke/{roleId}")
-    public ModelAndView revokeRole(ModelMap model, @PathVariable int userId, @PathVariable int roleId, 
+    @PostMapping("/user/{userId}/revoke/{roleId}")
+    public String revokeRole(ModelMap model, @PathVariable int userId, @PathVariable int roleId, 
         HttpServletResponse response) throws IOException {  
 
-            String jwt_token = AuthUtils.getJWTFromCookie(httpRequest);
-            if(jwt_token == null || jwt_token == ""){
-                AuthUtils.clearJWTCookie(response);
-                return new ModelAndView("redirect:/login", model);
-            }
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+        
+        UserRoleViewMovel userRole = new UserRoleViewMovel(userId, roleId);
+        String request = new Gson().toJson(userRole);
+
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user/revoke", request, jwt_token);  
+        ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+        if (errorResponse.error != null){
+            model.addAttribute("error", errorResponse.error);
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId, jwt_token);
+            UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class);  
+            model.addAttribute("user", userResponse.user); 
+
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/user/" + userId + "/roles", jwt_token);
+            RolesResponse rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);  
+            model.addAttribute("userRoles", rolesResponse.roles);      
             
-            UserRoleViewMovel userRole = new UserRoleViewMovel(userId, roleId);
-            String request = new Gson().toJson(userRole);
-    
-            // !!httpClient.postRequest(ServerInfo.SERVER_URL + "/user/revoke", request, jwt_token);       
-            return new ModelAndView("redirect:/user/" + userId, model);
+            serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/roles", jwt_token);
+            rolesResponse = new Gson().fromJson(serverResponse, RolesResponse.class);   
+            model.addAttribute("allRoles", rolesResponse.roles);
+
+            return "updateUser";
+        }      
+        return "redirect:/user/" + userId;
     }
 }

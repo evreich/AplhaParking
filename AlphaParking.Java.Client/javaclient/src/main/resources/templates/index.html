@@ -3,21 +3,10 @@
 <head>
     <title>Парковка "Альфа". Администирование</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
 </head>
 <body>
+    <th:block th:include="/_menu"></th:block> 
     <h1>Добро пожаловать!</h1>
-    <p>Test css style</p>
-    <div class="menu">
-        <a href="/login">Вход в систему</a>
-        | &nbsp;
-        <a href="/users">Список пользователей</a> 
-        | &nbsp;
-        <a href="/roles">Список ролей</a>  
-        | &nbsp;
-        <a href="/user/create">Добавить пользователя</a>  
-        | &nbsp;
-        <a href="/role/create">Добавить роль</a> 
-    </div>
 </body>
 </html>
