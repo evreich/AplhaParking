@@ -13,7 +13,7 @@
       th:utext="${error}" class="error">...
     </div>
 
-    <div th:if="${userPage != null && userPage.totalPages > 0}">
+    <div th:if="${usersList != null && usersList.size() > 0}">
       <table>
         <thead>
           <tr>
@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="user, iStat : ${userPage.content}">
+          <tr th:each="user: ${usersList}">
             <td th:text="${user.getId()}" />
             <td th:text="${user.getLogin()}" />
             <td th:text="${user.getFio()}" />
@@ -38,26 +38,7 @@
           </tr>
         </tbody>
       </table>
-
-      <div class="pagination-container"> 
-          
-        <ul th:if="${userPage != null && userPage.totalPages > 0}" class="pagination">
-            <li th:if="${userPage.number == 0}" class="previous-off">Пред.</li>
-            <li th:if="${userPage.number > 0}" class="previous"> <a th:href="@{/users(size=${userPage.size}, page=${userPage.number})}">Пред.</a> </li>  
-
-            <li th:each="pageNumber : ${pageNumbers}">
-              <a th:href="@{/users(size=${userPage.size}, page=${pageNumber})}"
-              th:text=${pageNumber}
-              th:class="${pageNumber==userPage.number + 1} ? active">
-              </a>
-            </li>
-
-            <li th:if="${userPage.totalPages == userPage.number + 1}" class="next-off">След.</li>
-            <li th:if="${userPage.totalPages > userPage.number + 1}" class="next"> <a th:href="@{/users(size=${userPage.size}, page=${userPage.number + 2})}">След.</a> </li> 
-        </ul> 
-
-      </div>
-
     </div>
   </body>
+  
 </html>

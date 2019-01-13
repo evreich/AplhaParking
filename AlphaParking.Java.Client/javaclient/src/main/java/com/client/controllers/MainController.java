@@ -1,6 +1,10 @@
 package com.client.controllers;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,12 +15,15 @@ import com.client.response_jsons.*;
 import com.client.utils.AuthUtils;
 import com.client.utils.HttpClient;
 import com.client.utils.ServerInfo;
+import com.client.utils.UserService;
 import com.client.validator.RoleValidator;
 import com.client.validator.UserValidator;
 import com.client.view_models.UserLoginViewModel;
 import com.client.view_models.UserRoleViewMovel;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -34,7 +41,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MainController {
-
     @Autowired
     HttpClient httpClient;
 
@@ -46,6 +52,8 @@ public class MainController {
 
     @Autowired
     private RoleValidator roleValidator;
+
+    private UserService userService;
 
     private String getToken(Model model, HttpServletResponse response){
         boolean isLogin;         
@@ -141,7 +149,7 @@ public class MainController {
         return "welcome";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/usersAll")
     public String getUsers(Model model, HttpServletResponse response) throws IOException {
         String jwt_token = getToken(model, response);
         if (jwt_token == "" || jwt_token == null){
@@ -153,10 +161,49 @@ public class MainController {
 
         if (usersResponse.error != null){
             model.addAttribute("error", usersResponse.error);
-            return "users";
+            return "usersAll";
         }
 
         model.addAttribute("usersList", usersResponse.users);
+
+        return "usersAll";
+    }
+
+    @GetMapping("/users")
+    public String getUsers(Model model,
+        @RequestParam("page") Optional<Integer> page, 
+        @RequestParam("size") Optional<Integer> size,
+        HttpServletResponse response) throws IOException {
+
+        String jwt_token = getToken(model, response);
+        if (jwt_token == "" || jwt_token == null){
+            return "redirect:/login";
+        }
+
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+
+        String serverResponse = httpClient.getRequest(ServerInfo.SERVER_URL + "/users", jwt_token);
+        UsersResponse usersResponse = new Gson().fromJson(serverResponse, UsersResponse.class);
+
+        if (usersResponse.error != null){
+            model.addAttribute("error", usersResponse.error);
+            return "users";
+        }
+
+        userService = new UserService(usersResponse.users);
+
+        Page<User> userPage = userService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+
+        model.addAttribute("userPage", userPage);
+
+        int totalPages = userPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
 
         return "users";
     }
@@ -188,7 +235,8 @@ public class MainController {
         }
 
         String request = new Gson().toJson(user);
-        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user/create", request, jwt_token);
+        //!!String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user/create", request, jwt_token);
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/user", request, jwt_token);
         UserResponse userResponse = new Gson().fromJson(serverResponse, UserResponse.class);
 
         if (userResponse.error != null){
@@ -257,7 +305,8 @@ public class MainController {
         }
 
         String request = new Gson().toJson(user);
-        String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/user/update", request, jwt_token); 
+        //!!String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/user/update", request, jwt_token);
+        String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/user", request, jwt_token);  
         ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
         if (errorResponse.error != null){
             model.addAttribute("error", errorResponse.error);
@@ -287,7 +336,8 @@ public class MainController {
             return "redirect:/login";
         }
         
-        String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/user/delete/" + userId, jwt_token); 
+        //!!String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/user/delete/" + userId, jwt_token); 
+        String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/user/" + userId, jwt_token); 
         ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
         if (errorResponse.error != null){
             model.addAttribute("error", errorResponse.error);
@@ -354,7 +404,8 @@ public class MainController {
         }
 
         String request = new Gson().toJson(role);
-        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/role/create", request, jwt_token);
+        //!!String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/role/create", request, jwt_token);
+        String serverResponse = httpClient.postRequest(ServerInfo.SERVER_URL + "/role", request, jwt_token);
         RoleResponse roleResponse = new Gson().fromJson(serverResponse, RoleResponse.class);
 
         if (roleResponse.error != null){
@@ -402,7 +453,8 @@ public class MainController {
         }
 
         String request = new Gson().toJson(role);
-        String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/role/update", request, jwt_token);
+        //!!String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/role/update", request, jwt_token);
+        String serverResponse = httpClient.putRequest(ServerInfo.SERVER_URL + "/role", request, jwt_token);
         ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
         if (errorResponse.error != null){
             model.addAttribute("error", errorResponse.error);
@@ -424,7 +476,8 @@ public class MainController {
             return "redirect:/login";
         }
         
-        String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/role/delete/" + roleId, jwt_token); 
+        //!!String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/role/delete/" + roleId, jwt_token); 
+        String serverResponse = httpClient.deleteRequest(ServerInfo.SERVER_URL + "/role/" + roleId, jwt_token); 
         ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
         if (errorResponse.error != null){
             model.addAttribute("error", errorResponse.error);
