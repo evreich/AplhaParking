@@ -13,8 +13,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks: 
+      - def-network
 
-  auth.api:
+  authapi:
     image: evreich/javaauth:${TAG:-latest}
     build:
       context: ./AlphaParking.Java.AuthService/javaauth
@@ -22,23 +24,25 @@ services:
     ports:
     - "8181:8181" 
     environment:
-    - EVENTBUS_HOST=localhost
+    - EVENTBUS_HOST=rabbitmq
     - EVENTBUS_PORT=5672
     - SERVER_PORT=8181
     links: 
     - rabbitmq
     depends_on:
     - rabbitmq
+    networks: 
+      - def-network
 
-  parking.api:
-    image: evreich/parking:${TAG:-latest}
+  parkingapi:
+    image: evreich/alphaparking:${TAG:-latest}
     build:
       context: ./AlphaParking
       dockerfile: Web.Host.Dockerfile   
     ports:
     - "8182:8182"
     environment:
-    - EVENTBUS_HOST=localhost
+    - EVENTBUS_HOST=rabbitmq
     - EVENTBUS_PORT=5672
     - ASPNETCORE_URLS=http://*:8182
     restart: on-failure
@@ -47,8 +51,10 @@ services:
     links: 
     - rabbitmq
     # command: dockerize -wait tcp://rabbitmq:15672 -wait tcp://rabbitmq:5672
+    networks: 
+      - def-network
 
-  gateway:
+  gatewayapi:
     image: evreich/gateway:${TAG:-latest}
     build:
       context: ./AlphaParking/AlphaParking.Web.Gateway
@@ -56,15 +62,10 @@ services:
     ports:
     - "9000:9000"
     environment:
-    # - AUTH_HOST=localhost
-    # - AUTH_PORT=8181
-    # - PARKING_HOST=localhost
-    # - PARKING_PORT=8182
-    - ASPNETCORE_ENVIRONMENT=dev
+    - ASPNETCORE_ENVIRONMENT=prod
     - ASPNETCORE_URLS=http://*:9000
-    depends_on: 
-    - auth.api
-    - parking.api
+    networks: 
+      - def-network
 
   webmvc:
     image: evreich/javaclient:${TAG:-latest}
@@ -74,11 +75,15 @@ services:
     ports:
     - "8585:8585"  
     environment:
-    - GATEWAY_HOST=localhost
+    - GATEWAY_HOST=gatewayapi
     - GATEWAY_PORT=9000
     - SERVER_PORT=8585
     depends_on:
-    - gateway
+    - gatewayapi
+    links: 
+    - gatewayapi
+    networks: 
+      - def-network
 
   webspa:
     image: evreich/client:${TAG:-latest}
@@ -88,8 +93,16 @@ services:
     ports:
     - "8383:8383"  
     environment:
-    - GATEWAY_HOST=localhost
+    - GATEWAY_HOST=gatewayapi
     - GATEWAY_PORT=9000
     - ASPNETCORE_URLS=http://*:8383
     depends_on:
-    - gateway
+    - gatewayapi
+    links: 
+    - gatewayapi
+    networks: 
+      - def-network
+
+networks:
+  def-network:
+    

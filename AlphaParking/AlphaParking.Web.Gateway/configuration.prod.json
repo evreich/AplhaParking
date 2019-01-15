@@ -1,50 +1,378 @@
 { 
     "ReRoutes": [ 
         { 
-            "DownstreamPathTemplate": "/user/create", 
+            "DownstreamPathTemplate": "/user/cars?userId={userId}", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
                 {
-                  "Host": "auth-service",
-                  "Port": 8080
+                  "Host": "parkingapi",
+                  "Port": 8182
                 }
             ],
-            "UpstreamPathTemplate": "/user", 
-            "UpstreamHttpMethod": [ "POST" ],
+            "UpstreamPathTemplate": "/user/cars?userId={userId}", 
+            "UpstreamHttpMethod": [ "GET" ],
             "AuthenticationOptions": {  
-                "AuthenticationProviderKey": "AlphaAuthSchema",  
+                "AuthenticationProviderKey": "Bearer",  
                 "AllowedScopes": []  
             } 
-        }, 
+        },
         { 
-            "DownstreamPathTemplate": "/", 
+            "DownstreamPathTemplate": "/vk/auth", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
                 {
-                  "Host": "auth-service",
-                  "Port": 8080
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/vk/auth", 
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+
+        { 
+            "DownstreamPathTemplate": "/login", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/login", 
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+
+        {
+            "DownstreamPathTemplate": "/register", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/registration", 
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+
+        { 
+            "DownstreamPathTemplate": "/users", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/users", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/logins", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/logins", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/roles", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
                 }
             ],
             "UpstreamPathTemplate": "/roles", 
             "UpstreamHttpMethod": [ "GET" ],
             "AuthenticationOptions": {  
-                "AuthenticationProviderKey": "AlphaAuthSchema",  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        }, 
+
+        { 
+            "DownstreamPathTemplate": "/roleNames", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/roleNames", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/create", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user", 
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
                 "AllowedScopes": []  
             } 
         }, 
+ 
+        { 
+            "DownstreamPathTemplate": "/user/{userId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/{userId}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/get/{login}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/get/{login}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/update", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user", 
+            "UpstreamHttpMethod": [ "PUT" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/delete/{userId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/{userId}", 
+            "UpstreamHttpMethod": [ "DELETE" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/role/create", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/role", 
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        }, 
+ 
+        { 
+            "DownstreamPathTemplate": "/role/{roleId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/role/{roleId}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        },
+
+        { 
+            "DownstreamPathTemplate": "/role/get/{roleName}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/role/get/{roleName}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        },
+
+        { 
+            "DownstreamPathTemplate": "/role/update", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/role", 
+            "UpstreamHttpMethod": [ "PUT" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/role/delete/{roleId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/role/{roleId}", 
+            "UpstreamHttpMethod": [ "DELETE" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/{userId}/roles", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/{userId}/roles", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/{userId}/role/{roleId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/{userId}/role/{roleId}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            }
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/grant", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/grant", 
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+
+        { 
+            "DownstreamPathTemplate": "/user/revoke", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "authapi",
+                  "Port": 8181
+                }
+            ],
+            "UpstreamPathTemplate": "/user/revoke", 
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
         { 
             "DownstreamPathTemplate": "/car", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
                 {
-                  "Host": "parking-service",
-                  "Port": 8080
+                  "Host": "parkingapi",
+                  "Port": 8182
                 }
             ],
             "UpstreamPathTemplate": "/cars", 
             "UpstreamHttpMethod": [ "GET" ],
             "AuthenticationOptions": {  
-                "AuthenticationProviderKey": "AlphaAuthSchema",  
+                "AuthenticationProviderKey": "Bearer",  
                 "AllowedScopes": []  
             } 
         }

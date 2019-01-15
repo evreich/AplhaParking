@@ -2,7 +2,7 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 ENV ASPNETCORE_URLS http://*:9000
-# ENV ASPNETCORE_ENVIRONMENT Production
+ENV ASPNETCORE_ENVIRONMENT dev
 EXPOSE 9000
 
 # Образ для сборки приложения

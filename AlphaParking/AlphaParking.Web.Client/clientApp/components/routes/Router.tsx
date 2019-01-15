@@ -13,10 +13,11 @@ import PrivateRoute from './PrivateRoute';
 
 interface IProps {
     isAuth: boolean;
+    userRoles: string[];
 }
 
 const RouterComponent: React.SFC<IProps> = (props) => {
-    const { isAuth } = props;
+    const { isAuth, userRoles } = props;
 
     return <Switch>
             <NotAuthOnlyRoute exact path='/' component={Home} isAuth={isAuth}/>
@@ -24,8 +25,8 @@ const RouterComponent: React.SFC<IProps> = (props) => {
             <NotAuthOnlyRoute path='/login' component={Login} isAuth={isAuth}/>
             <NotAuthOnlyRoute path='/vk/auth' component={VKAuthServerWaiter} isAuth={isAuth}/>
             <Route path='/forbidden' component={ForbiddenErrorPage}/>
-            <PrivateRoute path='/cars' component={UserCars} isAuth={isAuth} />
-            <PrivateRoute path='/parkPlaces' component={AllParkingPlaces} isAuth={isAuth} />
+            <PrivateRoute path='/cars' component={UserCars} isAuth={isAuth} userRoles={userRoles}/>
+            <PrivateRoute path='/parkPlaces' component={AllParkingPlaces} isAuth={isAuth} userRoles={userRoles} />
         </Switch>;
 };
 

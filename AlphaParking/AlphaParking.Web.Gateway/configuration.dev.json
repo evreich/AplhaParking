@@ -1,6 +1,22 @@
 { 
     "ReRoutes": [ 
         { 
+            "DownstreamPathTemplate": "/user/cars?userId={userId}", 
+            "DownstreamScheme": "http", 
+            "DownstreamHostAndPorts": [
+                {
+                  "Host": "localhost",
+                  "Port": 8182
+                }
+            ],
+            "UpstreamPathTemplate": "/user/cars?userId={userId}", 
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {  
+                "AuthenticationProviderKey": "Bearer",  
+                "AllowedScopes": []  
+            } 
+        },
+        { 
             "DownstreamPathTemplate": "/vk/auth", 
             "DownstreamScheme": "http", 
             "DownstreamHostAndPorts": [
@@ -344,25 +360,6 @@
                 "AllowedScopes": []  
             } 
         },
-
-
-        { 
-            "DownstreamPathTemplate": "/user/cars?userId={userId}", 
-            "DownstreamScheme": "http", 
-            "DownstreamHostAndPorts": [
-                {
-                  "Host": "localhost",
-                  "Port": 8182
-                }
-            ],
-            "UpstreamPathTemplate": "/user/cars?userId={userId}", 
-            "UpstreamHttpMethod": [ "GET" ],
-            "AuthenticationOptions": {  
-                "AuthenticationProviderKey": "Bearer",  
-                "AllowedScopes": []  
-            } 
-        },
- 
         { 
             "DownstreamPathTemplate": "/car", 
             "DownstreamScheme": "http", 

@@ -2,6 +2,8 @@
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
 WORKDIR /app
 ENV ASPNETCORE_URLS http://*:8182
+ENV EVENTBUS_HOST=localhost
+ENV EVENTBUS_PORT=5672
 EXPOSE 8182
 
 # Образ для сборки приложения
